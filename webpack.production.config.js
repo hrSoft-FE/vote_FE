@@ -1,14 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin'); //打包 css
+const autoprefixer = require('autoprefixer');               //自动处理浏览器前缀
+const HtmlWebpackPlugin = require('html-webpack-plugin');    //生成 html
+const CleanWebpackPlugin = require('clean-webpack-plugin');  //用于清除上次打包文件
 
 module.exports = {
     entry: {
-        bundle: __dirname +'/app/src/index.js',
-        vendors:['react','react-dom','react-router','redux']  //第三方库和框架另外打包
+        bundle: __dirname + '/app/src/index.js',
+        vendors: ['react', 'react-dom', 'react-router', 'redux']  //第三方库和框架另外打包
     },
     output: {
         path: './dist/build/',
@@ -19,24 +19,24 @@ module.exports = {
     cache: true,
     devtool: false,
     module: {
-        rules:[
+        rules: [
             {
                 test: /\.jsx?$/,
-                loaders:'react-hot-loader!babel-loader',
+                loaders: 'react-hot-loader!babel-loader',
                 exclude: /node_modules/
             },
             {
                 test: /\.css$/,
-                loaders:ExtractTextPlugin.extract({
+                loaders: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use:['css-loader?minimize', 'postcss-loader']
+                    use: ['css-loader?minimize', 'postcss-loader']
                 })
             },
             {
                 test: /\.less/,
-                loaders:ExtractTextPlugin.extract({
+                loaders: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use:['css-loader?minimize', 'postcss-loader', 'less-loader']
+                    use: ['css-loader?minimize', 'postcss-loader', 'less-loader']
                 })
             },
             {
@@ -64,7 +64,7 @@ module.exports = {
             filename: 'js/vendors.[chunkhash:8].js',
         }),
         new ExtractTextPlugin({
-            filename:'css/style.[contenthash:8].css',
+            filename: 'css/style.[contenthash:8].css',
             allChunks: true
         }),
         new webpack.DefinePlugin({
@@ -84,12 +84,16 @@ module.exports = {
         }),
 
         new webpack.optimize.LimitChunkCountPlugin({maxChunks: 15}),
-        new webpack.optimize.MinChunkSizePlugin({minChunkSize:1000}),
+        new webpack.optimize.MinChunkSizePlugin({minChunkSize: 1000}),
         new HtmlWebpackPlugin({
             template: './dist/template.ejs',
-            title: 'NEUQer',
+            title: 'React',
             favicon: './app/favicon.ico',
-            chunks: ['bundle','vendors']
+            chunks: ['bundle', 'vendors']
+        }),
+        new CleanWebpackPlugin(['dist/build'], {
+            verbose: true,
+            dry: false
         })
     ]
 };
