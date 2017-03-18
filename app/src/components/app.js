@@ -18,15 +18,17 @@ class AppComponent extends Component {
         return (
             <div className="App">
                 <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
+                    <img src={logo} className="App-logo" alt="logo"/>
                     <h2>Welcome to React</h2>
                 </div>
                 <p className="App-intro">
                     <Link to="demo">
-                        欢迎使用 react-redux请查看代码，结合自己所学知识开始你的React之旅！
+                        demo
+                    </Link>
+                    <Link to="home">
+                        home
                     </Link>
                 </p>
-                {this.props.children}
                 {this.props.children}
             </div>
         )

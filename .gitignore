@@ -3,3 +3,5 @@ dist/build/*
 npm-debug.log
 .idea/
 .DS_Store
+resource
+note
