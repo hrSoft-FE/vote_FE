@@ -27,6 +27,7 @@ class AppComponent extends Component {
                     </Link>
                 </p>
                 {this.props.children}
+                {this.props.children}
             </div>
         )
     }
