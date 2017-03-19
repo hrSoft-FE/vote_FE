@@ -10,13 +10,15 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "console-polyfill": "^0.2.2",
+    "normalize.css": "^5.0.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-router": "^2.4.0",
     "react-redux": "^5.0.3",
+    "react-router": "^2.4.0",
     "redux": "^3.6.0",
     "redux-log": "^2.0.0",
     "redux-thunk": "^2.1.0",
+    "swiper": "^3.4.2",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {

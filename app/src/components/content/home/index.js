@@ -1,19 +1,18 @@
 import React, {Component, PropTypes} from "react";
+// import Banner from "../../../components/plugin/banner";
+import "./index.less";
 
-
-class ReduxHome extends Component {
+class Home extends Component {
     render() {
-        //you can dispatch ation by using this.props.getDemo() or
-        // const {data,getDemo} = this.props;
-
         return (
-            <p> ReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHomeReduxHome</p>
+            <button className="vote-button"><span>发起投票</span></button>
+
         );
     }
 }
 
-ReduxHome.propTypes = {};
-ReduxHome.defaultProps = {};
+Home.propTypes = {};
+Home.defaultProps = {};
 
 
-export default ReduxHome;
+export default Home;
