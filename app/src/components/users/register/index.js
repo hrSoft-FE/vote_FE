@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from "react";
-import {Button, Form, FormGroup, Col, FormControl, ControlLabel, Checkbox} from 'react-bootstrap';
+// import {Button, Form, FormGroup, Col, FormControl, ControlLabel, Checkbox} from 'antd';
 import './index.less';
-import close from '../../../images/login/close.png';
 
+import close from '../../../images/login/close.png';
+import {Link} from 'react-router'
 class ReduxRegister extends Component {
     render() {
         //you can dispatch ation by using this.props.getDemo() or
@@ -12,72 +13,43 @@ class ReduxRegister extends Component {
             <div className="register-wrapper">
                 <div className="mask"></div>
                 <div className="register">
-
                     <div className="form-wrapper">
                         <div className="window-bar">
-                            <a href="#"><img src={close} alt="点击关闭"/></a>
+                            <a href="#">
+                                <img src={close} alt="点击关闭" width="15px"/>
+                            </a>
                         </div>
-                        <Form horizontal>
-                            <FormGroup controlId="formHorizontalEmail" className="input-box">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Email
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl type="email" placeholder="Email"/>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId="formHorizontalPassword" className="input-box">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Password
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl type="password" placeholder="Password"/>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId="formHorizontalEmail" className="input-box">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Email
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl type="email" placeholder="Email"/>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId="formHorizontalEmail" className="input-box">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Email
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl type="email" placeholder="Email"/>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup controlId="formHorizontalEmail" className="input-box">
-                                <Col componentClass={ControlLabel} sm={2}>
-                                    Email
-                                </Col>
-                                <Col sm={10}>
-                                    <FormControl type="email" placeholder="Email"/>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Col smOffset={2} sm={10}>
-                                    <Checkbox>Remember me</Checkbox>
-                                </Col>
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Col smOffset={2} sm={10}>
-                                    <Button type="submit">
-                                        Sign in
-                                    </Button>
-                                </Col>
-                            </FormGroup>
-                        </Form>
-
+                        <form className="register-form">
+                            <div className="form-item">
+                                <label htmlFor="" className="register-label">登录名称:</label>
+                                <input className="register-input" type="text"/>
+                            </div>
+                            <div className="form-item">
+                                <label htmlFor="" className="register-label">密码:</label>
+                                <input className="register-input" type="password"/>
+                            </div>
+                            <div className="form-item">
+                                <label htmlFor="" className="register-label">确认密码:</label>
+                                <input className="register-input" type="password"/>
+                            </div>
+                            <div className="form-item">
+                                <label htmlFor="" className="register-label">手机号:</label>
+                                <input className="register-input" type="text"/>
+                                <button className="register-button">发送验证码</button>
+                            </div>
+                            <div className="form-item">
+                                <label htmlFor="" className="register-label">验证码:</label>
+                                <input className="register-input" type="text"/>
+                            </div>
+                            <div className="form-item">
+                                <input type="checkbox" className="register-checkbox"/><span>我已经阅读接受voter<a
+                                href="#">服务条款</a></span>
+                            </div>
+                            <div className="form-item">
+                                <button className="create-user">创建用户</button>
+                            </div>
+                        </form>
+                        <div className="login"><Link to="login">已有账号,立即登录</Link></div>
                     </div>
                 </div>
 

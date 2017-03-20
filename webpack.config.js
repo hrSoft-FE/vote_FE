@@ -44,7 +44,7 @@ module.exports = {
                 loaders:['style-loader', 'css-loader', 'postcss-loader','less-loader']
             },
             {
-                test: /\.(png|jpg|gif|woff|woff2|svg)$/,
+                test: /\.(png|jpg|gif|woff|woff2|svg|eot|ttf|woff)$/,
                 loaders: [
                     'url-loader?limit=10000&name=[hash:8].[name].[ext]',
                 ]

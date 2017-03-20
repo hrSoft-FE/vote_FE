@@ -20,7 +20,7 @@ class AppComponent extends Component {
                     <div className="bar">
                         <img src={logo} className="logo" alt="logo"/>
                     </div>
-                    <div className="users">
+                    <div className="nav">
                         <Link to="login">登陆</Link>
                         <Link to="register">注册</Link>
                     </div>

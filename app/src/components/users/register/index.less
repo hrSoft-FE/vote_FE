@@ -1,54 +1,94 @@
-.register-wrapper {
-  //display:none;
+.mask {
+  position: absolute;
   width: 100%;
   height: 100%;
-  .mask {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: #d8d8d8 50%;
-    opacity: 0.5;
-  }
-  .register {
-    position: relative;
-    width: 100%;
-    border-radius: 5px;
+  z-index: -1;
+  background: #d8d8d8 50%;
+  opacity: 0.5;
+}
+.register {
+  //display:none;
+  position: absolute;
+  top: 100px;
+  left: 390px;
+  width: 500px;
+  height: 350px;
+  background: #fff;
 
-    .form-wrapper {
+  .window-bar {
+    position:relative;
+    box-sizing: border-box;
+    background: linear-gradient(#80C3F3, #4990E2);
+    //border: 1px inset #979797;
+    height: 20px;
+    width: 100%;
+    img{
       position: absolute;
-      top: 100px;
-      left: 390px;
-      background: #FFFFFF;
-      margin: 0 auto;
-      width: 500px;
-      height: 350px;
-      .window-bar {
-        margin: 0 auto;
-        background: linear-gradient(#80c3f3,#4990E2);
-        img {
-          //margin: 1px;
-          width: 15px;
-          height: 15px;
+      top: 3px;
+      right: 5px;
+
+    }
+  }
+  .register-form {
+    width: 70%;
+    margin: 10px auto;
+    font-size: 14px;
+    vertical-align: top;
+    .form-item {
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      vertical-align: top;
+      .register-label {
+        flex: 0 0 70px;
+        text-align: right;
+        padding-right: 10px;
+      }
+      .register-input {
+        flex: 1;
+        height: 20px;
+        border: 1px solid #8B8B8B;
+        border-radius: 2px;
+      }
+      .register-button{
+        flex: 0 1 100px;
+        margin-left: 5px;
+        width: 100px;
+        outline: none;
+        border: 1px;
+        border-radius: 2px;
+        font-size: 12px;
+        background: #4990E2;
+        cursor: pointer;
+      }
+      .register-checkbox{
+        height:14px;
+        width: 14px;
+      }
+      .create-user {
+        padding: 10px 20px;
+        font-size: 14px;
+        border: 1px;
+        outline: none;
+        background: #4990E2;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      span{
+        a{
+          text-decoration: none;
+          color: #FF4100;
         }
       }
-      form {
-        width: 70%;
-        margin: 10px auto;
-
-        .input-box {
-          display: flex;
-          //flex: 1;
-          label {
-            flex: 0 0 100px;
-          }
-          input {
-            flex: 1;
-            width: 255px;
-          }
-        }
-
-      }
+    }
+  }
+  .login {
+    display: flex;
+    justify-content: center;
+    a{
+      font-size: 14px;
+      text-decoration: none;
+      color: #FF4100;
     }
   }
 }
