@@ -9,6 +9,8 @@ require('es6-promise');
 
 import logo from '../images/vote.png';
 import Banner from './plugin/Banner';
+import Login from './users/login';
+import Register from './users/register';
 import './app.less'
 class AppComponent extends Component {
     render() {
@@ -17,6 +19,10 @@ class AppComponent extends Component {
                 <div className="nav-wrapper">
                     <div className="bar">
                         <img src={logo} className="logo" alt="logo"/>
+                    </div>
+                    <div className="users">
+                        <Link to="login">登陆</Link>
+                        <Link to="register">注册</Link>
                     </div>
                     <div className="nav">
                         <Link to="home">首页</Link>

@@ -1,0 +1,103 @@
+.login-wrapper{
+  display:none;
+  .mask{
+    width: 1280px;
+    height:670px;
+    background:rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .login{
+    width: 500px;
+    height: 380px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -300px;
+    margin-top: -200px;
+    z-index: 1100;
+    border-radius: 5px;
+    background: #FFFFFF;
+    .window-bar{
+      width: 500px;
+      height: 20px;
+      background: #4990E2;
+      position: relative;
+      img{
+        margin: 1px;
+        position: absolute;
+        right:0;
+        top:0;
+        width: 15px;
+        height: 15px;
+      }
+    }
+    .login-line{
+      span{
+        display: block;
+        font-size: 12px;
+        color: #8B8B8B;;
+        position: relative;
+        &:before,&:after{
+          content: '';
+          position: absolute;
+          top:52%;
+          background: #8B8B8B;
+          //背景线的宽和高
+          width: 150px;
+          height: 1px;
+        }
+        &:before{
+          //调整背景线的左右距离
+          left:31px;
+        }
+        &:after{
+          right:31px;
+        }
+      }
+    }
+    .login-with-others{
+      padding-top: 64px;
+      margin-bottom: -35px;
+      .image-boxes{
+        position: relative;
+        width: 400px;
+        height: 72px;
+        margin: 0 auto;
+        img{
+          width: 40px;
+          height: 40px;
+          margin-right: 31px;
+          margin-left: 31px;
+        }
+      }
+    }
+    .login-with-phone{
+      .login-form{
+        padding-left: 125px;
+        padding-top: 10px;
+        a{
+          display: block;
+          margin-top: -10px;
+          margin-bottom: 5px;
+        }
+      }
+      .login-btn{
+        &:hover{
+          background: #4990E2;
+        }
+        p{
+          width:148px;
+          height:10px;
+        }
+      }
+      img{
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+  }
+}
