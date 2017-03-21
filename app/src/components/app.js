@@ -19,6 +19,7 @@ class AppComponent extends Component {
                 <div className="nav-wrapper">
                     <div className="bar">
                         <img src={logo} className="logo" alt="logo"/>
+                        <div className="logo-text">VOTE</div>
                     </div>
                     <div className="nav">
                         <Link to="login">登陆</Link>

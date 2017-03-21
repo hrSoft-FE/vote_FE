@@ -9,6 +9,7 @@ import Vote from './components/content/vote';
 import PersonalCenter from './components/content/personalcenter';
 import Login from './components/users/login';
 import Register from './components/users/register';
+import Poll from './components/content/poll'
 
 const RouterApp = (
     <Router history={hashHistory}>
@@ -19,6 +20,7 @@ const RouterApp = (
             <Route path="register" component={Register}/>
             <Route path="home" component={Home} />
             <Route path="vote" component={Vote} />
+            <Route path="poll" component={Poll} />
             <Route path="personalCenter" component={PersonalCenter} />
         </Route>
 

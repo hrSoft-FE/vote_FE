@@ -5,7 +5,10 @@ import {Link} from 'react-router';
 class Home extends Component {
     render() {
         return (
-            <Link to="vote"><button className="vote-button"><span>发起投票</span></button></Link>
+
+            <Link to="poll">
+                <button className="vote-button"><span>发起投票</span></button>
+            </Link>
 
         );
     }
