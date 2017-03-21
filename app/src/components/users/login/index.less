@@ -68,25 +68,34 @@
     .form-wrapper {
       width: 270px;
       display: flex;
-      margin: 2px auto;
+      margin: 5px auto;
       .login-input {
+        box-sizing: border-box;
         width: 270px;
         height: 30px;
         border: 1px #979797 solid;
+        padding: 5px;
         border-radius: 9px;
-        margin: 5px 0;
+        outline: none;
+        margin: 8px 0;
+
       }
       .login-button {
         display: block;
         width: 148px;
         height: 30px;
-        margin: 0 auto;
+        margin: 8px auto;
         border: 1px;
         outline: none;
+        color: rgba(0,0,0,0.8);
         border-radius: 9px;
         background: linear-gradient(#80C3F3, #4990E2);
+        cursor: pointer;
+        transition: all 0.4s;
+        &:hover{
+          box-shadow: 2px 1px 2px 1px rgba(0, 0, 0, 0.2);
+        }
       }
-
     }
     .line-through {
       display: flex;
@@ -100,11 +109,10 @@
       }
       .line-through-line{
         flex: 1;
-        height: 1px;
         //width: 100px;
         position: relative;
-        top: 6px;
-        border-bottom: 2px solid #000 ;
+        top: -5px;
+        border-bottom: 2px solid #979797 ;
       }
     }
   }
