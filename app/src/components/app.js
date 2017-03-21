@@ -8,7 +8,7 @@ require('console-polyfill');
 require('es6-promise');
 
 import logo from '../images/vote.png';
-import Banner from './plugin/Banner';
+import Banner from './plugin/banner';
 import Login from './users/login';
 import Register from './users/register';
 import './app.less'
@@ -33,9 +33,6 @@ class AppComponent extends Component {
                 </div>
                 <div className="children-wrapper">
                     {this.props.children}
-                </div>
-                <div className="banner-wrapper">
-                    <Banner></Banner>
                 </div>
             </div>
         )

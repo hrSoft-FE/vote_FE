@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from "react";
-// import {Button, Form, FormGroup, Col, FormControl, ControlLabel, Checkbox} from 'antd';
 import './index.less';
 
 import close from '../../../images/login/close.png';

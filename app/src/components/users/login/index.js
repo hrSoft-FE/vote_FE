@@ -30,9 +30,9 @@ class ReduxLogin extends Component {
                         <div className="logo-text">voter</div>
                     </div>
                     <div className="line-through">
-                        <div className="line-through-line"></div>
+                        <div className="line-through-line"> </div>
                         <div className="line-through-text">第三方账号登录</div>
-                        <div className="line-through-line"></div>
+                        <div className="line-through-line"> </div>
                     </div>
                     <div className="icon-wrapper">
                         <div className="icon-item"><img src={qq_icon} alt=""/></div>

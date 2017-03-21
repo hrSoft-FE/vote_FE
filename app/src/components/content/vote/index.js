@@ -7,7 +7,9 @@ class Vote extends Component {
         const {data,getVote} = this.props;
 
         return (
+
             <div>Vote</div>
+
         );
     }
 }
