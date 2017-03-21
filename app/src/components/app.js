@@ -34,6 +34,10 @@ class AppComponent extends Component {
                 <div className="children-wrapper">
                     {this.props.children}
                 </div>
+                <div className="banner-wrapper">
+                    <Banner/>
+                </div>
+
             </div>
         )
     }

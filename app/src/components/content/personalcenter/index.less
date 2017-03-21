@@ -1,14 +1,28 @@
 .personal-wrapper {
   width: 500px;
   height: 400px;
-  margin: 100px auto;
+  margin: 0 auto;
+  padding: 80px 0;
   border-radius: 5px;
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: #d8d8d8 50%;
+    opacity: 0.5;
+  }
   .personal-form {
     width: 70%;
-    margin: 20px auto;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin: 0 auto;
     font-size: 14px;
     padding-top: 40px;
     vertical-align: top;
+    background: #FFFFFF;
     .form-item {
       display: flex;
       justify-content: center;
