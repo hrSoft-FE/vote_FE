@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from "react";
 
 //import './vote-item/index.js'
 import VoteItem from './vote-item'
+import "./index.less";
 class Vote extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +19,18 @@ class Vote extends Component {
                 {
                     status: false,
                     id: '003'
+                },
+                {
+                    status: false,
+                    id: '005'
+                },
+                {
+                    status: true,
+                    id: '008'
+                },
+                {
+                    status: false,
+                    id: '013'
                 }
             ]
         }
@@ -33,7 +46,7 @@ class Vote extends Component {
         });
 
         return (
-            <div className="vote_wrapper">
+            <div className="vote-wrapper">
                 <div className="mask"></div>
                 <div className="vote">
                     {voteItems}

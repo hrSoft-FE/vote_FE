@@ -23,7 +23,6 @@ const RouterApp = (
             <Route path="poll" component={Ques} />
             <Route path="personalCenter" component={PersonalCenter} />
         </Route>
-
     </Router>
 );
 

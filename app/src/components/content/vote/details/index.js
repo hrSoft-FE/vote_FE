@@ -7,13 +7,16 @@ class VoteItem extends Component {
     constructor(props) {
         super(props);
     };
-    
+    handleClick = function(){
+
+    };
+
     render() {
         //you can dispatch ation by using this.props.getDemo() or
         const {data,getVote} = this.props;
 
         return (
-            <div className="vote-item">
+            <div className="vote-details">
                 <div className="vote-item-state" >
                     <span>进行中</span>
                 </div>
@@ -22,8 +25,9 @@ class VoteItem extends Component {
                     <p>
                         <button className="vote-item-operate">查看</button>
                         <button className="vote-item-operate">编辑</button>
-                        <button className="vote-item-operate">删除</button>
+                        <button onClick={} className="vote-item-operate">删除</button>
                     </p>
+
                 </div>
 
 

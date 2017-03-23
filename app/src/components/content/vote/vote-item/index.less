@@ -1,25 +1,44 @@
 .vote-item {
-  width: 234px;
-  height: 170px;
-  display: inline;
+  display: inline-block;
+  margin: 0 23px 40px 23px;
+  border: 1px solid #d8d8d8;
+  width: 340px;
+  height: 230px;
   &-status {
-    width: 63px;
-    height: 37px;
+    width: 68px;
+    height: 68px;
     float: right;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   &-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    height: 238px;
+    width: 340px;
+    background: #ffffff;
     .vote-item-icon {
+      height: 80px;
+      margin: 28px 0 0 135px;
     }
-    .vote-item-operate {
-      background: #0b97c4;
+    p{
+      margin-left: 13px;
+      margin-top: 39px;
+    }
+    .vote-item-btn {
+      margin-left: 48px;
+      border: 1px inset #979797;
+      height: 30px;
+      width: 46px;
+      opacity: 0.9;
+      border-radius: 10px;
+      box-shadow: 5px 0 0 0;
+      background: -webkit-linear-gradient(top, #D0182C 77%, #A21322 98%, #000000);
+      font: 12px "PingFang SC";
       color: #ffffff;
+      outline:0 none !important;
     }
+  }
+  .vote-confirm{
+    display: none;
   }
 }

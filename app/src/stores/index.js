@@ -13,7 +13,7 @@ const configStore =(initialState)=>{
     //热替换
     if (module.hot) {
         module.hot.accept('../reducers', ()=> {
-            const nextReducer = require('../reducers');
+            const nextReducer = require('../reducers/index');
             store.replaceReducer(nextReducer);
         });
     }
