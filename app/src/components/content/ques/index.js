@@ -7,26 +7,27 @@ class Ques extends Component {
     render() {
 
         const {data, getQues} = this.props;
-        const voteTitile = "test";
+        const quesTitile = 'test';
         return (
-            <div className="poll-wrapper">
+            <div className="ques-wrapper">
                 <div className="mask"></div>
-                <div className="poll">
-                    <div className="logo-wrapper">
-                        <div className="logo-text">
-                            <strong>题目:</strong>
-                            {voteTitile}
+                <div className="">
+                        <div className="ques-text">
+                            {quesTitile}
                         </div>
-                    </div>
-                    <div className="form-wrapper">
+                    <div className="list-wrapper">
                         <form action="">
-                            <label htmlFor="" className="poll-code">请输入投票码:&nbsp;
-                                <input type="text"/>
-                            </label>
-                            <label htmlFor="" className="poll-submit">
-                                <button>确定</button>
-                            </label>
+                            <select className="selection">
+                                <option value="single" className="selection-item">单选</option>
+                                <option value="multiple" className="selection-item">单选</option>
+                            </select>
                         </form>
+                        <div className="ques-wrapper">
+                            {/*<QuesList></QuesList>*/}
+                        </div>
+                        <label htmlFor="" className="poll-submit">
+                            <button>确定</button>
+                        </label>
                     </div>
                 </div>
             </div>

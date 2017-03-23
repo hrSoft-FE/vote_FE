@@ -7,7 +7,7 @@ class Poll extends Component {
     render() {
 
         const {data, getPoll} = this.props;
-        const voteTitile = "test";
+        const voteTitile = 'test';
         return (
             <div className="poll-wrapper">
                 <div className="mask"></div>

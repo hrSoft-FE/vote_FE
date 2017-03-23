@@ -1,7 +1,6 @@
 import React from "react";
 import {Router, Route, IndexRoute, hashHistory} from "react-router";
 
-
 import AppComponent from "./components/app";
 // components React
 import Home from './components/content/home';
