@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 import logo from "../../../images/vote.png"
 import "./index.less"
-// import {Link} from "react-router";
+import {Link} from "react-router";
 class Poll extends Component {
 
     render() {
@@ -27,7 +27,9 @@ class Poll extends Component {
                                 <input type="text"/>
                             </label>
                             <label htmlFor="" className="poll-submit">
-                                <button>确定</button>
+                                <Link to="question">
+                                    <button>确定</button>
+                                </Link>
                             </label>
                         </form>
                     </div>
