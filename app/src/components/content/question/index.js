@@ -15,7 +15,6 @@ class Question extends Component {
 
     render() {
         const {data, getQuestion} = this.props;
-        const quesTitile = 'test';
         let list = [
             {
                 text: '1',
@@ -25,7 +24,7 @@ class Question extends Component {
                 text: '2',
                 checked: true
             }
-        ]
+        ];
         return (
             <div className="question-wrapper">
                 <div className="mask"></div>

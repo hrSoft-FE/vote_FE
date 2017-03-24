@@ -4,6 +4,7 @@ import './index.less';
 import './grid.less';
 
 class Statistics extends Component {
+
     render() {
         return (
             <div className="statistics-wrapper">
