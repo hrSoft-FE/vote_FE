@@ -15,25 +15,33 @@ class Question extends Component {
 
     render() {
         const {data, getQuestion} = this.props;
+        let title = 'test title';
         let list = [
             {
-                text: '1',
+                text: '选项1',
                 checked: false
             },
             {
-                text: '2',
+                text: '选项2',
                 checked: true
+            },
+            {
+                text: '选项3',
+                checked: false
             }
         ];
         return (
             <div className="question-wrapper">
                 <div className="mask"></div>
                 <div className="list-wrapper">
-                    <form action="">
-                        <select className="selection">
-                            <option value="single" className="selection-item">单选</option>
-                            <option value="multiple" className="selection-item">单选</option>
-                        </select>
+                    <div className="title">{title}</div>
+                    <form action="" className="toggle">
+                        {/*<select className="selection">*/}
+                        {/*<option value="single" className="selection-item">单选</option>*/}
+                        {/*<option value="multiple" className="selection-item">多选</option>*/}
+                        {/*</select>*/}
+                        <input type="radio" className="multiple"/>
+                        <span className="toggle-text">多选</span>
                     </form>
                     <div className="question-list">
                         <QuestionList
@@ -41,7 +49,7 @@ class Question extends Component {
                             handleItemChange={this.handleItemChange}
                         />
                     </div>
-                    <label htmlFor="" className="poll-submit">
+                    <label htmlFor="" className="question-submit">
                         <button>确定</button>
                     </label>
                 </div>

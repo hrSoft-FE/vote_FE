@@ -17,7 +17,6 @@ class Banner extends Component {
             autoplay: 3000,
         });
     }
-
     render() {
         return (
             <div className="slider">

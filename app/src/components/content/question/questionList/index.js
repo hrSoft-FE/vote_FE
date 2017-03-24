@@ -1,22 +1,8 @@
 import React, {Component, PropTypes} from "react";
-import logo from "../../../../images/vote.png"
+import List from "./list";
 import "./index.less"
 // import Item from "antd/lib/transfer/item.d";
 // import {Link} from "react-router";
-class List extends Component {
-    static defaultProps = {
-        text:'',
-        checked:false
-    };
-    render() {
-        return (
-            <div className="List-wrapper">
-                <input type="checkbox" checked={this.props.checked} onChange={this.props.onChange} />
-                <span>{this.props.value}</span>
-            </div>
-        );
-    }
-}
 class QuestionList extends Component {
     static defaultProps = {
         list: [],
@@ -44,16 +30,17 @@ class QuestionList extends Component {
         });
         this.props.handleItemChange(entry);
     }
-    render(){
-        return(
-            <div>
+
+    render() {
+        return (
+            <div className="question-list-item">
                 <ul>
-                    {this.state.list.map((entry,index)=>(
+                    {this.state.list.map((entry, index) => (
                         <List
                             key={`list-${index}`}
                             value={entry.text}
                             checked={entry.checked}
-                            onChange={this.onItemChange.bind(this,entry)}
+                            onChange={this.onItemChange.bind(this, entry)}
                         />
                     ))}
                 </ul>
