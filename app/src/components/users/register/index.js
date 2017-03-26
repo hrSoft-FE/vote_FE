@@ -2,29 +2,78 @@ import React, {Component, PropTypes} from "react";
 import './index.less';
 import API from '../../../api';
 import close from '../../../images/login/close.png';
-import {Link} from 'react-router'
+import {Link} from 'react-router';
+import Regx from '../../../utils/regx';
 class ReduxRegister extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            mobile: '',
+            name: '',
+            password: ''
+        };
+
         this._register = this._register.bind(this);
+        this.checkMobile = this.checkMobile.bind(this);
+        this.checkPassword = this.checkPassword.bind(this);
+        this.checkSecondPassword = this.checkSecondPassword.bind(this);
+        this.registerName = this.registerName.bind(this);
+    }
+
+    registerName(e) {
+        const name = e.target.value;
+        this.setState({
+            name: name
+        })
+    }
+
+    checkMobile(e) {
+        const mobile = e.target.value;
+        if (!Regx.mobile.test(mobile)) {
+            alert('手机号应为11位，请重新输入。')
+        }
+        this.setState({
+            mobile: mobile
+        })
+    };
+
+    checkPassword(e) {
+        const password = e.target.value;
+        if (!Regx.password.test(password)) {
+            alert('密码应为6-20位，请重新输入。')
+        }
+        this.setState({
+            password: password
+        })
+    }
+
+    checkSecondPassword(e) {
+        const secondpassword = e.target.value;
+        if (secondpassword !== this.state.password) {
+            alert('两次密码输入不一致！')
+        }
     }
 
     _register() {
+
         fetch(API.register, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                mobile: '12345678901',
-                name: 'abcd',
-                password: '123456'
+                mobile: this.state.mobile,
+                name: this.state.name,
+                password: this.state.password
             })
         }).then((res) => res.json())
             .then((json) => {
-                if (json.code === 10003) {
-                    alert('成功');
+                if (json.code == 0) {
+                    alert("注册成功,请登录。")
+                }
+                if (json.code == 10003) {
+                    alert("手机号已被注册。")
                 }
             })
     }
@@ -46,19 +95,19 @@ class ReduxRegister extends Component {
                         <form className="register-form">
                             <div className="form-item">
                                 <label htmlFor="" className="register-label">登录名称:</label>
-                                <input className="register-input" type="text"/>
+                                <input className="register-input" type="text" onBlur={this.registerName}/>
                             </div>
                             <div className="form-item">
                                 <label htmlFor="" className="register-label">密码:</label>
-                                <input className="register-input" type="password"/>
+                                <input className="register-input" type="password" onBlur={this.checkPassword}/>
                             </div>
                             <div className="form-item">
                                 <label htmlFor="" className="register-label">确认密码:</label>
-                                <input className="register-input" type="password"/>
+                                <input className="register-input" type="password" onBlur={this.checkSecondPassword}/>
                             </div>
                             <div className="form-item">
                                 <label htmlFor="" className="register-label">手机号:</label>
-                                <input className="register-input" type="text"/>
+                                <input className="register-input" type="text" onBlur={this.checkMobile}/>
                                 <button className="register-button">发送验证码</button>
                             </div>
                             <div className="form-item">
@@ -76,8 +125,6 @@ class ReduxRegister extends Component {
                         <div className="login"><Link to="login">已有账号,立即登录</Link></div>
                     </div>
                 </div>
-
-
             </div>
         );
     }
