@@ -23,6 +23,8 @@ class ReduxRegister extends Component {
 
     registerName(e) {
         const name = e.target.value;
+        e.preventDefault();
+        e.stopPropagation();
         this.setState({
             name: name
         })
@@ -30,6 +32,8 @@ class ReduxRegister extends Component {
 
     checkMobile(e) {
         const mobile = e.target.value;
+        e.preventDefault();
+        e.stopPropagation();
         if (!Regx.mobile.test(mobile)) {
             alert('手机号应为11位，请重新输入。')
         }
@@ -40,6 +44,8 @@ class ReduxRegister extends Component {
 
     checkPassword(e) {
         const password = e.target.value;
+        e.preventDefault();
+        e.stopPropagation();
         if (!Regx.password.test(password)) {
             alert('密码应为6-20位，请重新输入。')
         }
@@ -50,6 +56,8 @@ class ReduxRegister extends Component {
 
     checkSecondPassword(e) {
         const secondpassword = e.target.value;
+        e.preventDefault();
+        e.stopPropagation();
         if (secondpassword !== this.state.password) {
             alert('两次密码输入不一致！')
         }
@@ -69,28 +77,26 @@ class ReduxRegister extends Component {
             })
         }).then((res) => res.json())
             .then((json) => {
-                if (json.code == 0) {
+                if (json.code === 0) {
                     alert("注册成功,请登录。")
                 }
-                if (json.code == 10003) {
+                if (json.code === 10003) {
                     alert("手机号已被注册。")
                 }
             })
     }
 
     render() {
-
         const {data, getLogin} = this.props;
-
         return (
             <div className="register-wrapper">
                 <div className="mask"></div>
                 <div className="register">
                     <div className="form-wrapper">
                         <div className="window-bar">
-                            <a href="#">
+                            <Link to="home">
                                 <img src={close} alt="点击关闭" width="15px"/>
-                            </a>
+                            </Link>
                         </div>
                         <form className="register-form">
                             <div className="form-item">

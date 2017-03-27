@@ -1,10 +1,6 @@
 import React,{Component} from "react";
 import "./index.less";
 class List extends Component {
-    static defaultProps = {
-        text: '',
-        checked: false
-    };
     render() {
         return (
             <div className="item-wrapper">

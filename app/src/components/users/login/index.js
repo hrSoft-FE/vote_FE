@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from "react";
-
+import {Link} from "react-router";
 import './index.less';
 import vote from '../../../images/vote.png';
 import qq_icon from '../../../images/login/qq.png';
@@ -7,10 +7,10 @@ import weibo_icon from '../../../images/login/weibo.png';
 import wechat_icon from '../../../images/login/wechat.png';
 import close from '../../../images/login/close.png';
 import API from '../../../api';
-import phone from '../../../images/login/phone.png';
-import phone_hover from '../../../images/login/phone_hover.png';
-import password from '../../../images/login/password.png';
-import password_hover from '../../../images/login/password_hover.png';
+// import phone from '../../../images/login/phone.png';
+// import phone_hover from '../../../images/login/phone_hover.png';
+// import password from '../../../images/login/password.png';
+// import password_hover from '../../../images/login/password_hover.png';
 
 class ReduxLogin extends Component {
 
@@ -29,6 +29,7 @@ class ReduxLogin extends Component {
 
     loginMobile(e) {
         const mobile = e.target.value;
+        e.preventDefault();
         this.setState({
             mobile: mobile
         });
@@ -53,14 +54,13 @@ class ReduxLogin extends Component {
             })
         }).then((res) => res.json())
             .then((json) => {
-                if (json.code == 0) {
+                if (json.code === 0) {
                     alert("登陆成功");
                 }
             })
     }
 
     render() {
-        //you can dispatch ation by using this.props.getDemo() or
         const {data, getLogin} = this.props;
 
         return (
@@ -68,9 +68,9 @@ class ReduxLogin extends Component {
                 <div className="mask"></div>
                 <div className="login">
                     <div className="window-bar">
-                        <a href="#">
+                        <Link to="home">
                             <img src={close} alt="点击关闭" width="15px"/>
-                        </a>
+                        </Link>
                     </div>
                     <div className="logo-wrapper">
                         <img src={vote} className="logo" alt=""/>
