@@ -18,7 +18,8 @@ class ReduxLogin extends Component {
         super(props);
         this.state = {
             mobile: '',
-            password: ''
+            password: '',
+            loginTargin:'login'
         };
 
         this.loginMobile = this.loginMobile.bind(this);
@@ -55,7 +56,10 @@ class ReduxLogin extends Component {
         }).then((res) => res.json())
             .then((json) => {
                 if (json.code === 0) {
-                    alert("登陆成功");
+
+                }
+                if(json.code === 10001){
+
                 }
             })
     }
@@ -98,7 +102,7 @@ class ReduxLogin extends Component {
                                    onBlur={this.loginMobile}/>
                             <input type="password" placeholder="密码" className="login-input"
                                    onBlur={this.loginPassword}/>
-                            <button className="login-button" onClick={this.login_fetch}>登录</button>
+                            <Link to={this.state.loginTargin}><button className="login-button" onClick={this.login_fetch}>登录</button></Link>
                         </form>
                     </div>
                 </div>
