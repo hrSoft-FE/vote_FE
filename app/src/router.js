@@ -10,6 +10,7 @@ import Login from './components/users/login';
 import Register from './components/users/register';
 import Poll from './components/content/poll';
 import Question from './components/content/question';
+import Statistics from './components/content/vote/details/statistics';
 
 const RouterApp = (
     <Router history={hashHistory}>
@@ -22,6 +23,7 @@ const RouterApp = (
             <Route path="vote" component={Vote} />
             <Route path="poll" component={Poll} />
             <Route path="question" component={Question} />
+            <Route path="statistics" component={Statistics} />
             <Route path="personalCenter" component={PersonalCenter} />
         </Route>
     </Router>

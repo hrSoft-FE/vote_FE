@@ -17,19 +17,6 @@ class VoteItem extends Component {
 
         return (
             <div className="vote-details">
-                <div className="vote-item-state" >
-                    <span>进行中</span>
-                </div>
-                <div className="vote-item-box">
-                    <img src={icon} className="vote-item-icon" alt="投票"/>
-                    <p>
-                        <button className="vote-item-operate">查看</button>
-                        <button className="vote-item-operate">编辑</button>
-                        <button onClick={} className="vote-item-operate">删除</button>
-                    </p>
-
-                </div>
-
 
             </div>
         );

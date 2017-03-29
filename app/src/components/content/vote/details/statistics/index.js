@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from "react";
 import {Progress} from 'antd';
 import './index.less';
 import './grid.less';
+import {Link} from "react-router";
 
 class Statistics extends Component {
 
@@ -24,10 +25,11 @@ class Statistics extends Component {
                         <Progress percent={70} strokeWidth={20}/><p>票数:12</p>
                     </div>
                 </div>
-                <button>返回</button>
+                <Link to="vote"><button>返回</button></Link>
             </div>
         )
     }
+
 }
 
 export default Statistics;

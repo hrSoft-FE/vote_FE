@@ -10,21 +10,20 @@ class Personal extends Component {
                 <form className="personal-form">
                     <div className="form-item">
                         <p  className="personal-label">用户名:</p>
-                        <p className="personal-detail">user</p>
+                        <input type="text" className="personal-detail" value="ueser" readOnly/>
                     </div>
                     <div className="form-item">
                         <p className="personal-label">手机号:</p>
-                        <p className="personal-detail">18332518016</p>
+                        <input type="text" className="personal-detail" value="18332518016" readOnly/>
                     </div>
                     <div className="form-item">
                         <p className="personal-label">密码:</p>
-                        <div className="personal-password" style={{display:'none'}}>
-                            <p className="personal-detail">**********</p>
-                            <button>修改密码</button>
-                        </div>
-                        <div>
-                            <input type="password" className="personal-password"/>
-                        </div>
+                        {/*<div className="personal-detail" >*/}
+                            {/*<input type="text" className="" value="********" />*/}
+                            {/*<button className="">修改密码</button>*/}
+                        {/*</div>                        */}
+                        <input type="text" className="personal-detail personal-password" value="********" readOnly />
+                        <button className="">修改密码</button>
                     </div>
                     <div className="form-item">
                         <button className="save-password">保存</button>

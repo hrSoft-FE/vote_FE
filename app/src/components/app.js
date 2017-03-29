@@ -16,7 +16,7 @@ class AppComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            login: false
+            login: true
         }
     }
 
@@ -30,7 +30,7 @@ class AppComponent extends Component {
             </div>)
         } else {
             nav = (<div className="nav">
-                <a></a>>
+                <a></a>
                 <Link to="login">登陆</Link>
                 <Link to="register">注册</Link>
             </div>)
