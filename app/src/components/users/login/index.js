@@ -7,6 +7,7 @@ import weibo_icon from '../../../images/login/weibo.png';
 import wechat_icon from '../../../images/login/wechat.png';
 import close from '../../../images/login/close.png';
 import API from '../../../api';
+import goto from '../../../utils/goto';
 // import phone from '../../../images/login/phone.png';
 // import phone_hover from '../../../images/login/phone_hover.png';
 // import password from '../../../images/login/password.png';
@@ -19,7 +20,8 @@ class ReduxLogin extends Component {
         this.state = {
             mobile: '',
             password: '',
-            loginTargin:'login'
+            loginTarget:'',
+            login: false
         };
 
         this.loginMobile = this.loginMobile.bind(this);
@@ -55,18 +57,21 @@ class ReduxLogin extends Component {
             })
         }).then((res) => res.json())
             .then((json) => {
+                console.log(json);
                 if (json.code === 0) {
-
+                    localStorage.setItem("user.token", json.data.token);
+                    this.props.changeLog(true);
                 }
                 if(json.code === 10001){
-
+                    alert("密码输入错误。")
+                }
+                if(json.code === 10002){
+                    alert("手机号输入错误。")
                 }
             })
     }
 
     render() {
-        const {data, getLogin} = this.props;
-
         return (
             <div className="login-wrapper">
                 <div className="mask"></div>
@@ -102,7 +107,7 @@ class ReduxLogin extends Component {
                                    onBlur={this.loginMobile}/>
                             <input type="password" placeholder="密码" className="login-input"
                                    onBlur={this.loginPassword}/>
-                            <Link to={this.state.loginTargin}><button className="login-button" onClick={this.login_fetch}>登录</button></Link>
+                            <Link to={this.state.login?'/':'login'}><button className="login-button" onClick={this.login_fetch}>登录</button></Link>
                         </form>
                     </div>
                 </div>

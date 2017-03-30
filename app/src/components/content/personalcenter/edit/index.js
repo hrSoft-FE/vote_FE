@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from "react";
 import {Link} from 'react-router';
+import API from '../../../../api';
+import getToken from '../../../../utils/getToken';
 import { Button, Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
 const CollectionCreateForm = Form.create()(
     (props) => {
-        const { visible, onCancel, onCreate, form } = props;
+        const { visible, onCancel, onSave, form } = props;
         const { getFieldDecorator } = form;
         return (
             <Modal
@@ -13,17 +15,17 @@ const CollectionCreateForm = Form.create()(
                 title="编辑个人信息"
                 okText="保存"
                 onCancel={onCancel}
-                onOk={onCreate}
+                onOk={onSave}
             >
                 <Form layout="vertical">
                     <FormItem label="昵称">
-                        {getFieldDecorator('昵称')(<Input type="text" />)}
+                        {getFieldDecorator('newName')(<Input type="text" />)}
                     </FormItem>
                     <FormItem label="旧密码">
-                        {getFieldDecorator('旧密码')(<Input type="text" />)}
+                        {getFieldDecorator('oldPassword')(<Input type="password" />)}
                     </FormItem>
                     <FormItem label="新密码">
-                        {getFieldDecorator('新密码')(<Input type="text" />)}
+                        {getFieldDecorator('newPassword')(<Input type="password" />)}
                     </FormItem>
                 </Form>
             </Modal>
@@ -37,25 +39,74 @@ class Edit extends Component {
     };
     showModal = () => {
         this.setState({ visible: true });
-    }
+    };
     handleCancel = () => {
         this.setState({ visible: false });
-    }
-    handleCreate = () => {
+    };
+    handleSave = () => {
         const form = this.form;
         form.validateFields((err, values) => {
             if (err) {
                 return;
             }
-
-            console.log('Received values of form: ', values);
+            if(values.newName){
+                console.log('Received values of form: ', values);
+                fetch(API.name, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token':'cb52937986854448b840fef6297ef809'
+                    },
+                    body: JSON.stringify({
+                        newName:values.newName
+                    })
+                }).then((res) => res.json())
+                    .then((json) => {
+                        console.log(json);
+                        if (json.code === 0) {
+                            console.log("name");
+                        }
+                        if(json.code === 10001){
+                            alert("密码输入错误。")
+                        }
+                        if(json.code === 10002){
+                            alert("手机号输入错误。")
+                        }
+                    });
+            }
+            if(values.newPassword&&values.oldPassword){
+                console.log('Received values of form: ', values);
+                fetch(API.password, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token':'cb52937986854448b840fef6297ef809'
+                    },
+                    body: JSON.stringify({
+                        oldPassword:values.oldPassword,
+                        newPassword:values.newPassword
+                    })
+                }).then((res) => res.json())
+                    .then((json) => {
+                        console.log(json);
+                        if (json.code === 0) {
+                            console.log("mima");
+                        }
+                        if(json.code === 10001){
+                            alert("密码输入错误。")
+                        }
+                        if(json.code === 10002){
+                            alert("手机号输入错误。")
+                        }
+                    });
+            }
             form.resetFields();
             this.setState({ visible: false });
         });
-    }
+    };
     saveFormRef = (form) => {
         this.form = form;
-    }
+    };
     render() {
         return (
             <div>
@@ -64,7 +115,7 @@ class Edit extends Component {
                     ref={this.saveFormRef}
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
-                    onCreate={this.handleCreate}
+                    onSave={this.handleSave}
                 />
             </div>
         );
