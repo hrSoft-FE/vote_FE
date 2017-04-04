@@ -60,7 +60,7 @@ class ReduxLogin extends Component {
                 console.log(json);
                 if (json.code === 0) {
                     localStorage.setItem("user.token", json.data.token);
-                    this.props.changeLog(true);
+                    // this.props.changeLog(true);
                 }
                 if(json.code === 10001){
                     alert("密码输入错误。")
@@ -107,7 +107,9 @@ class ReduxLogin extends Component {
                                    onBlur={this.loginMobile}/>
                             <input type="password" placeholder="密码" className="login-input"
                                    onBlur={this.loginPassword}/>
-                            <Link to={this.state.login?'/':'login'}><button className="login-button" onClick={this.login_fetch}>登录</button></Link>
+                            <Link to={this.state.login?'/':'login'}>
+                                <button className="login-button" onClick={this.login_fetch}>登录</button>
+                            </Link>
                         </form>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from "react";
 
-import './index.less'
 import {Link} from "react-router";
+import './index.less'
 import finish from '../../../../images/content/vote/finished.png';
 import going from '../../../../images/content/vote/ongoing.png';
 import icon from '../../../../images/content/vote/icon.png';
@@ -14,7 +14,6 @@ class VoteItem extends Component {
         super(props);
     };
 
-
     Confirm = () => {
         Modal.confirm({
             title: '删除投票后，本投票活动及相关数据都会消失，是否确认删除？',
@@ -24,7 +23,7 @@ class VoteItem extends Component {
                 console.log('ok');
             }
         });
-    }
+    };
 
     render() {
         //you can dispatch ation by using this.props.getDemo() or
@@ -41,10 +40,12 @@ class VoteItem extends Component {
                 <div className="vote-item-box">
                     <img src={iconSrc} className="vote-item-icon" alt="投票"/>
                     <p>
-                        <Link to="statistics">
+                        <Link to="poll">
                             <button className={voteBtn}>查看</button>
                         </Link>
-                        <button className={voteBtn}>编辑</button>
+                        <Link to="raise">
+                             <button className={voteBtn}>编辑</button>
+                        </Link>
                         <button className={voteBtn} onClick={this.Confirm}>删除</button>
                     </p>
                 </div>

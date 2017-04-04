@@ -9,6 +9,7 @@ import PersonalCenter from './components/content/personalcenter';
 import Login from './components/users/login';
 import Register from './components/users/register';
 import Poll from './components/content/poll';
+import Raise from './components/content/raise';
 import Question from './components/content/question';
 import Statistics from './components/content/vote/details/statistics';
 
@@ -24,6 +25,7 @@ const RouterApp = (
             <Route path="poll" component={Poll} />
             <Route path="question" component={Question} />
             <Route path="statistics" component={Statistics} />
+            <Route path="raise" component={Raise} />
             <Route path="personalCenter" component={PersonalCenter} />
         </Route>
     </Router>

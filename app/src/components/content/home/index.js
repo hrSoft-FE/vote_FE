@@ -5,14 +5,13 @@ import {Link} from 'react-router';
 class Home extends Component {
     render() {
         return (
-
-            <Link to="poll">
+            <Link to="raise">
                 <button className="vote-button"><span>发起投票</span></button>
             </Link>
-
         );
     }
 }
+
 
 Home.propTypes = {};
 Home.defaultProps = {};
