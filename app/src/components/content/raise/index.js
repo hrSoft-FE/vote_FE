@@ -22,6 +22,10 @@ class Raise extends Component {
                 {
                     value: '选项2',
                     id: 1,
+                },
+                {
+                    value: '选项x',
+                    id: 2,
                 }
             ],
             sectionLimit: 1,           // 单选or多选
@@ -44,7 +48,7 @@ class Raise extends Component {
         this.onCreate = this.onCreate.bind(this);
     }
 
-    // 提交事件
+    // 创建投票事件
     onCreate = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -74,24 +78,21 @@ class Raise extends Component {
                 // }
             });
 
-
-
         // 本地调试
-        // console.log(
-        //     JSON.stringify({
-        //         // voteId: this.props.voteId,
-        //         title: this.state.title,
-        //         description: this.state.description,
-        //         anonymous: this.state.anonymous,
-        //         participator_limit: this.state.participatorLimit,
-        //         visibility_limit: this.state.visibilityLimit,
-        //         password: this.state.password,
-        //         start_time: this.state.startTime,
-        //         end_time: this.state.endTime,
-        //         options: this.state.options,
-        //     })
-        // );
-
+        console.log(
+            JSON.stringify({
+                // voteId: this.props.voteId,
+                title: this.state.title,
+                description: this.state.description,
+                anonymous: this.state.anonymous,
+                participator_limit: this.state.participatorLimit,
+                visibility_limit: this.state.visibilityLimit,
+                password: this.state.password,
+                start_time: this.state.startTime,
+                end_time: this.state.endTime,
+                options: this.state.options,
+            })
+        );
 
     };
 
@@ -114,7 +115,8 @@ class Raise extends Component {
     onSwitchPassword = (checked) => {
         this.setState({
             password: checked ? '' : null
-        })
+        });
+
     };
     onSwitchAnony = (checked) => {
         this.setState({
@@ -123,7 +125,6 @@ class Raise extends Component {
     };
 
     // 实时将state值与表单值同步
-
     onChangeOption = (e) => {
 
         this.state.options[e.target.id].value = e.target.value;  //此处用e.target.id，在删除选项时可能会有问题
@@ -184,12 +185,20 @@ class Raise extends Component {
         });
     };
 
+    // 增加删除选项
+    onRemoveOption = (e) => {
+        let id = e.target.id;
+        console.log(id);
+        this.state.options.splice(id, 1);
+        this.forceUpdate();
+    };
+
     render() {
         let options = [];
         options = this.state.options.map((option) => {
             return (
                 <div className="options-item"  key={option.id}>
-                    <Icon type="minus-circle" id={option.id}/>
+                    <Icon type="minus-circle" onClick={this.onRemoveOption} id={option.id} />
                     <input defaultValue={option.value}
                            onChange={this.onChangeOption}
                            id={option.id}
@@ -259,6 +268,4 @@ class Raise extends Component {
         )
     }
 }
-
-
 export default Raise;

@@ -58,6 +58,7 @@ class ReduxLogin extends Component {
         }).then((res) => res.json())
             .then((json) => {
                 console.log(json);
+
                 if (json.code === 0) {
                     localStorage.setItem("user.token", json.data.token);
                     // this.props.changeLog(true);
