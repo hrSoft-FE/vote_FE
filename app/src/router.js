@@ -5,7 +5,7 @@ import AppComponent from "./components/app";
 // components React
 import Home from './components/content/home';
 import Vote from './components/content/vote';
-import PersonalCenter from './components/content/personalcenter';
+import PersonalContainer from './containers/personalcenter.container';
 import Login from './components/users/login';
 import Register from './components/users/register';
 import Poll from './components/content/poll';
@@ -26,7 +26,7 @@ const RouterApp = (
             <Route path="question" component={Question} />
             <Route path="statistics" component={Statistics} />
             <Route path="raise" component={Raise} />
-            <Route path="personalCenter" component={PersonalCenter} />
+            <Route path="personalCenter" component={PersonalContainer} />
         </Route>
     </Router>
 );

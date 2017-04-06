@@ -1,7 +1,5 @@
 
-export const GET_DEMO_SUCC= 'GET_DEMO_SUCC';
-export const GET_DEMO_ERR= 'GET_DEMO_ERR';
-export const SHOW= 'SHOW';
-export const HIDE = 'HIDE';
+export const SET_PERSONAL_CENTER= 'SET_PERSONAL_CENTER';
+export const CLEAR_PERSONAL_CENTER= 'CLEAR_PERSONAL_CENTER';
 
 

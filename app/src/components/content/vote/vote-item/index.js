@@ -40,7 +40,7 @@ class VoteItem extends Component {
                 <div className="vote-item-box">
                     <img src={iconSrc} className="vote-item-icon" alt="投票"/>
                     <p>
-                        <Link to="poll">
+                        <Link to="statistics">
                             <button className={voteBtn}>查看</button>
                         </Link>
                         <Link to="raise">

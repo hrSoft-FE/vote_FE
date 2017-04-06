@@ -1,1 +1,1 @@
-export {getDemo} from './demo.action'
+export {getUserMe} from './personalcenter.action';

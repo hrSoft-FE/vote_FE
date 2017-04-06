@@ -78,10 +78,10 @@ class ReduxRegister extends Component {
         }).then((res) => res.json())
             .then((json) => {
                 if (json.code === 0) {
-                    alert("注册成功,请登录。")
+                    alert("注册成功,请登录。");
                 }
                 if (json.code === 10003) {
-                    alert("手机号已被注册。")
+                    alert("手机号已被注册。");
                 }
             })
     }

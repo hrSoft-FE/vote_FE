@@ -2,58 +2,30 @@ import React, {Component, PropTypes} from "react";
 import "./index.less";
 import "./grid.less";
 import Edit from './edit';
-import API from '../../../api';
-import getToken from '../../../utils/getToken';
-import {Link} from 'react-router';
+import {getUserMe} from '../../../actions/personalcenter.action';
+
 class Personal extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            name:'',
-            mobile:'',
-            oldpassword:'',
-            newpassword:''
-        };
-        this._fetch=this._fetch.bind(this);
     }
 
-    _fetch(){
-        fetch(API.me, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'token':'cb52937986854448b840fef6297ef809'
-            }
-        }).then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-                if (json.code === 0) {
-                    console.log("hi");
-                    this.setState({
-                        name:json.data.name,
-                        mobile:json.data.mobile
-                    })
-                }else{
-                    alert("please login")
-                }
-            })
+    componentDidMount() {
+        this.props.action.getUserMe();
     }
 
-    componentDidMount(){
-        this._fetch();
-    }
     render() {
+        const {personal} = this.props;
         return (
             <div className="form-wrapper personal-wrapper">
                 <div className="mask"></div>
                 <form className="personal-form">
                     <div className="form-item">
-                        <p  className="personal-label">用户名:</p>
-                        <p className="personal-detail">{this.state.name}</p>
+                        <p className="personal-label">用户名:</p>
+                        <p className="personal-detail">{personal.name} </p>
                     </div>
                     <div className="form-item">
                         <p className="personal-label">手机号:</p>
-                        <p className="personal-detail">{this.state.mobile}</p>
+                        <p className="personal-detail">{personal.mobile} </p>
                     </div>
                     <div className="form-item">
                         <p className="personal-label">密码:</p>
@@ -68,10 +40,6 @@ class Personal extends Component {
         );
     }
 }
-
-Personal.propTypes = {};
-Personal.defaultProps = {};
-
 
 export default Personal;
 
