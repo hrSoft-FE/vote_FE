@@ -1,6 +1,26 @@
 .statistics-wrapper {
+  width: 100%;
+  background: #ffffff;
+  height: 100%;
+  position: relative;
+  .side {
+    width: 20%;
+    height: 100%;
+    position: absolute;
+    top: 10px;
+  }
+  .side-left {
+    left: 10px;
+  }
+  .side-right {
+    right: 10px;
+  }
+}
+
+.statistics {
   width: 50%;
-  margin: 50px auto;
+  padding-top: 50px;
+  margin: 0 auto;
   .title-bar {
     position: relative;
     h1 {
@@ -39,6 +59,7 @@
     font-size: 14px;
     border: 1px;
     outline: none;
+    color: #ffffff;
     background: #4990E2;
     cursor: pointer;
     border-radius: 5px;
