@@ -1,7 +1,4 @@
 import React, {Component, PropTypes} from "react";
-import {Link} from 'react-router';
-import API from '../../../../api';
-import getToken from '../../../../utils/getToken';
 import { Button, Modal, Form, Input } from 'antd';
 const FormItem = Form.Item;
 
@@ -46,59 +43,12 @@ class Edit extends Component {
     handleSave = () => {
         const form = this.form;
         form.validateFields((err, values) => {
-            if (err) {
-                return;
-            }
-            if(values.newName){
-                console.log('Received values of form: ', values);
-                fetch(API.name, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token':'cb52937986854448b840fef6297ef809'
-                    },
-                    body: JSON.stringify({
-                        newName:values.newName
-                    })
-                }).then((res) => res.json())
-                    .then((json) => {
-                        console.log(json);
-                        if (json.code === 0) {
-                            console.log("name");
-                        }
-                        if(json.code === 10001){
-                            alert("密码输入错误。")
-                        }
-                        if(json.code === 10002){
-                            alert("手机号输入错误。")
-                        }
-                    });
-            }
-            if(values.newPassword&&values.oldPassword){
-                console.log('Received values of form: ', values);
-                fetch(API.password, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token':'cb52937986854448b840fef6297ef809'
-                    },
-                    body: JSON.stringify({
-                        oldPassword:values.oldPassword,
-                        newPassword:values.newPassword
-                    })
-                }).then((res) => res.json())
-                    .then((json) => {
-                        console.log(json);
-                        if (json.code === 0) {
-                            console.log("mima");
-                        }
-                        if(json.code === 10001){
-                            alert("密码输入错误。")
-                        }
-                        if(json.code === 10002){
-                            alert("手机号输入错误。")
-                        }
-                    });
+            if (!err) {
+                const {newName,oldPassword,newPassword}=values;
+                const name={newName};
+                const password={oldPassword,newPassword};
+                const body={name,password};
+                this.props.changeInfo(body);
             }
             form.resetFields();
             this.setState({ visible: false });

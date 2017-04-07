@@ -2,7 +2,9 @@ import React, {Component, PropTypes} from "react";
 import "./index.less";
 import "./grid.less";
 import Edit from './edit';
-import {getUserMe} from '../../../actions/personalcenter.action';
+import {getUserMe} from '../../../actions';
+import {changeInfo} from '../../../actions';
+import {Link} from 'react-router';
 
 class Personal extends Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class Personal extends Component {
     componentDidMount() {
         this.props.action.getUserMe();
     }
+
 
     render() {
         const {personal} = this.props;
@@ -32,8 +35,8 @@ class Personal extends Component {
                         <p className="personal-detail">**********</p>
                     </div>
                     <div className="form-item">
-                        <Edit className="save-password"/>
-                        <button className="save-password">返回</button>
+                        <Edit className="save-password" changeInfo={this.props.action.changeInfo}/>
+                        <Link to="/"><button className="save-password">返回</button></Link>
                     </div>
                 </form>
             </div>
