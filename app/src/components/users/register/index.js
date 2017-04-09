@@ -1,93 +1,79 @@
 import React, {Component, PropTypes} from "react";
 import './index.less';
-import API from '../../../api';
 import close from '../../../images/login/close.png';
 import {Link} from 'react-router';
-import Regx from '../../../utils/regx';
+import Rege from '../../../utils/regx';
+
+//表单控件
+import {Form, Input, Row, Col, Checkbox, Button} from 'antd';
+const FormItem = Form.Item;
+
 class ReduxRegister extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            mobile: '',
-            name: '',
-            password: ''
-        };
-
-        this._register = this._register.bind(this);
-        this.checkMobile = this.checkMobile.bind(this);
-        this.checkPassword = this.checkPassword.bind(this);
-        this.checkSecondPassword = this.checkSecondPassword.bind(this);
-        this.registerName = this.registerName.bind(this);
-    }
-
-    registerName(e) {
-        const name = e.target.value;
-        e.preventDefault();
-        e.stopPropagation();
-        this.setState({
-            name: name
-        })
-    }
-
-    checkMobile(e) {
-        const mobile = e.target.value;
-        e.preventDefault();
-        e.stopPropagation();
-        if (!Regx.mobile.test(mobile)) {
-            alert('手机号应为11位，请重新输入。')
+            is_login: localStorage.getItem('user.is_login') ? localStorage.getItem('user.is_login') : false
         }
-        this.setState({
-            mobile: mobile
-        })
+    }
+
+    state = {
+        confirmDirty: false,
+    };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                const {mobile, name, password} = values;
+                const body = {mobile, name, password};
+                this.props.forRegister(body);
+            }
+        });
+    };
+    handleConfirmBlur = (e) => {
+        const value = e.target.value;
+        this.setState({confirmDirty: this.state.confirmDirty || !!value});
+    };
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && value !== form.getFieldValue('password')) {
+            callback('两次密码输入不一致!');
+        } else {
+            callback();
+        }
+    };
+    checkConfirm = (rule, value, callback) => {
+        const form = this.props.form;
+        if (value && this.state.confirmDirty) {
+            form.validateFields(['confirm'], {force: true});
+        }
+        callback();
     };
 
-    checkPassword(e) {
-        const password = e.target.value;
-        e.preventDefault();
-        e.stopPropagation();
-        if (!Regx.password.test(password)) {
-            alert('密码应为6-20位，请重新输入。')
-        }
-        this.setState({
-            password: password
-        })
-    }
-
-    checkSecondPassword(e) {
-        const secondpassword = e.target.value;
-        e.preventDefault();
-        e.stopPropagation();
-        if (secondpassword !== this.state.password) {
-            alert('两次密码输入不一致！')
-        }
-    }
-
-    _register() {
-
-        fetch(API.register, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                mobile: this.state.mobile,
-                name: this.state.name,
-                password: this.state.password
-            })
-        }).then((res) => res.json())
-            .then((json) => {
-                if (json.code === 0) {
-                    alert("注册成功,请登录。");
-                }
-                if (json.code === 10003) {
-                    alert("手机号已被注册。");
-                }
-            })
-    }
-
     render() {
-        const {data, getLogin} = this.props;
+        const {getFieldDecorator} = this.props.form;
+        const formItemLayout = {
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 8},
+            },
+            wrapperCol: {
+                xs: {span: 18},
+                sm: {span: 14},
+            },
+        };
+        const tailFormItemLayout = {
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                    offset: 0,
+                },
+                sm: {
+                    span: 14,
+                    offset: 6,
+                },
+            },
+        };
+
         return (
             <div className="register-wrapper">
                 <div className="mask"></div>
@@ -98,37 +84,104 @@ class ReduxRegister extends Component {
                                 <img src={close} alt="点击关闭" width="15px"/>
                             </Link>
                         </div>
-                        <form className="register-form">
-                            <div className="form-item">
-                                <label htmlFor="" className="register-label">登录名称:</label>
-                                <input className="register-input" type="text" onBlur={this.registerName}/>
-                            </div>
-                            <div className="form-item">
-                                <label htmlFor="" className="register-label">密码:</label>
-                                <input className="register-input" type="password" onBlur={this.checkPassword}/>
-                            </div>
-                            <div className="form-item">
-                                <label htmlFor="" className="register-label">确认密码:</label>
-                                <input className="register-input" type="password" onBlur={this.checkSecondPassword}/>
-                            </div>
-                            <div className="form-item">
-                                <label htmlFor="" className="register-label">手机号:</label>
-                                <input className="register-input" type="text" onBlur={this.checkMobile}/>
-                                <button className="register-button">发送验证码</button>
-                            </div>
-                            <div className="form-item">
-                                <label htmlFor="" className="register-label">验证码:</label>
-                                <input className="register-input" type="text"/>
-                            </div>
-                            <div className="form-item">
-                                <input type="checkbox" className="register-checkbox"/><span>我已经阅读接受voter<a
-                                href="#">服务条款</a></span>
-                            </div>
-                            <div className="form-item">
-                                <button className="create-user" onClick={this._register}>创建用户</button>
-                            </div>
-                        </form>
-                        <div className="login"><Link to="login">已有账号,立即登录</Link></div>
+                        <Form onSubmit={this.handleSubmit} className="register-form">
+                            <FormItem
+                                {...formItemLayout}
+                                label="用户名"
+                                hasFeedback
+                                className="from-item"
+                            >
+                                {getFieldDecorator('name', {
+                                    rules: [{
+                                        required: true, message: '请输入你的用户名!', whitespace: true
+                                    }],
+                                })(
+                                    <Input />
+                                )}
+                            </FormItem>
+                            <FormItem
+                                {...formItemLayout}
+                                label="密码"
+                                hasFeedback
+                                className="from-item"
+                            >
+                                {getFieldDecorator('password', {
+                                    rules: [{
+                                        required: true, message: '请输入密码!',
+                                    }, {
+                                        validator: this.checkConfirm,
+                                    }, {
+                                        pattern: Rege.password, message: '请输入6-20位有效密码！'
+                                    }],
+                                })(
+                                    <Input type="password"/>
+                                )}
+                            </FormItem>
+                            <FormItem
+                                {...formItemLayout}
+                                label="确认密码"
+                                hasFeedback
+                                className="from-item"
+                            >
+                                {getFieldDecorator('confirm', {
+                                    rules: [{
+                                        required: true, message: '请再次输入你的密码!',
+                                    }, {
+                                        validator: this.checkPassword,
+                                    }],
+                                })(
+                                    <Input type="password" onBlur={this.handleConfirmBlur}/>
+                                )}
+                            </FormItem>
+
+                            <FormItem
+                                {...formItemLayout}
+                                label="手机号"
+                                className="from-item"
+                            >
+                                {getFieldDecorator('mobile', {
+                                    rules: [{
+                                        required: true, message: '请输入手机号!'
+                                    }, {
+                                        pattern: Rege.mobile, message: '请输入11位有效手机号！'
+                                    }],
+                                })(
+                                    <Input />
+                                )}
+                            </FormItem>
+                            <FormItem
+                                {...formItemLayout}
+                                label="验证码"
+                                className="from-item"
+                            >
+                                <Row gutter={8}>
+                                    <Col span={12}>
+                                        {getFieldDecorator('captcha', {
+                                            rules: [{required: true, message: '请输入你收到的验证码!'}],
+                                        })(
+                                            <Input size="large"/>
+                                        )}
+                                    </Col>
+                                    <Col span={12}>
+                                        <Button size="large">发送验证码</Button>
+                                    </Col>
+                                </Row>
+                            </FormItem>
+                            <FormItem className="from-item">
+                                {getFieldDecorator('agreement', {
+                                    valuePropName: 'checked',
+                                    initialValue: true,
+                                })(
+                                    <Checkbox>我已阅读并接受<a href="">VOTER服务条款</a></Checkbox>
+                                )}
+                                <a className="login-form-forgot"><Link to="login">已有账号,立即登录</Link></a>
+                            </FormItem>
+                            <FormItem {...tailFormItemLayout} className="from-item">
+                                <Button type="primary" htmlType="submit" size="large"
+                                        className="button-register">注册</Button>
+                            </FormItem>
+                        </Form>
+
                     </div>
                 </div>
             </div>
@@ -138,6 +191,6 @@ class ReduxRegister extends Component {
 
 ReduxRegister.propTypes = {};
 ReduxRegister.defaultProps = {};
-
+ReduxRegister = Form.create()(ReduxRegister);
 
 export default ReduxRegister;

@@ -6,73 +6,37 @@ import qq_icon from '../../../images/login/qq.png';
 import weibo_icon from '../../../images/login/weibo.png';
 import wechat_icon from '../../../images/login/wechat.png';
 import close from '../../../images/login/close.png';
-import API from '../../../api';
-import goto from '../../../utils/goto';
-// import phone from '../../../images/login/phone.png';
-// import phone_hover from '../../../images/login/phone_hover.png';
-// import password from '../../../images/login/password.png';
-// import password_hover from '../../../images/login/password_hover.png';
+import {Form, Icon, Input, Button} from 'antd';
+const FormItem = Form.Item;
+
+function hasErrors(fieldsError) {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
 
 class ReduxLogin extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            mobile: '',
-            password: '',
-            loginTarget:'',
-            login: false
-        };
-
-        this.loginMobile = this.loginMobile.bind(this);
-        this.loginPassword = this.loginPassword.bind(this);
-        this.login_fetch = this.login_fetch.bind(this);
-
     }
 
-    loginMobile(e) {
-        const mobile = e.target.value;
+    componentDidMount() {
+        this.props.form.validateFields();
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({
-            mobile: mobile
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                this.props.forLogin(values);
+            }
         });
-    }
-
-    loginPassword(e) {
-        const password = e.target.value;
-        this.setState({
-            password: password
-        });
-    }
-
-    login_fetch() {
-        fetch(API.login, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                mobile: this.state.mobile,
-                password: this.state.password
-            })
-        }).then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-
-                if (json.code === 0) {
-                    localStorage.setItem("user.token", json.data.token);
-                    // this.props.changeLog(true);
-                }
-                if(json.code === 10001){
-                    alert("密码输入错误。")
-                }
-                if(json.code === 10002){
-                    alert("手机号输入错误。")
-                }
-            })
-    }
+    };
 
     render() {
+        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
+        const mobileError = isFieldTouched('mobile') && getFieldError('mobile');
+        const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
             <div className="login-wrapper">
                 <div className="mask"></div>
@@ -103,24 +67,44 @@ class ReduxLogin extends Component {
 
                     </div>
                     <div className="form-wrapper">
-                        <form action="">
-                            <input type="text" placeholder="手机号 " className="icon-mobile:before login-input"
-                                   onBlur={this.loginMobile}/>
-                            <input type="password" placeholder="密码" className="login-input"
-                                   onBlur={this.loginPassword}/>
-                            <Link to={this.state.login?'/':'login'}>
-                                <button className="login-button" onClick={this.login_fetch}>登录</button>
-                            </Link>
-                        </form>
+                        <Form onSubmit={this.handleSubmit} className="from-boxes">
+                            <FormItem
+                                validateStatus={mobileError ? 'error' : ''}
+                                help={mobileError || ''}
+                            >
+                                {getFieldDecorator('mobile', {
+                                    rules: [{required: true, message: '请输入手机号'}],
+                                })(
+                                    <Input prefix={<Icon type="mobile" style={{fontSize: 13}}/>} placeholder="Mobile"/>
+                                )}
+                            </FormItem>
+                            <FormItem
+                                validateStatus={passwordError ? 'error' : ''}
+                                help={passwordError || ''}
+                            >
+                                {getFieldDecorator('password', {
+                                    rules: [{required: true, message: '请输入密码'}],
+                                })(
+                                    <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                                           placeholder="Password"/>
+                                )}
+                            </FormItem>
+                            <FormItem>
+                                <Button
+                                    className="from-button"
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={hasErrors(getFieldsError())}
+                                >
+                                    登录
+                                </Button>
+                            </FormItem>
+                        </Form>
                     </div>
                 </div>
             </div>
         );
     }
 }
-
-ReduxLogin.propTypes = {};
-ReduxLogin.defaultProps = {};
-
-
+ReduxLogin = Form.create()(ReduxLogin);
 export default ReduxLogin;

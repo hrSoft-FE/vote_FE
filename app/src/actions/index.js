@@ -1,2 +1,3 @@
 export {getUserMe} from './personalcenter.action';
 export {changeInfo} from './personalcenter.action';
+export {forLogin, forRegister} from './user.action';

@@ -6,8 +6,8 @@ import AppComponent from "./components/app";
 import Home from './components/content/home';
 import Vote from './components/content/vote';
 import PersonalContainer from './containers/personalcenter.container';
-import Login from './components/users/login';
-import Register from './components/users/register';
+import LoginContainer from './containers/login.container';
+import RegisterContainer from './containers/register.container';
 import Poll from './components/content/poll';
 import Raise from './components/content/raise';
 import Question from './components/content/question';
@@ -18,15 +18,15 @@ const RouterApp = (
         <Route path="/" component={AppComponent}>
             {/*config initial router*/}
             <IndexRoute component={Home}/>
-            <Route path="login" component={Login}/>
-            <Route path="register" component={Register}/>
-            <Route path="home" component={Home} />
-            <Route path="vote" component={Vote} />
-            <Route path="poll" component={Poll} />
-            <Route path="question" component={Question} />
-            <Route path="statistics" component={Statistics} />
-            <Route path="raise" component={Raise} />
-            <Route path="personalCenter" component={PersonalContainer} />
+            <Route path="login" component={LoginContainer}/>
+            <Route path="register" component={RegisterContainer}/>
+            <Route path="home" component={Home}/>
+            <Route path="vote" component={Vote}/>
+            <Route path="poll" component={Poll}/>
+            <Route path="question" component={Question}/>
+            <Route path="statistics" component={Statistics}/>
+            <Route path="raise" component={Raise}/>
+            <Route path="personalCenter" component={PersonalContainer}/>
         </Route>
     </Router>
 );

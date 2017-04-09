@@ -16,15 +16,19 @@ class AppComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            login: true
+            is_login: false
         }
     }
 
-
+    componentDidMount() {
+        this.setState({
+            is_login: localStorage.getItem("user.is_login")
+        })
+    }
 
     render() {
         let nav = "";
-        if (this.state.login) {
+        if (this.state.is_login) {
             nav = (<div className="nav">
                 <Link to="home">首页</Link>
                 <Link to="vote">我的投票</Link>
@@ -32,8 +36,7 @@ class AppComponent extends Component {
             </div>)
         } else {
             nav = (<div className="nav">
-                <a></a>
-                <Link to="login">登陆</Link>
+                <Link to="login">登录</Link>
                 <Link to="register">注册</Link>
             </div>)
         }

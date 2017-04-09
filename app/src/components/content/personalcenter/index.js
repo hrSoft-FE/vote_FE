@@ -2,8 +2,6 @@ import React, {Component, PropTypes} from "react";
 import "./index.less";
 import "./grid.less";
 import Edit from './edit';
-import {getUserMe} from '../../../actions';
-import {changeInfo} from '../../../actions';
 import {Link} from 'react-router';
 
 class Personal extends Component {
@@ -36,7 +34,9 @@ class Personal extends Component {
                     </div>
                     <div className="form-item">
                         <Edit className="save-password" changeInfo={this.props.action.changeInfo}/>
-                        <Link to="/"><button className="save-password">返回</button></Link>
+                        <Link to="/">
+                            <button className="save-password">返回</button>
+                        </Link>
                     </div>
                 </form>
             </div>

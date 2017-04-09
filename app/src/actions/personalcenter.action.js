@@ -1,7 +1,6 @@
 import API from '../api';
-import CodeHelper from '../utils/codeHelper';
 import {SET_PERSONAL_CENTER, CLEAR_PERSONAL_CENTER} from './type';
-import urlEncoder from '../utils/urlEncoder';
+import Goto from '../utils/goto';
 /**
  * 设置用户信息
  * @param data
@@ -31,25 +30,32 @@ const clearPersonalCenter = () => {
 export function getUserMe() {
     return (dispatch) => {
         const token = localStorage.getItem('user.token');
-        fetch(API.me, {
-            method: 'GET',
-            headers: {
-                'token': token
-            },
-        }).then((res) => {
-            return res.json()
-        }).then((json) => {
-            if (json.code === 0) {
-                console.log(json.data.name);
-                dispatch(setPersonalCenter(json.data));
-            } else {
-                localStorage.clear('user.token');
-                dispatch(clearPersonalCenter());
-                window.alert('登陆信息过期,请重新登陆。');
-                window.history.go(0);
-            }
-        })
+        if (token) {
+            fetch(API.me, {
+                method: 'GET',
+                headers: {
+                    'token': token
+                },
+            }).then((res) => {
+                return res.json()
+            }).then((json) => {
+                if (json.code === 0) {
+                    console.log(json.data.name);
+                    dispatch(setPersonalCenter(json.data));
+                }
+                if (json.code === 20001) {
+                    localStorage.clear('user.token');
+                    localStorage.setItem("user.is_login", "false");
+                    window.alert('登陆信息过期,请重新登陆。');
+                }
+            })
+        } else {
+            localStorage.clear('user.token');
+            localStorage.setItem("user.is_login", "false");
+            alert("没有登陆请先登陆");
+        }
     }
+
 }
 
 export function changeInfo(body) {
@@ -63,12 +69,13 @@ export function changeInfo(body) {
                         'Content-Type': 'application/json',
                         'token': token
                     },
-                    body: urlEncoder(body.name)
+                    body: JSON.stringify(body.name)
                 }).then((res) => res.json())
                     .then((json) => {
                         if (json.code === 0) {
-                            console.log(json.data);
+                            console.log('用户名修改成功.');
                             dispatch(setPersonalCenter(json.data));
+                            Goto('/');
                         }
                     });
             }
@@ -80,17 +87,18 @@ export function changeInfo(body) {
                         'Content-Type': 'application/json',
                         'token': token
                     },
-                    body: urlEncoder(body.password)
+                    body: JSON.stringify(body.password)
                 }).then((res) => res.json())
                     .then((json) => {
                         if (json.code === 0) {
-                            console.log(json.data);
-                            alert('密码修改成功!');
+                            console.log('密码修改成功!');
+                            dispatch(setPersonalCenter(json.data));
+                            Goto('/');
                         }
                     });
             }
         } else {
-            alert('修改失败,登陆失效,请重新登陆.')
+            console.log('修改失败,登陆失效,请重新登陆.')
         }
     }
 }
