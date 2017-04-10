@@ -6,10 +6,12 @@ import {combineReducers} from 'redux';
 import demo from './demo.reducer';
 import personal from './personalcenter.reducer';
 import users from './user.reducer';
+import raise from './raise.reducer';
 const rootReducer = combineReducers({
     demo,
     personal,
-    users
+    users,
+    raise
 });
 
 export default rootReducer;

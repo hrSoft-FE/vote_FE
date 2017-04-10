@@ -80,7 +80,7 @@ class ReduxRegister extends Component {
                 <div className="register">
                     <div className="form-wrapper">
                         <div className="window-bar">
-                            <Link to="home">
+                            <Link to="/">
                                 <img src={close} alt="点击关闭" width="15px"/>
                             </Link>
                         </div>
@@ -172,13 +172,17 @@ class ReduxRegister extends Component {
                                     valuePropName: 'checked',
                                     initialValue: true,
                                 })(
-                                    <Checkbox>我已阅读并接受<a href="">VOTER服务条款</a></Checkbox>
+                                    <Checkbox>我已阅读并接受<a>VOTER服务条款</a></Checkbox>
                                 )}
                                 <a className="login-form-forgot"><Link to="login">已有账号,立即登录</Link></a>
                             </FormItem>
                             <FormItem {...tailFormItemLayout} className="from-item">
-                                <Button type="primary" htmlType="submit" size="large"
-                                        className="button-register">注册</Button>
+                                <Button type="primary"
+                                        htmlType="submit"
+                                        size="large"
+                                        className="button-register">
+                                    注册
+                                </Button>
                             </FormItem>
                         </Form>
 

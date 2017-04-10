@@ -42,7 +42,7 @@ class ReduxLogin extends Component {
                 <div className="mask"></div>
                 <div className="login">
                     <div className="window-bar">
-                        <Link to="home">
+                        <Link to="/">
                             <img src={close} alt="点击关闭" width="15px"/>
                         </Link>
                     </div>
@@ -64,7 +64,6 @@ class ReduxLogin extends Component {
                         <div className="line-through-line"></div>
                         <div className="line-through-text">使用手机号登录</div>
                         <div className="line-through-line"></div>
-
                     </div>
                     <div className="form-wrapper">
                         <Form onSubmit={this.handleSubmit} className="from-boxes">

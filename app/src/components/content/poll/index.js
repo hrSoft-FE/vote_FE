@@ -28,7 +28,7 @@ class Poll extends Component {
                             </label>
                             <label htmlFor="" className="poll-submit">
                                 <Link to="question">
-                                    <button className="">确定</button>
+                                    <button>确定</button>
                                 </Link>
                             </label>
                         </form>

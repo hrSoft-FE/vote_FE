@@ -13,7 +13,6 @@ class Personal extends Component {
         this.props.action.getUserMe();
     }
 
-
     render() {
         const {personal} = this.props;
         return (

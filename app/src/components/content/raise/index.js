@@ -1,271 +1,199 @@
 import React, {Component, PropTypes} from "react";
-import API from '../../../api';
 import "./index.less"
-
-import { Radio, Switch} from 'antd';
-import { Icon } from 'antd';
-
-
+import {Form, Input, Icon, Button, InputNumber, Switch, Radio} from 'antd';
+import {DatePicker} from 'antd';
+import moment from 'moment';
+const FormItem = Form.Item;
+const RangePicker = DatePicker.RangePicker;
+const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+
+
+let uuid = 0;
+
+function onChange(dates, dateStrings) {
+    console.log('From: ', dates[0], ', to: ', dates[1]);
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+}
 
 class Raise extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '投票名称',
-            description: '',
-            options: [                 // 选项内容及编号
-                {
-                    value: '选项1',
-                    id: 0,
-                },
-                {
-                    value: '选项2',
-                    id: 1,
-                },
-                {
-                    value: '选项x',
-                    id: 2,
-                }
-            ],
-            sectionLimit: 1,           // 单选or多选
-            startTime: 1490427181,     // 开始时间、结束时间
-            endTime: 1490859181,
-            participatorLimit: 50,     // 人数限制
-            anonymous: false,          // 匿名
-            password: null,            // 密码
-            visibilityLimit: true,     // 是否私有（此处不需要）
+            participatorLimitDisable: true,
+            passwordDisable: true
         };
-        this.onSwitchRadio = this.onSwitchRadio.bind(this);
-        this.onSwitchDate = this.onSwitchDate.bind(this);
-        this.onSwitchParti = this.onSwitchParti.bind(this);
-        this.onSwitchPassword = this.onSwitchPassword.bind(this);
-        this.onSwitchAnony = this.onSwitchAnony.bind(this);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
-        this.onChangeOption = this.onChangeOption.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onChangeParti = this.onChangeParti.bind(this);
-        this.onCreate = this.onCreate.bind(this);
+        this.isShowParticipator = this.isShowParticipator.bind(this);
+        this.isShowPassword = this.isShowPassword.bind(this);
     }
 
-    // 创建投票事件
-    onCreate = (e) => {
+    remove = (k) => {
+        const {form} = this.props;
+        // can use data-binding to get
+        const keys = form.getFieldValue('keys');
+        // We need at least one passenger
+        if (keys.length === 1) {
+            return;
+        }
+
+        // can use data-binding to set
+        form.setFieldsValue({
+            keys: keys.filter(key => key !== k),
+        });
+    };
+
+    add = () => {
+        uuid++;
+        const {form} = this.props;
+        // can use data-binding to get
+        const keys = form.getFieldValue('keys');
+        const nextKeys = keys.concat(uuid);
+        // can use data-binding to set
+        // important! notify form to detect changes
+        form.setFieldsValue({
+            keys: nextKeys,
+        });
+    };
+
+    isShowParticipator() {
+        this.setState({
+            participatorLimitDisable: !this.state.participatorLimitDisable
+        })
+    }
+
+    isShowPassword() {
+        this.setState({
+            passwordDisable: !this.state.passwordDisable
+        })
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        fetch(API.create, {
-            method: 'POST',
-            headers: {
-                'token': '7617d10b37d64f8b9da23a0cc67fe3b7',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: this.state.title,
-                description: this.state.description,
-                anonymous: this.state.anonymous,
-                participatorLimit: this.state.participatorLimit,
-                visibilityLimit: this.state.visibilityLimit,
-                password: this.state.password,
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
-            })
-        }).then((cofg) => cofg.json())
-            .then((json) => {
-                if (json.code === 0) {
-                    console.log(json.data)
-                }
-                // if (json.code === 10003) {
-                //     console.log('')
-                // }
-            });
-
-        // 本地调试
-        console.log(
-            JSON.stringify({
-                // voteId: this.props.voteId,
-                title: this.state.title,
-                description: this.state.description,
-                anonymous: this.state.anonymous,
-                participator_limit: this.state.participatorLimit,
-                visibility_limit: this.state.visibilityLimit,
-                password: this.state.password,
-                start_time: this.state.startTime,
-                end_time: this.state.endTime,
-                options: this.state.options,
-            })
-        );
-
-    };
-
-    // 单选框：单选or复选
-    onSwitchRadio = (e) => {
-        this.setState({
-            sectionLimit: e.target.value,
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values);
+                const {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime} = values;
+                const body = {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime};
+                this.props.fetchVote(body);
+            }
         });
-    };
-
-    // 开关按钮可清除表单数据，并通过state控制表单的开关
-    onSwitchDate = (checked) => {
-
-    };
-    onSwitchParti = (checked) => {
-        this.setState({
-            participatorLimit: checked ? 0 : null
-        })
-    };
-    onSwitchPassword = (checked) => {
-        this.setState({
-            password: checked ? '' : null
-        });
-
-    };
-    onSwitchAnony = (checked) => {
-        this.setState({
-            anonymous: !!checked
-        })
-    };
-
-    // 实时将state值与表单值同步
-    onChangeOption = (e) => {
-
-        this.state.options[e.target.id].value = e.target.value;  //此处用e.target.id，在删除选项时可能会有问题
-        this.forceUpdate();
-
-       /**
-        // Q：直接调用子组件状态是被禁止的 （setState只能应用于第一层级）
-        // this.state = {
-        //     options: [                 // 选项内容及编号
-        //         {
-        //             value: '选项1',
-        //             id: '1',
-        //         },
-        //         {
-        //             value: '选项2',
-        //             id: '2',
-        //         }
-        //     ]
-        // }
-        //
-        // this.setState({
-        //     options[0].value: '...';
-        // })
-        //
-        // 试图用数组方法越过去自然也是太好用的
-        // this.state.options.map((option) => {
-        //     console.log(e.target.id);
-        //     if (option.id == e.target.id) {
-        //         setState({
-        //
-        //         });
-        //         console.log(option.value);
-        //     }
-        // });
-        //
-        // 原因在于 => React的setState方法不提倡组件逻辑过于复杂（而不是React忘记设计state的嵌套调用）
-        //            如果组件冗杂在一起，会影响React局部渲染的渲染效率
-        //
-        // 解决思路有两种：
-        // (1)强行state并强制渲染
-        // (2)拆子组件
-        //
-        **/
-    };
-    onChangeTitle = (e) => {
-        this.setState({
-            title: e.target.value
-        });
-    };
-    onChangeParti = (e) => {
-        this.setState({
-            participatorLimit: e.target.value
-        });
-    };
-    onChangePassword = (e) => {
-        this.setState({
-            password: e.target.value - 0
-        });
-    };
-
-    // 增加删除选项
-    onRemoveOption = (e) => {
-        let id = e.target.id;
-        console.log(id);
-        this.state.options.splice(id, 1);
-        this.forceUpdate();
     };
 
     render() {
-        let options = [];
-        options = this.state.options.map((option) => {
+
+        const {getFieldDecorator, getFieldValue} = this.props.form;
+
+        const formItemLayout = {
+            wrapperCol: {
+                xs: {span: 24, offset: 0},
+                sm: {span: 20, offset: 4},
+            },
+        };
+        getFieldDecorator('keys', {initialValue: []});
+        const keys = getFieldValue('keys');
+        const formItems = keys.map((k) => {
             return (
-                <div className="options-item"  key={option.id}>
-                    <Icon type="minus-circle" onClick={this.onRemoveOption} id={option.id} />
-                    <input defaultValue={option.value}
-                           onChange={this.onChangeOption}
-                           id={option.id}
+                <FormItem
+                    {...formItemLayout}
+                    required={false}
+                    key={k}
+                >
+                    <Icon
+                        className="dynamic-delete-button"
+                        type="minus-circle-o"
+                        disabled={keys.length === 1}
+                        onClick={() => this.remove(k)}
                     />
-                </div>
-            )}
-        );
+                    {getFieldDecorator(`names-${k}`, {
+                        validateTrigger: ['onChange', 'onBlur'],
+                        rules: [{
+                            required: true,
+                            whitespace: true,
+                            message: "请输入选项内容",
+                        }],
+                    })(
+                        <Input placeholder="选项" style={{width: '77%', marginLeft: 5}}/>
+                    )}
+                </FormItem>
+            );
+        });
         return (
             <div className="raise-wrapper">
                 <div className="mask"></div>
                 <div className="raise">
-                    <div className="header">
-                        <input type="text"
-                               defaultValue={this.state.title}
-                               onChange={this.onChangeTitle}/>
-                    </div>
-                    <div className="options">
-                        {options}
-                        <div className="options-bar">
-                            <span>
-                                <Icon type="plus-circle" />
-                                <span className="options-bar-add">添加选项</span>
-                            </span>
-                            <div className="options-bar-selection">
-                                <RadioGroup onChange={this.onSwitchRadio} value={this.state.sectionLimit}>
-                                    <Radio value={1}>单选</Radio>
-                                    <Radio value={2}>多选</Radio>
+                    <Form onSubmit={this.handleSubmit} className="raise-form">
+                        <FormItem
+                            {...formItemLayout}
+                            style={{marginLeft: 240, marginTop: 20}}
+                        >
+                            {getFieldDecorator('radio-button')(
+                                <RadioGroup>
+                                    <RadioButton value="1">单选</RadioButton>
+                                    <RadioButton value="2">多选</RadioButton>
                                 </RadioGroup>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="option-more">
-                        <div className="option-more-item">
-                            <span className="option-more-item-span">截止日期</span>
-                            <input type="text"
-                                   defaultValue={this.state.startTime}/>
-                            <Switch defaultChecked={true}
-                                    onChange={this.onSwitchDate}/>
-                        </div>
-                        <div className="option-more-item">
-                            <span className="option-more-item-span">人数限制</span>
-                            <input type="text"
-                                   defaultValue={this.state.participatorLimit}
-                                   onChange={this.onChangeParti}
-                                   disabled={this.state.participatorLimit==null}/>
-                            <Switch defaultChecked={true}
-                                    onChange={this.onSwitchParti}/>
-                        </div>
-                        <div className="option-more-item">
-                            <span className="option-more-item-span">密码</span>
-                            <input type="text"
-                                   defaultValue={this.state.password}
-                                   onChange={this.onChangePassword}
-                                   disabled={this.state.password==null}/>
-                            <Switch defaultChecked={false}
-                                    onChange={this.onSwitchPassword}/>
-                        </div>
-                        <div className="option-more-item">
-                            <span className="option-more-item-span">是否匿名</span>
-                            <Switch defaultChecked={false}
-                                    onChange={this.onSwitchAnony}/>
-                        </div>
-                    </div>
-                    <button className="push" onClick={this.onCreate}>发起投票</button>
+                            )}
+                        </FormItem>
+                        <FormItem style={{marginLeft: 78}}>
+                            {getFieldDecorator('title', {
+                                rules: [{required: true, message: '请输入投票题目'}],
+                            })(
+                                <Input style={{width: '80%'}} placeholder="投票名称"/>
+                            )}
+                        </FormItem>
+                        {formItems}
+                        <FormItem {...formItemLayout}>
+                            <Button type="dashed" onClick={this.add} style={{width: '85%'}}>
+                                <Icon type="plus"/> 添加选项
+                            </Button>
+                        </FormItem>
+                        <RangePicker
+                            ranges={{Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')]}}
+                            showTime format="YYYY/MM/DD HH:mm:ss" onChange={onChange}
+                            style={{width: '67%', marginLeft: 78, marginBottom: 25}}
+                        />
+                        <FormItem
+                            {...formItemLayout}
+                        >
+                            {getFieldDecorator('participatorLimit')(
+                                <InputNumber placeholder="人数限制" style={{width: '70%'}}
+                                             disabled={this.state.participatorLimitDisable}/>
+                            )}
+                            {getFieldDecorator('switch-participator', {valuePropName: 'checked'})(
+                                <Switch onChange={this.isShowParticipator}/>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                        >
+                            {getFieldDecorator('password')(
+                                <Input placeholder="投票密码" type="password" style={{width: '70%', marginRight: 8}}
+                                       disabled={this.state.passwordDisable}/>
+                            )}
+                            {getFieldDecorator('switch-password', {valuePropName: 'checked'})(
+                                <Switch onChange={this.isShowPassword}/>
+                            )}
+                        </FormItem>
+
+                        <FormItem
+                            {...formItemLayout}
+                            style={{marginLeft: 250}}
+                        >
+                            <span>是否匿名</span>
+                            {getFieldDecorator('anonymous', {valuePropName: 'checked'})(
+                                <Switch style={{marginLeft: 11}}/>
+                            )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            style={{marginLeft: 130}}
+                        >
+                            <Button type="primary" htmlType="submit" size="large">发起投票</Button>
+                        </FormItem>
+                    </Form>
                 </div>
             </div>
         )
     }
 }
+Raise = Form.create()(Raise);
 export default Raise;

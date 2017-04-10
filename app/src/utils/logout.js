@@ -1,6 +1,6 @@
 'use strict';
 
-const targetPath = '/home/login';
+const targetPath = '/login';
 import {browserHistory} from 'react-router';
 export default ()=> {
     localStorage.clear();

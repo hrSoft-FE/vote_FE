@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from "react";
 import "./index.less";
 import "./grid.less";
 import close from '../../../images/login/close.png';
-import {Link} from 'react-router';
 class Forgetpw extends Component {
     render() {
         return (

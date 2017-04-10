@@ -52,10 +52,9 @@ export function getUserMe() {
         } else {
             localStorage.clear('user.token');
             localStorage.setItem("user.is_login", "false");
-            alert("没有登陆请先登陆");
+            console.log("没有登陆请先登陆");
         }
     }
-
 }
 
 export function changeInfo(body) {

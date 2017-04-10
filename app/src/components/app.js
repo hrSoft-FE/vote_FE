@@ -9,8 +9,7 @@ require('es6-promise');
 
 import logo from '../images/vote.png';
 import Banner from './plugin/banner';
-import Login from './users/login';
-import Register from './users/register';
+import Home from './content/home';
 import './app.less'
 class AppComponent extends Component {
     constructor(props) {
@@ -30,9 +29,10 @@ class AppComponent extends Component {
         let nav = "";
         if (this.state.is_login) {
             nav = (<div className="nav">
-                <Link to="home">首页</Link>
+                <Link to="/">首页</Link>
                 <Link to="vote">我的投票</Link>
                 <Link to="personalCenter">个人中心</Link>
+                <Home/>
             </div>)
         } else {
             nav = (<div className="nav">
@@ -55,7 +55,6 @@ class AppComponent extends Component {
                 <div className="banner-wrapper">
                     <Banner/>
                 </div>
-
             </div>
         )
     }

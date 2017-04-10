@@ -28,9 +28,6 @@ class Banner extends Component {
                         <div className="swiper-slide">
                             <img src={banner2}/>
                         </div>
-                        <div className="swiper-slide">
-                            <img src={banner3}/>
-                        </div>
                     </div>
                     <div className="swiper-pagination"></div>
                     <div className="swiper-button-prev"></div>
