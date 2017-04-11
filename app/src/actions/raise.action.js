@@ -20,7 +20,6 @@ export const initiateVote = (data) => {
  * @param body
  */
 export function fetchVote(body) {
-    console.log("未登陆请先登陆");
     return (dispatch) => {
         const token = localStorage.getItem('user.token');
         if (token) {
@@ -35,10 +34,10 @@ export function fetchVote(body) {
                 return res.json()
             }).then((json) => {
                 if (json.code === 0) {
-                    console.log(json.data.name);
+                    console.log('hi');
                     dispatch(initiateVote(json.data));
                 } else {
-                    console.log('投票已存在')
+                    console.log(json);
                 }
             })
         } else {

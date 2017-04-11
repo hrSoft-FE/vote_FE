@@ -71,10 +71,10 @@ class Raise extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime} = values;
                 const body = {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime};
                 this.props.fetchVote(body);
+                console.log('Received values of form: ', body);
             }
         });
     };
@@ -155,13 +155,18 @@ class Raise extends Component {
                             {...formItemLayout}
                         >
                             {getFieldDecorator('participatorLimit')(
-                                <InputNumber placeholder="人数限制" style={{width: '70%'}}
+                                <InputNumber placeholder="人数限制" style={{width: '60%'}}
                                              disabled={this.state.participatorLimitDisable}/>
                             )}
-                            {getFieldDecorator('switch-participator', {valuePropName: 'checked'})(
-                                <Switch onChange={this.isShowParticipator}/>
-                            )}
+                            <FormItem
+                                {...formItemLayout}
+                            >
+                                {getFieldDecorator('switch-participator', {valuePropName: 'checked'})(
+                                    <Switch onChange={this.isShowParticipator}/>
+                                )}
+                            </FormItem>
                         </FormItem>
+
                         <FormItem
                             {...formItemLayout}
                         >
@@ -169,11 +174,14 @@ class Raise extends Component {
                                 <Input placeholder="投票密码" type="password" style={{width: '70%', marginRight: 8}}
                                        disabled={this.state.passwordDisable}/>
                             )}
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                        >
                             {getFieldDecorator('switch-password', {valuePropName: 'checked'})(
                                 <Switch onChange={this.isShowPassword}/>
                             )}
                         </FormItem>
-
                         <FormItem
                             {...formItemLayout}
                             style={{marginLeft: 250}}
