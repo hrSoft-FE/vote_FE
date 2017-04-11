@@ -2,7 +2,7 @@
  * Created by out_xu on 16/12/20.
  */
 import {message} from "antd";
-//TODO 添加状态码 http://marklux.cn/blog/29
+
 const codeMap = {
     "500": "内部错误",
     "1001": "e-mail已被注册",

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import "./index.less"
-import {Form, Input, Icon, Button, InputNumber, Switch, Radio} from 'antd';
+import {Form, Input, Icon, Button, InputNumber, Switch, Radio,Col} from 'antd';
 import {DatePicker} from 'antd';
 import moment from 'moment';
 const FormItem = Form.Item;
@@ -21,10 +21,14 @@ class Raise extends Component {
         super(props);
         this.state = {
             participatorLimitDisable: true,
-            passwordDisable: true
+            passwordDisable: true,
+            anonymous: false,
+            visibility: false
         };
         this.isShowParticipator = this.isShowParticipator.bind(this);
         this.isShowPassword = this.isShowPassword.bind(this);
+        this.isAnonymous=this.isAnonymous.bind(this);
+        this.isVisibility=this.isVisibility.bind(this);
     }
 
     remove = (k) => {
@@ -67,14 +71,28 @@ class Raise extends Component {
         })
     }
 
+    isAnonymous(){
+        this.setState({
+            anonymous: !this.state.anonymous
+        })
+    }
+
+    isVisibility(){
+        this.setState({
+            visibility: !this.state.visibility
+        })
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime} = values;
-                const body = {title, anonymous, participatorLimit, visibilityLimit, password, startTime, endTime};
+                const {title, participatorLimit, password, startTime, endTime, time} = values,
+                      anonymous=this.state.anonymous,
+                      visibilityLimit=this.state.visibility;
+                const body = {title, participatorLimit, visibilityLimit, password, startTime, endTime,anonymous};
                 this.props.fetchVote(body);
-                console.log('Received values of form: ', body);
+                console.log('Received values of form: ', time);
             }
         });
     };
@@ -146,51 +164,49 @@ class Raise extends Component {
                                 <Icon type="plus"/> 添加选项
                             </Button>
                         </FormItem>
+                        {getFieldDecorator('time')(
                         <RangePicker
                             ranges={{Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')]}}
                             showTime format="YYYY/MM/DD HH:mm:ss" onChange={onChange}
                             style={{width: '67%', marginLeft: 78, marginBottom: 25}}
                         />
+                        )}
                         <FormItem
                             {...formItemLayout}
                         >
-                            {getFieldDecorator('participatorLimit')(
-                                <InputNumber placeholder="人数限制" style={{width: '60%'}}
-                                             disabled={this.state.participatorLimitDisable}/>
-                            )}
-                            <FormItem
-                                {...formItemLayout}
-                            >
+                            <FormItem style={{marginTop: 10}}>
+                                {getFieldDecorator('participatorLimit')(
+                                    <InputNumber placeholder="人数限制" style={{width: '70%'}}
+                                                 disabled={this.state.participatorLimitDisable}/>
+                                )}
+                            </FormItem>
+                            <FormItem style={{marginLeft: 268}}>
                                 {getFieldDecorator('switch-participator', {valuePropName: 'checked'})(
-                                    <Switch onChange={this.isShowParticipator}/>
+                                    <Switch onChange={this.isShowParticipator} className="switch"/>
                                 )}
                             </FormItem>
                         </FormItem>
-
                         <FormItem
                             {...formItemLayout}
                         >
-                            {getFieldDecorator('password')(
-                                <Input placeholder="投票密码" type="password" style={{width: '70%', marginRight: 8}}
-                                       disabled={this.state.passwordDisable}/>
-                            )}
+                            <FormItem style={{marginTop: 10}}>
+                                {getFieldDecorator('password')(
+                                    <Input placeholder="投票密码" type="password" style={{width: '70%', marginRight: 8}}
+                                           disabled={this.state.passwordDisable}/>
+                                )}
+                            </FormItem>
+                            <FormItem style={{marginLeft: 268}}>
+                                {getFieldDecorator('switch-password', {valuePropName: 'checked'})(
+                                    <Switch onChange={this.isShowPassword} className="switch"/>
+                                )}
+                            </FormItem>
                         </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                        >
-                            {getFieldDecorator('switch-password', {valuePropName: 'checked'})(
-                                <Switch onChange={this.isShowPassword}/>
-                            )}
-                        </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                            style={{marginLeft: 250}}
-                        >
+                            <FormItem {...formItemLayout}>
                             <span>是否匿名</span>
-                            {getFieldDecorator('anonymous', {valuePropName: 'checked'})(
-                                <Switch style={{marginLeft: 11}}/>
-                            )}
-                        </FormItem>
+                            <Switch style={{marginLeft: 11,marginRight:105}} onChange={this.isAnonymous}/>
+                            <span>是否私有</span>
+                            <Switch style={{marginLeft: 11}} onChange={this.isVisibility}/>
+                            </FormItem>
                         <FormItem
                             {...formItemLayout}
                             style={{marginLeft: 130}}
