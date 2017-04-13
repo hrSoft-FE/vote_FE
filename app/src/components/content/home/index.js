@@ -6,7 +6,11 @@ class Home extends Component {
     render() {
         return (
             <Link to="raise">
-                <button className="vote-button"><span>发起投票</span></button>
+                <div className="vote-wrapper">
+                    <button className="vote-button">
+                        <span>发起投票</span>
+                    </button>
+                </div>
             </Link>
         );
     }

@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from "react";
-import logo from "../../../images/vote.png"
 import "./index.less"
 // import {Link} from "react-router";
 import QuestionList from './questionList';
@@ -9,12 +8,17 @@ class Question extends Component {
         this.handleItemChange = this.handleItemChange.bind(this);
     }
 
+    componentDidMount() {
+        const id = localStorage.getItem('vote.id') || 0;
+        this.props.getVoteInfo(id);
+    }
+
     handleItemChange(item) {
 
     }
 
     render() {
-        const {data, getQuestion} = this.props;
+        const {poll} = this.props;
         let title = 'test title';
         let list = [
             {
