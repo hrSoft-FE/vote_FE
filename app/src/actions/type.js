@@ -6,4 +6,7 @@ export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
 
 export const INITIATE_VOTE = 'INITIATE_VOTE';
 
+export const GET_VOTE = 'GET_VOTE';
+
+
 

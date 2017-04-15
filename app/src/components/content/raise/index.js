@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from "react";
 import "./index.less"
-import {Form, Input, Icon, Button, InputNumber, Switch, Radio,Col} from 'antd';
+import {Form, Input, Icon, Button, InputNumber, Switch, Radio} from 'antd';
 import {DatePicker} from 'antd';
 import moment from 'moment';
 const FormItem = Form.Item;
@@ -27,8 +27,8 @@ class Raise extends Component {
         };
         this.isShowParticipator = this.isShowParticipator.bind(this);
         this.isShowPassword = this.isShowPassword.bind(this);
-        this.isAnonymous=this.isAnonymous.bind(this);
-        this.isVisibility=this.isVisibility.bind(this);
+        this.isAnonymous = this.isAnonymous.bind(this);
+        this.isVisibility = this.isVisibility.bind(this);
     }
 
     remove = (k) => {
@@ -71,13 +71,13 @@ class Raise extends Component {
         })
     }
 
-    isAnonymous(){
+    isAnonymous() {
         this.setState({
             anonymous: !this.state.anonymous
         })
     }
 
-    isVisibility(){
+    isVisibility() {
         this.setState({
             visibility: !this.state.visibility
         })
@@ -87,12 +87,34 @@ class Raise extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const {title, participatorLimit, password, startTime, endTime, time} = values,
-                      anonymous=this.state.anonymous,
-                      visibilityLimit=this.state.visibility;
-                const body = {title, participatorLimit, visibilityLimit, password, startTime, endTime,anonymous};
+                console.log(values);
+                let options = [];
+                Object.keys(values).forEach(key => {
+                    if (key.match(/^name?/)) {
+                        let item = {'value': values[key]};
+                        options.push(item)
+                    }
+                });
+                console.log(options);
+                const {title, participator_limit, password, type, time} = values;
+                const anonymous = this.state.anonymous;
+                const visibility_limit = this.state.visibility;
+                const start_time = Date.parse(time[0]);
+                const end_time = Date.parse(time[1]);
+                const problem = {options, type};
+                const body = {
+                    title,
+                    participator_limit,
+                    visibility_limit,
+                    password,
+                    start_time,
+                    end_time,
+                    anonymous,
+                    problem,
+                    time
+                };
                 this.props.fetchVote(body);
-                console.log('Received values of form: ', time);
+                console.log('body: ', body);
             }
         });
     };
@@ -144,7 +166,7 @@ class Raise extends Component {
                             {...formItemLayout}
                             style={{marginLeft: 240, marginTop: 20}}
                         >
-                            {getFieldDecorator('radio-button')(
+                            {getFieldDecorator('type')(
                                 <RadioGroup>
                                     <RadioButton value="1">单选</RadioButton>
                                     <RadioButton value="2">多选</RadioButton>
@@ -165,11 +187,14 @@ class Raise extends Component {
                             </Button>
                         </FormItem>
                         {getFieldDecorator('time')(
-                        <RangePicker
-                            ranges={{Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')]}}
-                            showTime format="YYYY/MM/DD HH:mm:ss" onChange={onChange}
-                            style={{width: '67%', marginLeft: 78, marginBottom: 25}}
-                        />
+                            <RangePicker
+                                ranges={{
+                                    Today: [moment(), moment()],
+                                    'This Month': [moment(), moment().endOf('month')]
+                                }}
+                                showTime format="YYYY-MM-DD HH:mm:ss" onChange={onChange}
+                                style={{width: '67%', marginLeft: 78, marginBottom: 25}}
+                            />
                         )}
                         <FormItem
                             {...formItemLayout}
@@ -201,12 +226,12 @@ class Raise extends Component {
                                 )}
                             </FormItem>
                         </FormItem>
-                            <FormItem {...formItemLayout}>
+                        <FormItem {...formItemLayout}>
                             <span>是否匿名</span>
-                            <Switch style={{marginLeft: 11,marginRight:105}} onChange={this.isAnonymous}/>
+                            <Switch style={{marginLeft: 11, marginRight: 105}} onChange={this.isAnonymous}/>
                             <span>是否私有</span>
                             <Switch style={{marginLeft: 11}} onChange={this.isVisibility}/>
-                            </FormItem>
+                        </FormItem>
                         <FormItem
                             {...formItemLayout}
                             style={{marginLeft: 130}}
