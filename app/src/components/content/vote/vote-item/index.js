@@ -43,7 +43,7 @@ class VoteItem extends Component {
                         <Link to="statistics">
                             <button className={voteBtn}>查看</button>
                         </Link>
-                        <Link to="raise">
+                        <Link to="revise">
                              <button className={voteBtn}>编辑</button>
                         </Link>
                         <button className={voteBtn} onClick={this.Confirm}>删除</button>

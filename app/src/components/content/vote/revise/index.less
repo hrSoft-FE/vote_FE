@@ -1,0 +1,36 @@
+.revise-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font: 16px "PingFang SC"; //字体过小时，减号无法正常显示
+  .revise {
+    padding: 15px;
+    margin-top: 10px;
+    width: 500px;
+    background: #ffffff;
+    opacity: 1;
+    box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    .revise-form {
+      margin: 0 auto;
+    }
+    .switch{
+      margin-top: -13px;
+    }
+    .dynamic-delete-button {
+      cursor: pointer;
+      position: relative;
+      top: 4px;
+      font-size: 24px;
+      color: #999;
+      transition: all .3s;
+    }
+    .dynamic-delete-button:hover {
+      color: #777;
+    }
+    .dynamic-delete-button[disabled] {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}

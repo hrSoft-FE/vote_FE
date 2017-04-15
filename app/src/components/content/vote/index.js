@@ -47,7 +47,8 @@ class Vote extends Component {
 
         return (
             <div className="vote-wrapper">
-                <div className="mask"></div>
+                <div className="mask">
+                </div>
                 <div className="vote">
                     {voteItems}
                 </div>

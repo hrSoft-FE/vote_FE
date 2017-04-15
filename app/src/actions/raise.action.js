@@ -6,6 +6,7 @@ import API from '../api';
  * @param data
  * @returns {{type: *, payload: {}}}
  */
+
 export const initiateVote = (data) => {
     return {
         type: INITIATE_VOTE,
@@ -19,6 +20,8 @@ export const initiateVote = (data) => {
  *
  * @param body
  */
+
+
 export function fetchVote(body) {
     return (dispatch) => {
         const token = localStorage.getItem('user.token');

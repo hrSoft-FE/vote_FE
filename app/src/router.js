@@ -11,6 +11,7 @@ import Poll from './components/content/poll';
 import RaiseContainer from './containers/raise.container';
 import Question from './components/content/question';
 import Statistics from './components/content/vote/details/statistics';
+import Revise from './components/content/vote/revise';
 
 const RouterApp = (
     <Router history={hashHistory}>
@@ -22,6 +23,7 @@ const RouterApp = (
             <Route path="poll" component={Poll}/>
             <Route path="question" component={Question}/>
             <Route path="statistics" component={Statistics}/>
+            <Route path="revise" component={Revise}/>
             <Route path="raise" component={RaiseContainer}/>
             <Route path="personalCenter" component={PersonalContainer}/>
         </Route>
