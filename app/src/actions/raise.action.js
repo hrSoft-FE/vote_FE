@@ -1,5 +1,7 @@
 import {INITIATE_VOTE} from './type';
 import API from '../api';
+import Goto from '../utils/goto';
+import {message} from 'antd';
 
 /**
  * 发起投票
@@ -21,6 +23,7 @@ export const initiateVote = (data) => {
  */
 export function fetchVote(body) {
     return (dispatch) => {
+        console.log('hi,action');
         const token = localStorage.getItem('user.token');
         if (token) {
             fetch(API.create, {
@@ -36,12 +39,15 @@ export function fetchVote(body) {
                 if (json.code === 0) {
                     console.log('hi');
                     dispatch(initiateVote(json.data));
-                } else {
-                    console.log(json);
+                    localStorage.setItem('voteId',json.data.vote.id);
+                    Goto('qrcode');
+                }
+                if(json.code === 30001){
+                    message.warning("投票已存在");
                 }
             })
         } else {
-            console.log("未登陆请先登陆");
+            message.warning("登录失效");
         }
     }
 }

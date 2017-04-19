@@ -8,7 +8,8 @@ class Poll extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: ''
+            id: '',
+            password:''
         };
         this.enterVote = this.enterVote.bind(this);
         this.getId = this.getId.bind(this);
@@ -22,19 +23,27 @@ class Poll extends Component {
         });
         console.log(id);
     }
+    getPassword(e) {
+        e.preventDefault();
+        let password = e.target.value;
+        this.setState({
+            password: password
+        });
+        console.log(password);
+    }
 
     enterVote() {
-        console.log('hihihi');
-        Goto('/question');
+        console.log('执行了enterVote');
         const id = this.state.id;
         localStorage.setItem('vote.id', id);
-        fetch(API.vote + id + '/join', {
+        fetch(API.vote + id + 'join', {
             method: 'POST'
         }).then((res) => {
             return res.json();
         }).then((json) => {
             if (json.data === 0) {
                 Goto('/question');
+                console.log('进入投票成功');
             }
         })
     }
@@ -42,7 +51,6 @@ class Poll extends Component {
 
     render() {
 
-        const voteTitile = 'test';
         return (
             <div className="poll-wrapper">
                 <div className="mask"></div>
@@ -51,15 +59,14 @@ class Poll extends Component {
                         <div className="logo">
                             <img src={logo} alt=""/>
                         </div>
-                        <div className="logo-text">
-                            <strong>题目:</strong>
-                            {voteTitile}
-                        </div>
                     </div>
                     <div className="form-wrapper">
                         <form action="">
                             <label htmlFor="" className="poll-code">请输入投票码:&nbsp;
                                 <input type="text" onChange={this.getId}/>
+                            </label>
+                            <label htmlFor="" className="poll-code">请输入投票密码:&nbsp;
+                                <input type="text" onChange={this.getPassword}/>
                             </label>
                             <label htmlFor="" className="poll-submit">
                                 <button onClick={this.enterVote}>确定</button>

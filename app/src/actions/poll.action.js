@@ -18,14 +18,14 @@ const getVote = (data) => {
 
 export function getVoteInfo(id) {
    return dispatch=>{
-       fetch(API.vote+id+'/join',{
+       fetch(API.vote+id+'/info',{
            method:'GET'
        }).then((res)=>{
            return res.json();
        }).then((json)=>{
            if(json.data===0){
                dispatch(getVote(json.data));
-               Goto('/question');
+               console.log('投票信息获取成功');
            }
        })
    }
