@@ -18,10 +18,9 @@ class QRCode extends Component {
         const { qrcode } = this.props;
         console.log(qrcode.path);
         const path = "http://"+qrcode.path;
-
         return (
             <div className="login-wrapper qrc-wrapper">
-                <div className="mask"></div>
+                <div className="mask"> </div>
                 <div className="qrc-window">
                     <div className="qrc">
                         <img src={path} alt="二维码"/>
