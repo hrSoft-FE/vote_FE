@@ -1,8 +1,8 @@
-import {SET_USER_INFO} from "../actions/type";
+import {GET_QRC_URL} from "../actions/type";
 
-export default function users(state = {}, action) {
+export default function qrcode(state = {}, action) {
     switch (action.type) {
-        case SET_USER_INFO:
+        case GET_QRC_URL:
             return {
                 ...state,
                 ...action.payload

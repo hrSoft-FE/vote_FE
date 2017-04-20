@@ -15,9 +15,10 @@ class Personal extends Component {
 
     render() {
         const {personal} = this.props;
+        console.log(personal);
         return (
             <div className="form-wrapper personal-wrapper">
-                <div className="mask"></div>
+                <div className="mask"> </div>
                 <form className="personal-form">
                     <div className="form-item">
                         <p className="personal-label">用户名:</p>

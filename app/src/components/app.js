@@ -4,9 +4,6 @@ import {Link} from 'react-router'
 import "whatwg-fetch";
 import "fetch-ie8/fetch.js";
 
-require('console-polyfill');
-require('es6-promise');
-
 import logo from '../images/vote.png';
 import Banner from './plugin/banner';
 import Home from './content/home';
@@ -54,6 +51,13 @@ class AppComponent extends Component {
                 <div className="banner-wrapper">
                     <Banner/>
                 </div>
+                <Link to="poll">
+                <div className="join-wrapper">
+                    <button className="join-button">
+                        <span>参与投票</span>
+                    </button>
+                </div>
+                </Link>
             </div>
         )
     }

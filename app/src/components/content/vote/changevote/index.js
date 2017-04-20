@@ -16,16 +16,14 @@ function onChange(dates, dateStrings) {
     console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
 }
 
-class Raise extends Component {
+class ChangeVote extends Component {
     constructor(props) {
         super(props);
         this.state = {
             participatorLimitDisable: true,
             passwordDisable: true,
             anonymous: false,
-            visibility: false,
-            password: null,
-            participator_limit: 0
+            visibility: false
         };
         this.isShowParticipator = this.isShowParticipator.bind(this);
         this.isShowPassword = this.isShowPassword.bind(this);
@@ -70,8 +68,7 @@ class Raise extends Component {
     isShowPassword() {
         this.setState({
             passwordDisable: !this.state.passwordDisable
-        });
-
+        })
     }
 
     isAnonymous() {
@@ -90,33 +87,31 @@ class Raise extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let option = [];
+                console.log(values);
+                let options = [];
                 Object.keys(values).forEach(key => {
                     if (key.match(/^name?/)) {
                         let item = {'value': values[key]};
-                        option.push(item);
+                        options.push(item)
                     }
                 });
-                const {title, participatorLimit, password, type, time} = values;
+                console.log(options);
+                const {title, participator_limit, password, type, time} = values;
                 const anonymous = this.state.anonymous;
-                const visibilityLimit = this.state.visibility;
-                const startTime = Date.parse(time[0]);
-                const endTime = Date.parse(time[1]);
-                const problems = [
-                    {
-                        options: option,
-                        type: parseInt(type)
-                    }
-                ];
+                const visibility_limit = this.state.visibility;
+                const start_time = Date.parse(time[0]);
+                const end_time = Date.parse(time[1]);
+                const problem = {options, type};
                 const body = {
                     title,
-                    participatorLimit,
-                    visibilityLimit,
+                    participator_limit,
+                    visibility_limit,
                     password,
-                    startTime,
-                    endTime,
+                    start_time,
+                    end_time,
                     anonymous,
-                    problems
+                    problem,
+                    time
                 };
                 this.props.fetchVote(body);
                 console.log('body: ', body);
@@ -164,7 +159,7 @@ class Raise extends Component {
         });
         return (
             <div className="raise-wrapper">
-                <div className="mask"> </div>
+                <div className="mask"></div>
                 <div className="raise">
                     <Form onSubmit={this.handleSubmit} className="raise-form">
                         <FormItem
@@ -205,7 +200,7 @@ class Raise extends Component {
                             {...formItemLayout}
                         >
                             <FormItem style={{marginTop: 10}}>
-                                {getFieldDecorator('participatorLimit',{initialValue: 0})(
+                                {getFieldDecorator('participatorLimit')(
                                     <InputNumber placeholder="人数限制" style={{width: '70%'}}
                                                  disabled={this.state.participatorLimitDisable}/>
                                 )}
@@ -220,9 +215,9 @@ class Raise extends Component {
                             {...formItemLayout}
                         >
                             <FormItem style={{marginTop: 10}}>
-                                {getFieldDecorator('password',{initialValue: null})(
+                                {getFieldDecorator('password')(
                                     <Input placeholder="投票密码" type="password" style={{width: '70%', marginRight: 8}}
-                                           disabled={this.state.passwordDisable} />
+                                           disabled={this.state.passwordDisable}/>
                                 )}
                             </FormItem>
                             <FormItem style={{marginLeft: 268}}>
@@ -241,7 +236,7 @@ class Raise extends Component {
                             {...formItemLayout}
                             style={{marginLeft: 130}}
                         >
-                            <Button type="primary" htmlType="submit" size="large">发起投票</Button>
+                            <Button type="primary" htmlType="submit" size="large">保存修改</Button>
                         </FormItem>
                     </Form>
                 </div>
@@ -249,5 +244,6 @@ class Raise extends Component {
         )
     }
 }
-Raise = Form.create()(Raise);
-export default Raise;
+ChangeVote = Form.create()(ChangeVote);
+
+export default ChangeVote;

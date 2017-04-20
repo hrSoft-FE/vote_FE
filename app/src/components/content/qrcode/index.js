@@ -5,13 +5,25 @@ import Qrcode from '../../../images/content/vote/sideimgleft.png';
 
 class QRCode extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
+    componentDidMount() {
+        let id = localStorage.getItem('voteId');
+        this.props.getQRCode(id);
+    }
+
     render() {
+        const { qrcode } = this.props;
+        console.log(qrcode.path);
+        const path = "http://"+qrcode.path;
         return (
             <div className="login-wrapper qrc-wrapper">
-                <div className="mask"></div>
+                <div className="mask"> </div>
                 <div className="qrc-window">
                     <div className="qrc">
-                        <img src={Qrcode} alt="二维码"/>
+                        <img src={path} alt="二维码"/>
                     </div>
                     <div className="link-box">
                         <Link to="raise">链接</Link>

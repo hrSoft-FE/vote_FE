@@ -1,6 +1,7 @@
 import API from '../api';
 import {SET_PERSONAL_CENTER, CLEAR_PERSONAL_CENTER} from './type';
 import Goto from '../utils/goto';
+import { message } from 'antd';
 /**
  * 设置用户信息
  * @param data
@@ -42,17 +43,16 @@ export function getUserMe() {
                 if (json.code === 0) {
                     console.log(json.data.name);
                     dispatch(setPersonalCenter(json.data));
+                    message.success('获取个人信息成功');
                 }
                 if (json.code === 20001) {
-                    localStorage.clear('user.token');
-                    localStorage.setItem("user.is_login", "false");
-                    window.alert('登陆信息过期,请重新登陆。');
+                    localStorage.clear();
+                    dispatch(clearPersonalCenter());
+                    message.error('登陆信息过期,请重新登陆。');
+                    Goto('login');
+                    window.history.go(0);
                 }
             })
-        } else {
-            localStorage.clear('user.token');
-            localStorage.setItem("user.is_login", "false");
-            console.log("没有登陆请先登陆");
         }
     }
 }
