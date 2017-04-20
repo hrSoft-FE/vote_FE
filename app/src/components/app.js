@@ -12,12 +12,12 @@ class AppComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            is_login: true
+            is_login: false
         }
     }
     componentDidMount() {
         this.setState({
-            is_login: localStorage.getItem("user.is_login")
+            is_login: localStorage.getItem("user.is_login")||false
         })
     }
 
