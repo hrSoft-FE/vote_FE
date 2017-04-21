@@ -13,7 +13,7 @@ const userApiMaker = (path) => {
 const voteApiMaker = (path) => {
     return `${__APIVOTE__}/${path}`
 };
-const propblemApiMaker = (path) => {
+const problemApiMaker = (path) => {
     return `${__APIUSER__}/${path}`
 };
 const optionApiMaker = (path) => {
@@ -28,13 +28,12 @@ export default {
     me: userApiMaker('me'),
     name: userApiMaker('nickname'),
     password: userApiMaker('password'),
-    test: userApiMaker('test'),
     //vote
     vote: voteApiMaker(''),
     create: voteApiMaker('create'),
     joinInfo: voteApiMaker('{voteId}/info'),
     voteInfo: voteApiMaker('info'),//用户所有的投票信息
+    delVote: voteApiMaker(':voteId/delete')
     //problem
-
 
 }

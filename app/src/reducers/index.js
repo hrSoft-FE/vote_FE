@@ -9,13 +9,15 @@ import users from './user.reducer';
 import raise from './raise.reducer';
 import poll from './poll.reducer';
 import qrcode from './qrcode.reducer';
+import vote from './vote.reducer';
 const rootReducer = combineReducers({
     demo,
     personal,
     users,
     raise,
     poll,
-    qrcode
+    qrcode,
+    vote,
 });
 
 export default rootReducer;

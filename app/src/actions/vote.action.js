@@ -1,51 +1,77 @@
-import {GET_DEMO_ERR,GET_DEMO_SUCC} from './type'
+import {SET_USER_VOTE} from './type';
+import API from '../api';
 
-const getVoteSuccess = (data) => {
+const setUserVote = (data) => {
     return {
-        type: GET_DEMO_SUCC,
+        type: SET_USER_VOTE,
         payload: {
-            data
+            ...data
         }
     }
 };
 
-const getDemoErr = () => {
-    return {
-        type: GET_DEMO_ERR,
-    }
-};
-
-/**
- * 用 Promise 触发 aciton
- * @param params
- * @returns {function(*)}
- */
-export function getVoteInfo(params) {
+export function getUserVote() {
     return (dispatch) => {
-        //a example with fetch
-        fetch('url').then((res) => {
-            return res.json()
-        }).then((json) => {
-            //do something with json
-            dispatch(getVoteSuccess(data))
-
-        }).catch(() => {
-            dispatch(getDemoErr())
-        })
+        const token = localStorage.getItem('user.token');
+        if (token) {
+            fetch(API.voteInfo, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': token,
+                },
+            }).then((res) => {
+                return res.json();
+            }).then((json) => {
+                console.log(json);
+                if (json.code === 0) {
+                    console.log('qevet');
+                    console.log(json.data);
+                    console.log('jiuwe');
+                    localStorage.setItem('vote', json.data);
+                    dispatch(setUserVote(json.data));
+                }
+                if (json.code === 20001) {
+                    localStorage.clear('user.token');
+                    localStorage.setItem("user.is_login", "false");
+                    window.alert('登陆信息过期,请重新登陆。');
+                }
+            })
+        } else {
+            localStorage.clear('user.token');
+            localStorage.setItem("user.is_login", "false");
+            window.alert('登陆信息过期,请重新登陆。');
+        }
     }
 }
 
-export function deleteVote(params){
+export function delUserVote(delId) {
     return (dispatch) => {
-        //a example with fetch
-        fetch('url').then((res) => {
-            return res.json()
-        }).then((json) => {
-            //do something with json
-            dispatch(getVoteSuccess(data))
-
-        }).catch(() => {
-            dispatch(getDemoErr())
-        })
+        const token = localStorage.getItem('user.token');
+        if (token) {
+            fetch(API.delVote.replace(/:voteId/,delId), {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': token,
+                },
+            }).then((res) => {
+                return res.json();
+            }).then((json) => {
+                if (json.code === 0) {
+                    console.log('Successfully deleted!');
+                    getUserVote();    // 刷新删除后的视图
+                }
+                if (json.code === 20001) {
+                    localStorage.clear('user.token');
+                    localStorage.setItem("user.is_login", "false");
+                    window.alert('登陆信息过期,请重新登陆。');
+                }
+            })
+        } else {
+            localStorage.clear('user.token');
+            localStorage.setItem("user.is_login", "false");
+            window.alert('登陆信息过期,请重新登陆。');
+        }
     }
 }

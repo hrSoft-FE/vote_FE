@@ -21,16 +21,17 @@ class VoteItem extends Component {
             cancelText: 'Cancel',
             onOk() {
                 console.log('ok');
+                let voteId = VoteItem.props.id;
+                VoteItem.props.delUserVote(voteId);
             }
         });
     };
 
     render() {
         //you can dispatch ation by using this.props.getDemo() or
-        const {data, getVote} = this.props;
         let statusSrc = this.props.status ? finish : going;
         let iconSrc = this.props.status ? icon2 : icon;
-        let voteBtn = this.props.status ? "vote-item-btn vote-item-btn-finish" : "vote-item-btn vote-item-btn-action";
+        let voteBtn = this.props.status ? "vote-item-btn vote-item-btn-finissh" : "vote-item-btn vote-item-btn-action";
 
         return (
             <div className="vote-item">

@@ -15,7 +15,6 @@ class Personal extends Component {
 
     render() {
         const {personal} = this.props;
-        console.log(personal);
         return (
             <div className="form-wrapper personal-wrapper">
                 <div className="mask"> </div>
