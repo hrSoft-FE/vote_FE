@@ -1,17 +1,31 @@
-import React,{Component} from "react";
-import "./index.less";
+import React, { Component } from 'react'
+import './index.less'
+
 class List extends Component {
-    render() {
-        return (
-            <div className="item-wrapper">
-                <input className="list-checked" type="radio" checked={this.props.checked} onChange={this.props.onChange}/>
-                <span className="list-text">{this.props.value}</span>
-            </div>
-        );
+  constructor (props) {
+    super(props)
+    this.state = {
+      checked: false
     }
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange () {
+    this.setState({
+      checked: !this.state.checked
+    })
+  }
+
+  render () {
+    return (
+      <div className='item-wrapper'>
+        <input className='list-checked' type='radio' checked={this.state.checked} onChange={this.onChange} />
+        <span className='list-text'>{this.props.value}</span>
+      </div>
+    )
+  }
 }
-List.propTypes = {};
-List.defaultProps = {};
+List.propTypes = {}
+List.defaultProps = {}
 
-
-export default List;
+export default List

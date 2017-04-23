@@ -1,68 +1,60 @@
-import React, {Component, PropTypes} from "react";
-import "./index.less"
+import React, { Component, PropTypes } from 'react'
+import './index.less'
 // import {Link} from "react-router";
-import QuestionList from './questionList';
+import QuestionList from './questionList'
 class Question extends Component {
-    constructor(props) {
-        super(props);
-        this.handleItemChange = this.handleItemChange.bind(this);
-    }
+  constructor (props) {
+    super(props)
+    this.handleItemChange = this.handleItemChange.bind(this)
+  }
 
-    componentDidMount() {
-        const id = localStorage.getItem('vote.id') || 0;
-        this.props.getVoteInfo(id);
-    }
+  componentDidMount () {
+    const id = window.localStorage.getItem('vote.id')
+    this.props.getVoteInfo(id)
+  }
 
-    handleItemChange(item) {
+  handleItemChange () {
+    this.props.submitVote()
+  }
 
+  render () {
+    const {vote = {}, problems = {}, options = {}} = this.props
+    let option = []
+    Object.keys(options).forEach(key => {
+      let item = {
+        'value': options[key].value,
+        'id': options[key].id
+      }
+      option.push(item)
+    })
+    let list = option
+    console.log(list)
+    const isMuti = (t = {type: 0}) => {
+      return t.type === 1 ? '单选' : '多选'
     }
-
-    render() {
-        const {poll} = this.props;
-        let title = 'test title';
-        let list = [
-            {
-                text: '选项1',
-                checked: false
-            },
-            {
-                text: '选项2',
-                checked: true
-            },
-            {
-                text: '选项3',
-                checked: false
-            }
-        ];
-        return (
-            <div className="question-wrapper">
-                <div className="mask"></div>
-                <div className="list-wrapper">
-                    <div className="title">{title}</div>
-                    <form action="" className="toggle">
-                        {/*<select className="selection">*/}
-                        {/*<option value="single" className="selection-item">单选</option>*/}
-                        {/*<option value="multiple" className="selection-item">多选</option>*/}
-                        {/*</select>*/}
-                        <input type="radio" className="multiple"/>
-                        <span className="toggle-text">多选</span>
-                    </form>
-                    <div className="question-list">
-                        <QuestionList
-                            list={list}
-                            handleItemChange={this.handleItemChange}
-                        />
-                    </div>
-                    <label htmlFor="" className="question-submit">
-                        <button>确定</button>
-                    </label>
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className='question-wrapper'>
+        <div className='mask' />
+        <div className='list-wrapper'>
+          <div className='title'>{vote.title}</div>
+          <form action='' className='toggle'>
+            <span className='toggle-text'>{isMuti(problems[0])}</span>
+          </form>
+          <div className='question-list'>
+            <QuestionList
+              list={list}
+              type={isMuti(problems[0])}
+            />
+          </div>
+          <label className='question-submit'>
+            <button onClick={this.handleItemChange}>确定</button>
+          </label>
+        </div>
+      </div>
+    )
+  }
 }
-Question.propTypes = {};
-Question.defaultProps = {};
+Question.propTypes = {}
+Question.defaultProps = {}
 
-
-export default Question;
+export default Question

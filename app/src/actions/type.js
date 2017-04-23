@@ -1,15 +1,12 @@
-export const SET_PERSONAL_CENTER = 'SET_PERSONAL_CENTER';
-export const CLEAR_PERSONAL_CENTER = 'CLEAR_PERSONAL_CENTER';
+export const SET_PERSONAL_CENTER = 'SET_PERSONAL_CENTER'
+export const CLEAR_PERSONAL_CENTER = 'CLEAR_PERSONAL_CENTER'
 
-export const SET_USER_INFO = 'SET_USER_INFO';
-export const CLEAR_USER_INFO = 'CLEAR_USER_INFO';
+export const SET_USER_INFO = 'SET_USER_INFO'
+export const CLEAR_USER_INFO = 'CLEAR_USER_INFO'
 
-export const INITIATE_VOTE = 'INITIATE_VOTE';
+export const INITIATE_VOTE = 'INITIATE_VOTE'
 
-export const GET_VOTE = 'GET_VOTE';
-export const GET_QRC_URL = 'GET_QRC_URL';
+export const GET_VOTE = 'GET_VOTE'
+export const GET_QRC_URL = 'GET_QRC_URL'
 
-export const SET_USER_VOTE = 'SET_USER_VOTE';
-
-
-
+export const SET_USER_VOTE = 'SET_USER_VOTE'

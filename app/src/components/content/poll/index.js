@@ -1,85 +1,83 @@
-import React, {Component, PropTypes} from "react";
-import logo from "../../../images/vote.png"
-import "./index.less"
-import Goto from '../../../utils/goto';
-import API from '../../../api';
+import React, { Component } from 'react'
+import logo from '../../../images/vote.png'
+import './index.less'
+import Goto from '../../../utils/goto'
+import API from '../../../api'
+import fetch from 'fetch-ie8'
 class Poll extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: '',
-            password:''
-        };
-        this.enterVote = this.enterVote.bind(this);
-        this.getId = this.getId.bind(this);
+  constructor (props) {
+    super(props)
+    this.state = {
+      id: '',
+      password: ''
     }
+    this.enterVote = this.enterVote.bind(this)
+    this.getId = this.getId.bind(this)
+  }
 
-    getId(e) {
-        e.preventDefault();
-        let id = e.target.value;
-        this.setState({
-            id: id
-        });
-        console.log(id);
-    }
-    getPassword(e) {
-        e.preventDefault();
-        let password = e.target.value;
-        this.setState({
-            password: password
-        });
-        console.log(password);
-    }
+  getId (e) {
+    e.preventDefault()
+    let id = e.target.value
+    this.setState({
+      id: id
+    })
+    console.log(id)
+  }
 
-    enterVote() {
-        console.log('执行了enterVote');
-        const id = this.state.id;
-        localStorage.setItem('vote.id', id);
-        fetch(API.vote + id + 'join', {
-            method: 'POST'
-        }).then((res) => {
-            return res.json();
-        }).then((json) => {
-            if (json.data === 0) {
-                Goto('/question');
-                console.log('进入投票成功');
-            }
-        })
-    }
+  getPassword (e) {
+    e.preventDefault()
+    let password = e.target.value
+    this.setState({
+      password: password
+    })
+    console.log(password)
+  }
 
+  enterVote () {
+    console.log('执行了enterVote')
+    const id = this.state.id
+    window.localStorage.setItem('vote.id', id)
+    fetch(API.vote + id + 'join', {
+      method: 'POST'
+    }).then((res) => {
+      return res.json()
+    }).then((json) => {
+      if (json.data === 0) {
+        Goto('/question')
+        console.log('进入投票成功')
+      }
+    })
+  }
 
-    render() {
-
-        return (
-            <div className="poll-wrapper">
-                <div className="mask"></div>
-                <div className="poll">
-                    <div className="logo-wrapper">
-                        <div className="logo">
-                            <img src={logo} alt=""/>
-                        </div>
-                    </div>
-                    <div className="form-wrapper">
-                        <form action="">
-                            <label htmlFor="" className="poll-code">请输入投票码:&nbsp;
-                                <input type="text" onChange={this.getId}/>
-                            </label>
-                            <label htmlFor="" className="poll-code">请输入投票密码:&nbsp;
-                                <input type="text" onChange={this.getPassword}/>
-                            </label>
-                            <label htmlFor="" className="poll-submit">
-                                <button onClick={this.enterVote}>确定</button>
-                            </label>
-                        </form>
-                    </div>
-                </div>
+  render () {
+    return (
+      <div className='poll-wrapper'>
+        <div className='mask' />
+        <div className='poll'>
+          <div className='logo-wrapper'>
+            <div className='logo'>
+              <img src={logo} alt='' />
             </div>
-        );
-    }
+          </div>
+          <div className='form-wrapper'>
+            <form action=''>
+              <label htmlFor='' className='poll-code'>请输入投票码:&nbsp;
+                <input type='text' onChange={this.getId} />
+              </label>
+              <label htmlFor='' className='poll-code'>请输入投票密码:&nbsp;
+                <input type='text' onChange={this.getPassword} />
+              </label>
+              <label htmlFor='' className='poll-submit'>
+                <button onClick={this.enterVote}>确定</button>
+              </label>
+            </form>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
-Poll.propTypes = {};
-Poll.defaultProps = {};
+Poll.propTypes = {}
+Poll.defaultProps = {}
 
-
-export default Poll;
+export default Poll

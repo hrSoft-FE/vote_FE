@@ -1,13 +1,11 @@
-import React, {Component, PropTypes} from "react";
-
-import {Link} from "react-router";
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 import './index.less'
-import finish from '../../../../images/content/vote/finished.png';
-import going from '../../../../images/content/vote/ongoing.png';
-import icon from '../../../../images/content/vote/icon.png';
-import icon2 from '../../../../images/content/vote/icon2.png';
-import warn from '../../../../images/content/vote/warn.png';
-import {Modal, Button} from 'antd';
+import finish from '../../../../images/content/vote/finished.png'
+import going from '../../../../images/content/vote/ongoing.png'
+import icon from '../../../../images/content/vote/icon.png'
+import icon2 from '../../../../images/content/vote/icon2.png'
+import { Modal } from 'antd'
 
 class VoteItem extends Component {
     constructor(props) {
@@ -56,8 +54,4 @@ class VoteItem extends Component {
 }
 
 
-VoteItem.propTypes = {};
-VoteItem.defaultProps = {};
-
-
-export default VoteItem;
+export default VoteItem

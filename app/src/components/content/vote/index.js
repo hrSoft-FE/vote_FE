@@ -1,18 +1,18 @@
-import React, {Component, PropTypes} from "react";
+import React, { Component } from 'react'
 
-//import './vote-item/index.js'
+// import './vote-item/index.js'
 import VoteItem from './vote-item'
-import "./index.less";
+import './index.less'
 class Vote extends Component {
-    constructor(props) {
-        super(props);
-    };
+  constructor (props) {
+    super(props)
+  };
 
-    componentDidMount() {
+  componentDidMount () {
         // this.props.action.getUserVote();
-    }
+  }
 
-    render() {
+  render () {
         // console.log(this.props);
         // const {data} = this.props;
         // let voteItems = data.votes.map(function (item) {
@@ -21,23 +21,21 @@ class Vote extends Component {
         //         <VoteItem status={status} key={item.id} delUserVote ={this.props.action.delUserVote}/>
         //     )
         // });
-        console.log(this.props);
+    console.log(this.props)
 
-        return (
-            <div className="vote-wrapper">
-                <div className="mask">
-                </div>
-                <div className="vote">
-                    <button onClick={this.props.action.getUserVote}>点我点我！</button>
-                    {/*{voteItems}*/}
-                </div>
-            </div>
-        )
-    }
+    return (
+      <div className='vote-wrapper'>
+        <div className='mask' />
+        <div className='vote'>
+          <button onClick={this.props.action.getUserVote}>点我点我！</button>
+          {/* {voteItems} */}
+        </div>
+      </div>
+    )
+  }
 }
 
-
-export default Vote;
+export default Vote
         // this.state = {
         //     data: [
         //         {

@@ -1,56 +1,57 @@
-import React, {Component, PropTypes} from "react";
-import List from "./list";
-import "./index.less"
+import React, { Component, PropTypes } from 'react'
+import List from './list'
+import './index.less'
 // import Item from "antd/lib/transfer/item.d";
 // import {Link} from "react-router";
+import { Radio } from 'antd'
+const RadioGroup = Radio.Group
+
 class QuestionList extends Component {
-    static defaultProps = {
-        list: [],
-        handleItemChange: () => {
+  constructor (props) {
+    super(props)
+    this.state = {
+      value: []
+    }
+  }
+
+  onChange = (e) => {
+    console.log('radio checked', e.target.value)
+    this.setState({
+      value: e.target.value,
+    })
+  }
+
+  render () {
+    const {list = [], type} = this.props
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px'
+    }
+    console.log('type', type)
+    return (
+      <div className='question-list-item'>
+        {
+          type === '多选' && list.map((entry, index) => (
+            <List
+              key={`list-${index}`}
+              value={entry.value}
+              id={entry.id}
+            />
+          ))
         }
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            list: this.props.list.map((entry) => ({
-                text: entry.text,
-                checked: entry.checked
-            })),
-        };
-    }
-
-    onItemChange(entry) {
-        const {list} = this.state;
-        this.setState({
-            list: list.map((prevEntry) => ({
-                text: prevEntry.text,
-                checked: prevEntry.text === entry.text ? !prevEntry.checked : prevEntry.checked
-            })),
-        });
-        this.props.handleItemChange(entry);
-    }
-
-    render() {
-        return (
-            <div className="question-list-item">
-                <ul>
-                    {this.state.list.map((entry, index) => (
-                        <List
-                            key={`list-${index}`}
-                            value={entry.text}
-                            checked={entry.checked}
-                            onChange={this.onItemChange.bind(this, entry)}
-                        />
-                    ))}
-                </ul>
-            </div>
-        );
-    }
-
+        <RadioGroup onChange={this.onChange} value={this.state.value}>
+          {
+            type === '单选' && list.map((entry, index) => (
+              <Radio style={radioStyle} value={entry.id} key={'radio-' + index}>{entry.value}</Radio>
+            ))
+          }
+        </RadioGroup>
+      </div>
+    )
+  }
 }
-QuestionList.propTypes = {};
-QuestionList.defaultProps = {};
+QuestionList.propTypes = {}
+QuestionList.defaultProps = {}
 
-
-export default QuestionList;
+export default QuestionList
