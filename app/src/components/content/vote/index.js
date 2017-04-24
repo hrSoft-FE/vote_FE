@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, PropTypes} from 'react'
 
 // import './vote-item/index.js'
 import VoteItem from './vote-item'
@@ -9,26 +9,32 @@ class Vote extends Component {
   };
 
   componentDidMount () {
-        // this.props.action.getUserVote();
+    this.props.action.getUserVote()
   }
 
   render () {
-        // console.log(this.props);
-        // const {data} = this.props;
-        // let voteItems = data.votes.map(function (item) {
-        //     let status = item.endTime - Date.parse(new Date()) < 0;
-        //     return (
-        //         <VoteItem status={status} key={item.id} delUserVote ={this.props.action.delUserVote}/>
-        //     )
-        // });
-    console.log(this.props)
+    const {vote = {}, action} = this.props
+    const votes = vote.votes || []
+
+    let voteItems = votes.map(function (item) {
+      let status = item.endTime - Date.parse(new Date()) < 0
+      if (!item.deleted) {
+        return (
+          <VoteItem
+            status={status}
+            key={item.id}
+            action={action}
+            voteId={item.id}
+                    />
+        )
+      }
+    })
 
     return (
       <div className='vote-wrapper'>
         <div className='mask' />
         <div className='vote'>
-          <button onClick={this.props.action.getUserVote}>点我点我！</button>
-          {/* {voteItems} */}
+          {voteItems}
         </div>
       </div>
     )
@@ -36,31 +42,6 @@ class Vote extends Component {
 }
 
 export default Vote
-        // this.state = {
-        //     data: [
-        //         {
-        //             status: true,
-        //             id: '001'
-        //         },
-        //         {
-        //             status: true,
-        //             id: '002'
-        //         },
-        //         {
-        //             status: false,
-        //             id: '003'
-        //         },
-        //         {
-        //             status: false,
-        //             id: '005'
-        //         },
-        //         {
-        //             status: true,
-        //             id: '008'
-        //         },
-        //         {
-        //             status: false,
-        //             id: '013'
-        //         }
-        //     ]
-        // }
+        // let votes = vote.votes;
+        // console.log(vote);
+        // console.log(votes);

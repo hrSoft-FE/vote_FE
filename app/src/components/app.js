@@ -17,7 +17,7 @@ class AppComponent extends Component {
   }
   componentDidMount () {
     this.setState({
-      is_login: localStorage.getItem('user.is_login') || false
+      is_login: window.localStorage.getItem('user.is_login') || false
     })
   }
 

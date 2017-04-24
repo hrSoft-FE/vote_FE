@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import 'es6-promise'
 // 引入redux
 import {Provider} from 'react-redux'
 import configStore from './stores'
-const store = configStore()
 import RouterApp from './router'
+const store = configStore()
 
 ReactDOM.render(
   <Provider store={store}>

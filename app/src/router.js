@@ -30,6 +30,7 @@ const RouterApp = (
       <Route path='personalCenter' component={PersonalContainer} />
       <Route path='qrcode' component={QRCodeContainer} />
       <Route path='changevote' component={ChangeVote} />
+
     </Route>
   </Router>
 )

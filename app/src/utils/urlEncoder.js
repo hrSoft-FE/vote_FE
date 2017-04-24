@@ -8,11 +8,11 @@ export default function urlEncode (param, key, encode) {
   let paramStr = ''
   let t = typeof (param)
   let i = false
-  if (t == 'string' || t == 'number' || t == 'boolean') {
-    paramStr += key + '=' + ((encode == null || encode) ? encodeURIComponent(param) : param) + '&'
+  if (t === 'string' || t === 'number' || t === 'boolean') {
+    paramStr += key + '=' + ((encode === null || encode) ? encodeURIComponent(param) : param) + '&'
   } else {
     for (let i in param) {
-      let k = key == null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i)
+      let k = key === null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i)
       paramStr += urlEncode(param[i], k, encode)
     }
   }

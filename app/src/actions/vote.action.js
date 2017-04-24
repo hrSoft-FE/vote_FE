@@ -12,7 +12,7 @@ const setUserVote = (data) => {
 
 export function getUserVote () {
   return (dispatch) => {
-    const token = localStorage.getItem('user.token')
+    const token = window.localStorage.getItem('user.token')
     if (token) {
       fetch(API.voteInfo, {
         method: 'GET',
@@ -23,34 +23,32 @@ export function getUserVote () {
       }).then((res) => {
         return res.json()
       }).then((json) => {
-        console.log(json)
         if (json.code === 0) {
-          console.log('qevet')
-          console.log(json.data)
-          console.log('jiuwe')
-          localStorage.setItem('vote', json.data)
+          console.log('获取成功！')
+          window.localStorage.setItem('vote', json.data)
           dispatch(setUserVote(json.data))
         }
         if (json.code === 20001) {
-          localStorage.clear('user.token')
-          localStorage.setItem('user.is_login', 'false')
+          window.localStorage.clear('user.token')
+          window.localStorage.setItem('user.is_login', 'false')
           window.alert('登陆信息过期,请重新登陆。')
         }
       })
     } else {
-      localStorage.clear('user.token')
-      localStorage.setItem('user.is_login', 'false')
+      window.localStorage.clear('user.token')
+      window.localStorage.setItem('user.is_login', 'false')
       window.alert('登陆信息过期,请重新登陆。')
     }
   }
 }
 
 export function delUserVote (delId) {
-  return (dispatch) => {
-    const token = localStorage.getItem('user.token')
+  return () => {
+    const token = window.localStorage.getItem('user.token')
+    const url = API.delVote
     if (token) {
-      fetch(API.delVote.replace(/:voteId/, delId), {
-        method: 'GET',
+      fetch(url.replace(/:voteId/, delId), {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           'token': token
@@ -60,17 +58,16 @@ export function delUserVote (delId) {
       }).then((json) => {
         if (json.code === 0) {
           console.log('Successfully deleted!')
-          getUserVote()    // 刷新删除后的视图
         }
         if (json.code === 20001) {
-          localStorage.clear('user.token')
-          localStorage.setItem('user.is_login', 'false')
+          window.localStorage.clear('user.token')
+          window.localStorage.setItem('user.is_login', 'false')
           window.alert('登陆信息过期,请重新登陆。')
         }
       })
     } else {
-      localStorage.clear('user.token')
-      localStorage.setItem('user.is_login', 'false')
+      window.localStorage.clear('user.token')
+      window.localStorage.setItem('user.is_login', 'false')
       window.alert('登陆信息过期,请重新登陆。')
     }
   }

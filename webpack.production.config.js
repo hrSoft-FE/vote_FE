@@ -8,7 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')  // 用于清除上�
 module.exports = {
   entry: {
     bundle: __dirname + '/app/src/index.js',
-    vendors: ['react', 'react-dom', 'react-router', 'redux']  // 第三方库和框架另外打包
+    vendors: ['whatwg-fetch','es6-promise','react', 'react-dom', 'react-router', 'redux']  // 第三方库和框架另外打包
   },
   output: {
     path: './dist/build/',
@@ -48,7 +48,16 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [' ', '.js', '.jsx']
+    extensions: [' ', '.js', '.jsx'],
+    alias: {
+      'actions': path.join(__dirname, '/app/src/actions'),
+      'api': path.join(__dirname, '/app/src/api'),
+      'components': path.join(__dirname, '/app/src/components'),
+      'containers': path.join(__dirname, '/app/src/containers'),
+      'images': path.join(__dirname, '/app/src/images'),
+      'reducers': path.join(__dirname, '/app/src/reducers'),
+      'utils': path.join(__dirname, '/app/src/utils')
+    }
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
