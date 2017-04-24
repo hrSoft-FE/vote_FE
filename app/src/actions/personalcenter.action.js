@@ -1,7 +1,8 @@
 import API from '../api'
-import {SET_PERSONAL_CENTER, CLEAR_PERSONAL_CENTER} from './type'
-import Goto from '../utils/goto'
+import { SET_PERSONAL_CENTER, CLEAR_PERSONAL_CENTER } from './type'
+import Goto from 'utils/goto'
 import { message } from 'antd'
+import codeHelper from 'utils/codeHelper'
 /**
  * 设置用户信息
  * @param data
@@ -41,16 +42,17 @@ export function getUserMe () {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          console.log(json.data.name)
           dispatch(setPersonalCenter(json.data))
-          message.success('获取个人信息成功')
+          message.success(codeHelper(json.code))
         }
         if (json.code === 20001) {
           localStorage.clear()
           dispatch(clearPersonalCenter())
-          message.error('登陆信息过期,请重新登陆。')
+          message.error(codeHelper(json.code))
           Goto('login')
           window.history.go(0)
+        } else {
+          message.error(codeHelper(json.code))
         }
       })
     }
@@ -70,13 +72,15 @@ export function changeInfo (body) {
           },
           body: JSON.stringify(body.name)
         }).then((res) => res.json())
-                    .then((json) => {
-                      if (json.code === 0) {
-                        console.log('用户名修改成功.')
-                        dispatch(setPersonalCenter(json.data))
-                        Goto('/')
-                      }
-                    })
+          .then((json) => {
+            if (json.code === 0) {
+              dispatch(setPersonalCenter(json.data))
+              Goto('/')
+              message.success(codeHelper(json.code))
+            } else {
+              message.error(codeHelper(json.code))
+            }
+          })
       }
 
       if (body.password) {
@@ -88,16 +92,17 @@ export function changeInfo (body) {
           },
           body: JSON.stringify(body.password)
         }).then((res) => res.json())
-                    .then((json) => {
-                      if (json.code === 0) {
-                        console.log('密码修改成功!')
-                        dispatch(setPersonalCenter(json.data))
-                        Goto('/')
-                      }
-                    })
+          .then((json) => {
+            if (json.code === 0) {
+              console.log('密码修改成功!')
+              dispatch(setPersonalCenter(json.data))
+              Goto('/')
+              message.success(codeHelper(json.code))
+            } else {
+              message.error(codeHelper(json.code))
+            }
+          })
       }
-    } else {
-      console.log('修改失败,登陆失效,请重新登陆.')
     }
   }
 }

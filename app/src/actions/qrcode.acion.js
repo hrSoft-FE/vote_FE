@@ -1,5 +1,7 @@
 import {GET_QRC_URL} from './type'
 import API from '../api'
+import codeHelper from 'utils/codeHelper'
+import {message} from 'antd'
 
 /**
  *
@@ -16,7 +18,7 @@ const getQrcodeUrl = (data) => {
 }
 
 export function getQRCode (id) {
-  const token = localStorage.getItem('user.token')
+  const token = localStorage.getItem('user.token') || 0
   const url = 'http://localhost:8080/#/question' + id
   if (token) {
     return dispatch => {
@@ -32,11 +34,11 @@ export function getQRCode (id) {
       }).then((json) => {
         if (json.code === 0) {
           dispatch(getQrcodeUrl(json.data))
-          console.log('二维码获取成功')
+          message.success(codeHelper(json.code))
+        } else {
+          message.error(codeHelper(json.code))
         }
       })
     }
-  } else {
-    console.log('token不存在')
   }
 }

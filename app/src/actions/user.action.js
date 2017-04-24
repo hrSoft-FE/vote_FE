@@ -1,8 +1,8 @@
 import { SET_USER_INFO } from './type'
 import API from '../api'
-import Goto from '../utils/goto'
+import Goto from 'utils/goto'
 import { message } from 'antd'
-import fetch from 'fetch-ie8'
+import codeHelper from 'utils/codeHelper'
 
 const setUserInfo = (data) => {
   return {
@@ -31,13 +31,9 @@ export function forLogin (body) {
         dispatch(setUserInfo(json.data))
         Goto('/')
         window.history.go(0)
-        console.log('登录成功')
-      }
-      if (json.code === 10001) {
-        message.error('密码输入错误')
-      }
-      if (json.code === 10002) {
-        message.error('手机号输入错误')
+        message.success(codeHelper(json.code))
+      } else {
+        message.error(codeHelper(json.code))
       }
     })
   }
@@ -56,12 +52,13 @@ export function forRegister (body) {
       return res.json()
     }).then((json) => {
       if (json.code === 0) {
-        console.log(json)
         Goto('login')
-        message.success('注册成功')
+        message.success(codeHelper(json.code))
       }
       if (json.code === 10003) {
-        message.error('手机号已被注册，请更换手机号重新注册')
+        message.error(codeHelper(json.code))
+      } else {
+        message.error(codeHelper(json.code))
       }
     })
   }

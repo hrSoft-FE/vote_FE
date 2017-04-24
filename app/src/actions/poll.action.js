@@ -1,7 +1,7 @@
 import { GET_VOTE } from './type'
 import API from '../api'
-import fetch from 'fetch-ie8'
-
+import codeHelper from 'utils/codeHelper'
+import {message} from 'antd'
 /**
  *
  * @param data
@@ -17,15 +17,45 @@ const getVote = (data) => {
 }
 
 export function getVoteInfo (id) {
+  const token = window.localStorage.getItem('user.token')
   return dispatch => {
     fetch(API.vote + id + '/info', {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'token': token
+      }
     }).then((res) => {
       return res.json()
     }).then((json) => {
-      if (json.data === 0) {
+      if (json.code === 0) {
         dispatch(getVote(json.data))
-        console.log('投票信息获取成功')
+        message.success(codeHelper(json.code))
+      } else {
+        message.error(codeHelper(json.code))
+      }
+    })
+  }
+}
+
+export function submitVote (body) {
+  let token = window.localStorage.getItem('user.token')
+  let id = window.localStorage.getItem('voteID')
+  return dispatch => {
+    fetch(API.vote + id + '/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token
+      },
+      body: JSON.stringify(body)
+    }).then((res) => {
+      return res.json()
+    }).then((json) => {
+      if (json.code === 0) {
+        dispatch(getVote(json.data))
+        message.success(codeHelper(json.code))
+      } else {
+        message.error(codeHelper(json.code))
       }
     })
   }

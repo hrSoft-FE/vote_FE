@@ -1,6 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import './index.less'
-// import {Link} from "react-router";
 import QuestionList from './questionList'
 class Question extends Component {
   constructor (props) {
@@ -9,7 +8,7 @@ class Question extends Component {
   }
 
   componentDidMount () {
-    const id = window.localStorage.getItem('vote.id')
+    const id = window.localStorage.getItem('voteId')
     this.props.getVoteInfo(id)
   }
 
@@ -37,7 +36,7 @@ class Question extends Component {
         <div className='mask' />
         <div className='list-wrapper'>
           <div className='title'>{vote.title}</div>
-          <form action='' className='toggle'>
+          <form className='toggle'>
             <span className='toggle-text'>{isMuti(problems[0])}</span>
           </form>
           <div className='question-list'>

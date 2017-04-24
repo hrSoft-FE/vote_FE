@@ -3,7 +3,9 @@ import logo from '../../../images/vote.png'
 import './index.less'
 import Goto from '../../../utils/goto'
 import API from '../../../api'
-import fetch from 'fetch-ie8'
+import codeHelper from 'utils/codeHelper'
+import {message} from 'antd'
+
 class Poll extends Component {
   constructor (props) {
     super(props)
@@ -24,27 +26,35 @@ class Poll extends Component {
     console.log(id)
   }
 
-  getPassword (e) {
-    e.preventDefault()
-    let password = e.target.value
-    this.setState({
-      password: password
-    })
-    console.log(password)
-  }
+  // getPassword (e) {
+  //   e.preventDefault()
+  //   let password = e.target.value
+  //   this.setState({
+  //     password: password
+  //   })
+  //   console.log(password)
+  // }
 
-  enterVote () {
-    console.log('执行了enterVote')
+  enterVote (e) {
+    e.preventDefault()
     const id = this.state.id
-    window.localStorage.setItem('vote.id', id)
-    fetch(API.vote + id + 'join', {
-      method: 'POST'
+    const token = window.localStorage.getItem('user.token')
+    window.localStorage.setItem('voteId', id)
+    fetch(API.vote + id + '/join', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': token
+      },
+      body: JSON.stringify({'voteId': id})
     }).then((res) => {
       return res.json()
     }).then((json) => {
-      if (json.data === 0) {
-        Goto('/question')
-        console.log('进入投票成功')
+      if (json.code === 0) {
+        Goto('/question/' + id)
+        message.success(codeHelper(json.code))
+      } else {
+        message.error(codeHelper(json.code))
       }
     })
   }
@@ -60,14 +70,11 @@ class Poll extends Component {
             </div>
           </div>
           <div className='form-wrapper'>
-            <form action=''>
-              <label htmlFor='' className='poll-code'>请输入投票码:&nbsp;
+            <form>
+              <label className='poll-code'>请输入投票码:&nbsp;
                 <input type='text' onChange={this.getId} />
               </label>
-              <label htmlFor='' className='poll-code'>请输入投票密码:&nbsp;
-                <input type='text' onChange={this.getPassword} />
-              </label>
-              <label htmlFor='' className='poll-submit'>
+              <label className='poll-submit'>
                 <button onClick={this.enterVote}>确定</button>
               </label>
             </form>

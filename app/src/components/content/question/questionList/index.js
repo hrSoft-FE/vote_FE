@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import List from './list'
 import './index.less'
-// import Item from "antd/lib/transfer/item.d";
-// import {Link} from "react-router";
 import { Radio } from 'antd'
 const RadioGroup = Radio.Group
 
@@ -19,6 +17,12 @@ class QuestionList extends Component {
     this.setState({
       value: e.target.value
     })
+    const records = []
+    let item = {
+      problemId: window.localStorage.getItem('voteId'),
+      optionId: e.target.value
+    }
+    records.push(item)
   }
 
   render () {

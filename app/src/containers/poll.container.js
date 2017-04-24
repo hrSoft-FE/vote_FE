@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { getVoteInfo } from '../actions/'
+import { getVoteInfo, submitVote } from '../actions/'
 import Question from '../components/content/question'
 
 class PollContainer extends Component {
   render () {
-    const {poll: {poll}, action: {getVoteInfo}} = this.props
+    const {poll, action: {getVoteInfo, submitVote}} = this.props
     return (
       <Question
         poll={poll}
         getVoteInfo={getVoteInfo}
+        submitVote={submitVote}
       />
     )
   }
@@ -23,7 +24,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToTop = (dispatch) => {
-  const actions = {getVoteInfo}
+  const actions = {getVoteInfo, submitVote}
   const actionMap = {action: bindActionCreators(actions, dispatch)}
   return actionMap
 }

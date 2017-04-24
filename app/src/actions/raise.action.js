@@ -2,6 +2,7 @@ import {INITIATE_VOTE} from './type'
 import API from '../api'
 import Goto from '../utils/goto'
 import {message} from 'antd'
+import codeHelper from 'utils/codeHelper'
 
 /**
  * 发起投票
@@ -25,7 +26,6 @@ export const initiateVote = (data) => {
 
 export function fetchVote (body) {
   return (dispatch) => {
-    console.log('hi,action')
     const token = localStorage.getItem('user.token')
     if (token) {
       fetch(API.create, {
@@ -39,17 +39,14 @@ export function fetchVote (body) {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          console.log('hi')
           dispatch(initiateVote(json.data))
           localStorage.setItem('voteId', json.data.vote.id)
           Goto('qrcode')
-        }
-        if (json.code === 30001) {
-          message.warning('投票已存在')
+          message.success(codeHelper(json.code))
+        } else {
+          message.error(codeHelper(json.code))
         }
       })
-    } else {
-      message.warning('登录失效')
     }
   }
 }
