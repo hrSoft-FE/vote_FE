@@ -89,6 +89,7 @@ class Raise extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         let option = []
+        console.log(values)
         Object.keys(values).forEach(key => {
           if (key.match(/^name?/)) {
             let item = {'value': values[key]}
@@ -117,7 +118,6 @@ class Raise extends Component {
           problems
         }
         this.props.fetchVote(body)
-        console.log('body: ', body)
       }
     })
   }

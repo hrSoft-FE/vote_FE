@@ -19,7 +19,7 @@ const getQrcodeUrl = (data) => {
 
 export function getQRCode (id) {
   const token = localStorage.getItem('user.token') || 0
-  const url = 'http://localhost:8080/#/question' + id
+  const url = 'http://localhost:8080/#/poll'
   if (token) {
     return dispatch => {
       fetch(API.vote + id + '/encode', {
@@ -34,9 +34,9 @@ export function getQRCode (id) {
       }).then((json) => {
         if (json.code === 0) {
           dispatch(getQrcodeUrl(json.data))
-          message.success(codeHelper(json.code))
+          message.success('获取二维码成功')
         } else {
-          message.error(codeHelper(json.code))
+          codeHelper(json.code)
         }
       })
     }

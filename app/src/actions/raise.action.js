@@ -41,10 +41,10 @@ export function fetchVote (body) {
         if (json.code === 0) {
           dispatch(initiateVote(json.data))
           localStorage.setItem('voteId', json.data.vote.id)
+          message.success('成功发起投票')
           Goto('qrcode')
-          message.success(codeHelper(json.code))
         } else {
-          message.error(codeHelper(json.code))
+          codeHelper(json.code)
         }
       })
     }

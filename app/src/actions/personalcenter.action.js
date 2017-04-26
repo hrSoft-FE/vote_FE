@@ -43,16 +43,14 @@ export function getUserMe () {
       }).then((json) => {
         if (json.code === 0) {
           dispatch(setPersonalCenter(json.data))
-          message.success(codeHelper(json.code))
+          message.success('信息获取成功')
         }
-        if (json.code === 20001) {
+        if (json.code === 20001 || json.code === 20002) {
           localStorage.clear()
           dispatch(clearPersonalCenter())
-          message.error(codeHelper(json.code))
           Goto('login')
+          codeHelper(json.code)
           window.history.go(0)
-        } else {
-          message.error(codeHelper(json.code))
         }
       })
     }
@@ -76,9 +74,9 @@ export function changeInfo (body) {
             if (json.code === 0) {
               dispatch(setPersonalCenter(json.data))
               Goto('/')
-              message.success(codeHelper(json.code))
+              message.success('信息修改成功')
             } else {
-              message.error(codeHelper(json.code))
+              codeHelper(json.code)
             }
           })
       }
@@ -94,12 +92,11 @@ export function changeInfo (body) {
         }).then((res) => res.json())
           .then((json) => {
             if (json.code === 0) {
-              console.log('密码修改成功!')
               dispatch(setPersonalCenter(json.data))
-              Goto('/')
-              message.success(codeHelper(json.code))
+              Goto('personalcenter')
+              message.success('密码修改成功!')
             } else {
-              message.error(codeHelper(json.code))
+              codeHelper(json.code)
             }
           })
       }

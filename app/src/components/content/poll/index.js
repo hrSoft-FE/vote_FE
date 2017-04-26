@@ -26,15 +26,6 @@ class Poll extends Component {
     console.log(id)
   }
 
-  // getPassword (e) {
-  //   e.preventDefault()
-  //   let password = e.target.value
-  //   this.setState({
-  //     password: password
-  //   })
-  //   console.log(password)
-  // }
-
   enterVote (e) {
     e.preventDefault()
     const id = this.state.id
@@ -52,9 +43,9 @@ class Poll extends Component {
     }).then((json) => {
       if (json.code === 0) {
         Goto('/question/' + id)
-        message.success(codeHelper(json.code))
+        message.success('进入成功')
       } else {
-        message.error(codeHelper(json.code))
+        codeHelper(json.code)
       }
     })
   }

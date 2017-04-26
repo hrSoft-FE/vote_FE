@@ -6,10 +6,12 @@ import Question from '../components/content/question'
 
 class PollContainer extends Component {
   render () {
-    const {poll, action: {getVoteInfo, submitVote}} = this.props
+    const {poll: {vote, problems, options}, action: {getVoteInfo, submitVote}} = this.props
     return (
       <Question
-        poll={poll}
+        vote={vote}
+        problems={problems}
+        options={options}
         getVoteInfo={getVoteInfo}
         submitVote={submitVote}
       />

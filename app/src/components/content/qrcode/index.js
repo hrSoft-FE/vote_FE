@@ -10,7 +10,7 @@ class QRCode extends Component {
 
   render () {
     const {qrcode} = this.props
-    console.log(qrcode.path)
+
     const path = 'http://' + qrcode.path
     return (
       <div className='login-wrapper qrc-wrapper'>
@@ -20,7 +20,7 @@ class QRCode extends Component {
             <img src={path} alt='二维码' />
           </div>
           <div className='link-box'>
-            <Link to='raise'>链接</Link>
+            <Link to='poll'>链接</Link>
             <sapn>复制链接</sapn>
           </div>
           <Link to='raise'>

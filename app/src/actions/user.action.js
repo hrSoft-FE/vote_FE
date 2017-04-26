@@ -31,9 +31,9 @@ export function forLogin (body) {
         dispatch(setUserInfo(json.data))
         Goto('/')
         window.history.go(0)
-        message.success(codeHelper(json.code))
+        message.success('登录成功')
       } else {
-        message.error(codeHelper(json.code))
+        codeHelper(json.code)
       }
     })
   }
@@ -52,11 +52,8 @@ export function forRegister (body) {
       return res.json()
     }).then((json) => {
       if (json.code === 0) {
+        message.success('注册成功')
         Goto('login')
-        message.success(codeHelper(json.code))
-      }
-      if (json.code === 10003) {
-        message.error(codeHelper(json.code))
       } else {
         message.error(codeHelper(json.code))
       }

@@ -29,9 +29,9 @@ export function getVoteInfo (id) {
     }).then((json) => {
       if (json.code === 0) {
         dispatch(getVote(json.data))
-        message.success(codeHelper(json.code))
+        message.success('投票信息获取成功')
       } else {
-        message.error(codeHelper(json.code))
+        codeHelper(json.code)
       }
     })
   }
@@ -39,7 +39,7 @@ export function getVoteInfo (id) {
 
 export function submitVote (body) {
   let token = window.localStorage.getItem('user.token')
-  let id = window.localStorage.getItem('voteID')
+  let id = window.localStorage.getItem('voteId')
   return dispatch => {
     fetch(API.vote + id + '/submit', {
       method: 'POST',
@@ -47,15 +47,15 @@ export function submitVote (body) {
         'Content-Type': 'application/json',
         'token': token
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify({'records': body})
     }).then((res) => {
       return res.json()
     }).then((json) => {
       if (json.code === 0) {
         dispatch(getVote(json.data))
-        message.success(codeHelper(json.code))
+        message.success('投票成功')
       } else {
-        message.error(codeHelper(json.code))
+        codeHelper(json.code)
       }
     })
   }

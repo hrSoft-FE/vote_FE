@@ -26,17 +26,14 @@ export function getUserVote () {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          message.success(codeHelper(json.code))
+          message.success('投票获取成功')
           window.localStorage.setItem('vote', json.data)
           dispatch(setUserVote(json.data))
-        }
-        if (json.code === 20001 || json.code === 20002) {
-          message.error(codeHelper(json.code))
+        } else {
+          codeHelper(json.code)
           window.localStorage.clear('user.token')
           localStorage.setItem('user.is_login', 'false')
           window.history.go(0)
-        } else {
-          message.error(codeHelper(json.code))
         }
       })
     }
@@ -59,15 +56,10 @@ export function delUserVote (delId) {
       }).then((json) => {
         if (json.code === 0) {
           message.success(codeHelper(json.code))
-        }
-        if (json.code === 20001) {
-          message.error(codeHelper(json.code))
-          window.localStorage.clear('user.token')
-          window.localStorage.setItem('user.is_login', 'false')
         } else {
-          message.error(codeHelper(json.code))
           window.localStorage.clear('user.token')
           window.localStorage.setItem('user.is_login', 'false')
+          codeHelper(json.code)
           window.history.go(0)
         }
       })

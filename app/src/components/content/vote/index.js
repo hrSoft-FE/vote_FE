@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 
 // import './vote-item/index.js'
 import VoteItem from './vote-item'
