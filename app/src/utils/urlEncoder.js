@@ -3,18 +3,13 @@
  * 借鉴http://www.tuicool.com/articles/uaIr2mj
  */
 
-export default function urlEncode (param, key, encode) {
-  if (param === null) { return '' }
-  let paramStr = ''
-  let t = typeof (param)
-  let i = false
-  if (t === 'string' || t === 'number' || t === 'boolean') {
-    paramStr += key + '=' + ((encode === null || encode) ? encodeURIComponent(param) : param) + '&'
+export default (uri, params) => {
+  const paramsArray = []
+  Object.keys(params).forEach(key => params[key] && paramsArray.push(`${key}=${params[key]}`))
+  if (uri.search(/\?/) === -1) {
+    uri += `?${paramsArray.join('&')}`
   } else {
-    for (let i in param) {
-      let k = key === null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i)
-      paramStr += urlEncode(param[i], k, encode)
-    }
+    uri += `&${paramsArray.join('&')}`
   }
-  return paramStr
+  return uri
 }

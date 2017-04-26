@@ -118,9 +118,14 @@ class Revise extends Component {
     })
   }
 
+  componentDidMount () {
+    this.props.action.getVoteItem(this.props.location.query.voteid)
+    console.log(this.props.revise)
+  }
+
   render () {
     const {getFieldDecorator, getFieldValue} = this.props.form
-
+    const {revise = {}, action} = this.props
     const formItemLayout = {
       wrapperCol: {
         xs: {span: 24, offset: 0},

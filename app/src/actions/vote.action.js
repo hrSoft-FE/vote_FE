@@ -55,7 +55,7 @@ export function delUserVote (delId, callback) {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          // message.success(codeHelper(json.code))
+          message.success(codeHelper(json.code))
         }
         if (json.code === 20001) {
           message.error(codeHelper(json.code))
