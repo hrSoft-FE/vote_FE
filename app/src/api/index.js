@@ -1,11 +1,11 @@
 // User
-const __APIUSER__ = 'http://192.168.1.219:8080/user'
+const __APIUSER__ = 'http://192.168.1.217:8080/user'
 // Vote
-const __APIVOTE__ = 'http://192.168.1.219:8080/vote'
+const __APIVOTE__ = 'http://192.168.1.217:8080/vote'
 // Problem
-const __APIPROBLEM__ = 'http://192.168.1.219:8080/problem'
+const __APIPROBLEM__ = 'http://192.168.1.217:8080/problem'
 // Option
-const __APIOPTION__ = 'http://192.168.1.219:8080/option'
+const __APIOPTION__ = 'http://192.168.1.217:8080/option'
 
 const userApiMaker = (path) => {
   return `${__APIUSER__}/${path}`
@@ -33,7 +33,6 @@ export default {
   create: voteApiMaker('create'),
   joinInfo: voteApiMaker('{voteId}/info'),
   voteInfo: voteApiMaker('info'), // 用户所有的投票信息
+  voteItemInfo: voteApiMaker(':voteId/info'), // 用户单个的投票信息
   delVote: voteApiMaker(':voteId/delete')
-    // problem
-
 }

@@ -5,32 +5,31 @@ import finish from 'images/content/vote/finished.png'
 import going from 'images/content/vote/ongoing.png'
 import icon from 'images/content/vote/icon.png'
 import icon2 from 'images/content/vote/icon2.png'
-import { Modal, Button } from 'antd'
+import { Modal } from 'antd'
 
 class VoteItem extends Component {
   constructor (props) {
     super(props)
+    this.Confirm = this.Confirm.bind(this)
   };
 
-  Confirm = (delId, action) => {
+  Confirm () {
+    const {voteId, action} = this.props
     Modal.confirm({
       title: '删除投票后，本投票活动及相关数据都会消失，是否确认删除？',
       okText: 'OK',
       cancelText: 'Cancel',
-      onOk () {
-        console.log('ok')
-        action.del(delId)
-        action.getVote()
+      async onOk () {
+        await action.delUserVote(voteId, action.getUserVote)
       }
     })
   }
 
   render () {
-    // you can dispatch ation by using this.props.getDemo() or
+    // you can dispatch action by using this.props.getDemo() or
     let statusSrc = this.props.status ? finish : going
     let iconSrc = this.props.status ? icon2 : icon
     let voteBtn = this.props.status ? 'vote-item-btn vote-item-btn-finish' : 'vote-item-btn vote-item-btn-action'
-    const action = this.props.action
     return (
       <div className='vote-item'>
         <div className='vote-item-status'>
@@ -42,11 +41,14 @@ class VoteItem extends Component {
             <Link to='statistics'>
               <button className={voteBtn}>查看</button>
             </Link>
-            <Link to='changevote'>
-              <button className={voteBtn}>编辑</button>
+            <Link to='revise'>
+              <button className={voteBtn} onClick={this.props.action.getVoteItem()}>编辑</button>
             </Link>
-            <button className={voteBtn}
-                    onClick={() => this.Confirm(this.props.voteId, action)}>删除
+            <button
+              className={voteBtn}
+              onClick={this.Confirm}
+            >
+              删除
             </button>
           </p>
         </div>

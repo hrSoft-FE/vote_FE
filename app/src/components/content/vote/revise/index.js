@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import './index.less'
-import { Form, Input, Icon, Button, InputNumber, Switch, Radio, Col } from 'antd'
-import { DatePicker } from 'antd'
+import { Form, Input, Icon, Button, InputNumber, Switch, Radio, DatePicker } from 'antd'
 import moment from 'moment'
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
@@ -10,7 +9,8 @@ const RadioGroup = Radio.Group
 
 let uuid = 0
 
-function onChange (dates, dateStrings) {
+function onChange (parameters) {
+  let {dates, dateStrings} = parameters
   console.log('From: ', dates[0], ', to: ', dates[1])
   console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
 }
@@ -86,12 +86,34 @@ class Revise extends Component {
     e.preventDefault()
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const {title, participatorLimit, password, startTime, endTime, time} = values,
-          anonymous = this.state.anonymous,
-          visibilityLimit = this.state.visibility
-        const body = {title, participatorLimit, visibilityLimit, password, startTime, endTime, anonymous}
+        console.log(values)
+        let options = []
+        Object.keys(values).forEach(key => {
+          if (key.match(/^name?/)) {
+            let item = {'value': values[key]}
+            options.push(item)
+          }
+        })
+        console.log(options)
+        const {title, participatorLimit, password, type, time} = values
+        const anonymous = this.state.anonymous
+        const visibilityLimit = this.state.visibility
+        const startTime = Date.parse(time[0])
+        const endTime = Date.parse(time[1])
+        const problem = {options, type}
+        const body = {
+          title,
+          participatorLimit,
+          visibilityLimit,
+          password,
+          startTime,
+          endTime,
+          anonymous,
+          problem,
+          time
+        }
         this.props.fetchVote(body)
-        console.log('Received values of form: ', time)
+        console.log('body: ', body)
       }
     })
   }
@@ -134,15 +156,15 @@ class Revise extends Component {
       )
     })
     return (
-      <div className='revise-wrapper'>
+      <div className='raise-wrapper'>
         <div className='mask' />
-        <div className='revise'>
-          <Form onSubmit={this.handleSubmit} className='revise-form'>
+        <div className='raise'>
+          <Form onSubmit={this.handleSubmit} className='raise-form'>
             <FormItem
               {...formItemLayout}
               style={{marginLeft: 240, marginTop: 20}}
             >
-              {getFieldDecorator('radio-button')(
+              {getFieldDecorator('type')(
                 <RadioGroup>
                   <RadioButton value='1'>单选</RadioButton>
                   <RadioButton value='2'>多选</RadioButton>
@@ -164,8 +186,11 @@ class Revise extends Component {
             </FormItem>
             {getFieldDecorator('time')(
               <RangePicker
-                ranges={{Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')]}}
-                showTime format='YYYY/MM/DD HH:mm:ss' onChange={onChange}
+                ranges={{
+                  Today: [moment(), moment()],
+                  'This Month': [moment(), moment().endOf('month')]
+                }}
+                showTime format='YYYY-MM-DD HH:mm:ss' onChange={onChange}
                 style={{width: '67%', marginLeft: 78, marginBottom: 25}}
               />
             )}
@@ -174,8 +199,10 @@ class Revise extends Component {
             >
               <FormItem style={{marginTop: 10}}>
                 {getFieldDecorator('participatorLimit')(
-                  <InputNumber placeholder='人数限制' style={{width: '70%'}}
-                    disabled={this.state.participatorLimitDisable} />
+                  <InputNumber
+                    placeholder='人数限制' style={{width: '70%'}}
+                    disabled={this.state.participatorLimitDisable}
+                  />
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>
@@ -189,8 +216,12 @@ class Revise extends Component {
             >
               <FormItem style={{marginTop: 10}}>
                 {getFieldDecorator('password')(
-                  <Input placeholder='投票密码' type='password' style={{width: '70%', marginRight: 8}}
-                    disabled={this.state.passwordDisable} />
+                  <Input
+                    placeholder='投票密码'
+                    type='password'
+                    style={{width: '70%', marginRight: 8}}
+                    disabled={this.state.passwordDisable}
+                  />
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>
@@ -209,7 +240,7 @@ class Revise extends Component {
               {...formItemLayout}
               style={{marginLeft: 130}}
             >
-              <Button type='primary' htmlType='submit' size='large'>修改投票</Button>
+              <Button type='primary' htmlType='submit' size='large'>保存修改</Button>
             </FormItem>
           </Form>
         </div>
@@ -218,4 +249,5 @@ class Revise extends Component {
   }
 }
 Revise = Form.create()(Revise)
+
 export default Revise

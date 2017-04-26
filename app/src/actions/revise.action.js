@@ -1,22 +1,22 @@
-import {SET_USER_VOTE} from './type'
+import {SET_VOTE_ITEM} from './type'
 import API from '../api'
 import codeHelper from 'utils/codeHelper'
 import {message} from 'antd'
 
-const setUserVote = (data) => {
+const setVoteItem = (data) => {
   return {
-    type: SET_USER_VOTE,
+    type: SET_VOTE_ITEM,
     payload: {
       ...data
     }
   }
 }
 
-export function getUserVote () {
+export function getVoteItem (reviseId) {
   return (dispatch) => {
     const token = window.localStorage.getItem('user.token')
     if (token) {
-      fetch(API.voteInfo, {
+      fetch(API.voteItemInfo.replace(/:voteId/, reviseId), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,21 +26,25 @@ export function getUserVote () {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          message.success('投票获取成功')
-          window.localStorage.setItem('vote', json.data)
-          dispatch(setUserVote(json.data))
-        } else {
-          codeHelper(json.code)
+          // message.success(codeHelper(json.code))
+          console.log(json.data)
+          window.localStorage.setItem('voteItem', json.data)
+          dispatch(setVoteItem(json.data))
+        }
+        if (json.code === 20001 || json.code === 20002) {
+          // message.error(codeHelper(json.code))
           window.localStorage.clear('user.token')
           localStorage.setItem('user.is_login', 'false')
           window.history.go(0)
+        } else {
+          // message.error(codeHelper(json.code))
         }
       })
     }
   }
 }
 
-export function delUserVote (delId, callback) {
+export function reviseVoteItem (delId, callback) {
   return async () => {
     const token = window.localStorage.getItem('user.token')
     const url = API.delVote

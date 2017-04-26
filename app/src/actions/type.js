@@ -9,3 +9,4 @@ export const GET_VOTE = 'GET_VOTE'
 export const GET_QRC_URL = 'GET_QRC_URL'
 
 export const SET_USER_VOTE = 'SET_USER_VOTE'
+export const SET_VOTE_ITEM = 'SET_VOTE_ITEM'

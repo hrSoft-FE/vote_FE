@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'es6-promise'
+import 'whatwg-fetch'
+
 // 引入redux
 import {Provider} from 'react-redux'
 import configStore from './stores'

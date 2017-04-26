@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-
+import React, { Component } from 'react'
+import { Pagination } from 'antd'
 // import './vote-item/index.js'
 import VoteItem from './vote-item'
 import './index.less'
@@ -25,7 +25,7 @@ class Vote extends Component {
             key={item.id}
             action={action}
             voteId={item.id}
-                    />
+          />
         )
       }
     })
@@ -35,6 +35,7 @@ class Vote extends Component {
         <div className='mask' />
         <div className='vote'>
           {voteItems}
+          <Pagination defaultCurrent={6} total={500} />
         </div>
       </div>
     )
