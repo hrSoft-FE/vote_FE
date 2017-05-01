@@ -59,8 +59,8 @@ class VoteItem extends Component {
     )
   }
 }
-
 VoteItem.propTypes = {}
+
 VoteItem.defaultProps = {}
 
 export default VoteItem

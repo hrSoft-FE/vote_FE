@@ -9,19 +9,19 @@ class Vote extends Component {
   };
 
   componentDidMount () {
-    this.props.action.getUserVote()
+    const currentPage = 2
+    const rows = 80
+    this.props.action.getUserVote(currentPage, rows)
   }
 
   render () {
     const {vote = {}, action} = this.props
-    const votes = vote.votes || []
-
-    let voteItems = votes.map(function (item) {
-      let status = item.endTime - Date.parse(new Date()) < 0
+    const list = vote.list || []
+    let voteItems = list.map(function (item) {
       if (!item.deleted) {
         return (
           <VoteItem
-            status={status}
+            status={item.endTime - Date.parse(new Date()) < 0}
             key={item.id}
             action={action}
             voteId={item.id}
@@ -29,13 +29,12 @@ class Vote extends Component {
         )
       }
     })
-
     return (
       <div className='vote-wrapper'>
         <div className='mask' />
         <div className='vote'>
           {voteItems}
-          <Pagination defaultCurrent={6} total={500} />
+          {/*<Pagination defaultCurrent={6} total={500} />*/}
         </div>
       </div>
     )

@@ -12,11 +12,13 @@ const setUserVote = (data) => {
   }
 }
 
-export function getUserVote () {
+export function getUserVote (page = 2, rows = 80) {
   return (dispatch) => {
     const token = window.localStorage.getItem('user.token')
+    // 此处为了替换2处，连写了2次replace，有点累赘
+    const url = API.voteInfo.replace(/pnum/, page).replace(/rnum/, rows)
     if (token) {
-      fetch(API.voteInfo, {
+      fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -31,8 +33,8 @@ export function getUserVote () {
           dispatch(setUserVote(json.data))
         } else {
           codeHelper(json.code)
-          window.localStorage.clear('user.token')
-          localStorage.setItem('user.is_login', 'false')
+          // window.localStorage.clear('user.token')
+          // localStorage.setItem('user.is_login', 'false')
           window.history.go(0)
         }
       })
@@ -56,13 +58,13 @@ export function delUserVote (delId, callback) {
       }).then((json) => {
         if (json.code === 0) {
           message.success(codeHelper(json.code))
-        }
-        if (json.code === 20001) {
+        } else if (json.code === 20001) {
           message.error(codeHelper(json.code))
           window.localStorage.clear('user.token')
           window.localStorage.setItem('user.is_login', 'false')
           return json.code
         } else {
+          console.log(json.code)
         }
       }).then(() => {
         callback()

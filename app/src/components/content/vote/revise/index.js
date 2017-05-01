@@ -9,8 +9,7 @@ const RadioGroup = Radio.Group
 
 let uuid = 0
 
-function onChange (parameters) {
-  let {dates, dateStrings} = parameters
+function onChange (dates, dateStrings) {
   console.log('From: ', dates[0], ', to: ', dates[1])
   console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
 }
@@ -101,7 +100,12 @@ class Revise extends Component {
         const startTime = Date.parse(time[0])
         const endTime = Date.parse(time[1])
         const problem = {options, type}
+        // 与raise的body不同的地方
+        const voteId = this.props.location.query.voteid
+        const problemId = this.props.revise.problems[0].id
+        console.log(voteId, problemId)
         const body = {
+          voteId,
           title,
           participatorLimit,
           visibilityLimit,
@@ -112,7 +116,7 @@ class Revise extends Component {
           problem,
           time
         }
-        this.props.fetchVote(body)
+        this.props.action.reviseVoteItem(body)
         console.log('body: ', body)
       }
     })
@@ -120,12 +124,23 @@ class Revise extends Component {
 
   componentDidMount () {
     this.props.action.getVoteItem(this.props.location.query.voteid)
-    console.log(this.props.revise)
+     // 获取并设置原有的表单数据
+    const {revise = {}, action} = this.props
+    const {vote = {}, problems = [], options = []} = revise
+    const {title = '', anonymous = false, participatorLimit = true, startTime = 1490427181, endTime = 1490427183, password = null} = vote
+    const {type = 1} = problems[0] || {}
+    const {form} = this.props
+    form.setFieldsValue({
+      // type: type,
+      title: title,
+      participatorLimit: participatorLimit,
+      password: password
+    })
+    console.log(form.getFieldValue('type'))
   }
 
   render () {
     const {getFieldDecorator, getFieldValue} = this.props.form
-    const {revise = {}, action} = this.props
     const formItemLayout = {
       wrapperCol: {
         xs: {span: 24, offset: 0},
@@ -170,14 +185,15 @@ class Revise extends Component {
               style={{marginLeft: 240, marginTop: 20}}
             >
               {getFieldDecorator('type')(
-                <RadioGroup>
+                <RadioGroup >
                   <RadioButton value='1'>单选</RadioButton>
                   <RadioButton value='2'>多选</RadioButton>
                 </RadioGroup>
               )}
             </FormItem>
-            <FormItem style={{marginLeft: 78}}>
+            <FormItem style={{marginLeft: 78}} >
               {getFieldDecorator('title', {
+                // initialValue: '一个可爱的初始标题',
                 rules: [{required: true, message: '请输入投票题目'}]
               })(
                 <Input style={{width: '80%'}} placeholder='投票名称' />
@@ -190,7 +206,7 @@ class Revise extends Component {
               </Button>
             </FormItem>
             {getFieldDecorator('time')(
-              <RangePicker 
+              <RangePicker
                 ranges={{
                   Today: [moment(), moment()],
                   'This Month': [moment(), moment().endOf('month')]

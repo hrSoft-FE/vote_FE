@@ -14,10 +14,10 @@ const voteApiMaker = (path) => {
   return `${__APIVOTE__}/${path}`
 }
 const problemApiMaker = (path) => {
-  return `${__APIUSER__}/${path}`
+  return `${__APIPROBLEM__}/${path}`
 }
 const optionApiMaker = (path) => {
-  return `${__APIUSER__}/${path}`
+  return `${__APIOPTION__}/${path}`
 }
 
 export default {
@@ -32,7 +32,10 @@ export default {
   vote: voteApiMaker(''),
   create: voteApiMaker('create'),
   joinInfo: voteApiMaker('{voteId}/info'),
-  voteInfo: voteApiMaker('info'), // 用户所有的投票信息
+  voteInfo: voteApiMaker('info?page=pnum&rows=rnum'), // 用户所有的投票信息
   voteItemInfo: voteApiMaker(':voteId/info'), // 用户单个的投票信息
-  delVote: voteApiMaker(':voteId/delete')
+  delVote: voteApiMaker(':voteId/delete'),
+    // problem
+  title: problemApiMaker(':problemId/title'),
+  type: problemApiMaker(':problemId/type')
 }
