@@ -41,7 +41,7 @@ class VoteItem extends Component {
         <div className='vote-item-box'>
           <img src={iconSrc} className='vote-item-icon' alt='投票' />
           <p>
-            <Link to='statistics'>
+            <Link to={urlEncoder('statistics', query)}>
               <button className={voteBtn}>查看</button>
             </Link>
             <Link to={urlEncoder('revise', query)}>

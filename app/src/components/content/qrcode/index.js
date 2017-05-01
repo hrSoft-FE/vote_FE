@@ -16,6 +16,9 @@ class QRCode extends Component {
       <div className='login-wrapper qrc-wrapper'>
         <div className='mask' />
         <div className='qrc-window'>
+          <div className='qrc-id'>
+            你的投票码为：{window.localStorage.getItem('voteId')}
+          </div>
           <div className='qrc'>
             <img src={path} alt='二维码' />
           </div>

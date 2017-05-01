@@ -10,6 +10,7 @@ import revise from './revise.reducer'
 import poll from './poll.reducer'
 import qrcode from './qrcode.reducer'
 import vote from './vote.reducer'
+import statistics from './statistics.reducer'
 const rootReducer = combineReducers({
   personal,
   users,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   revise,
   poll,
   qrcode,
-  vote
+  vote,
+  statistics
 })
 
 export default rootReducer

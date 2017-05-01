@@ -4,7 +4,6 @@ import { Form, Input, Icon, Button, InputNumber, Switch, Radio, DatePicker } fro
 import moment from 'moment'
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
-const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 let uuid = 0
@@ -21,12 +20,20 @@ class Revise extends Component {
       participatorLimitDisable: true,
       passwordDisable: true,
       anonymous: false,
-      visibility: false
+      visibility: false,
+      value: 1
     }
     this.isShowParticipator = this.isShowParticipator.bind(this)
     this.isShowPassword = this.isShowPassword.bind(this)
     this.isAnonymous = this.isAnonymous.bind(this)
     this.isVisibility = this.isVisibility.bind(this)
+  }
+
+  onChange = (e) => {
+    console.log('radio checked', e.target.value)
+    this.setState({
+      value: e.target.value
+    })
   }
 
   remove = (k) => {
@@ -94,7 +101,8 @@ class Revise extends Component {
           }
         })
         console.log(options)
-        const {title, participatorLimit, password, type, time} = values
+        const {title, participatorLimit, password, time} = values
+        const type = this.state.value
         const anonymous = this.state.anonymous
         const visibilityLimit = this.state.visibility
         const startTime = Date.parse(time[0])
@@ -124,19 +132,20 @@ class Revise extends Component {
 
   componentDidMount () {
     this.props.action.getVoteItem(this.props.location.query.voteid)
-     // 获取并设置原有的表单数据
-    const {revise = {}, action} = this.props
-    const {vote = {}, problems = [], options = []} = revise
+    // 获取并设置原有的表单数据
+    const {revise: {vote = {}, problems = [], options = []}, action} = this.props
     const {title = '', anonymous = false, participatorLimit = true, startTime = 1490427181, endTime = 1490427183, password = null} = vote
     const {type = 1} = problems[0] || {}
     const {form} = this.props
+    this.setState({
+      value: type
+    })
     form.setFieldsValue({
       // type: type,
       title: title,
       participatorLimit: participatorLimit,
       password: password
     })
-    console.log(form.getFieldValue('type'))
   }
 
   render () {
@@ -184,14 +193,12 @@ class Revise extends Component {
               {...formItemLayout}
               style={{marginLeft: 240, marginTop: 20}}
             >
-              {getFieldDecorator('type')(
-                <RadioGroup >
-                  <RadioButton value='1'>单选</RadioButton>
-                  <RadioButton value='2'>多选</RadioButton>
-                </RadioGroup>
-              )}
+              <RadioGroup onChange={this.onChange} value={this.state.value}>
+                <Radio value={1}>单选</Radio>
+                <Radio value={2}>多选</Radio>
+              </RadioGroup>
             </FormItem>
-            <FormItem style={{marginLeft: 78}} >
+            <FormItem style={{marginLeft: 78}}>
               {getFieldDecorator('title', {
                 // initialValue: '一个可爱的初始标题',
                 rules: [{required: true, message: '请输入投票题目'}]

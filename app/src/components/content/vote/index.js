@@ -9,8 +9,8 @@ class Vote extends Component {
   };
 
   componentDidMount () {
-    const currentPage = 2
-    const rows = 80
+    const currentPage = 1
+    const rows = 200
     this.props.action.getUserVote(currentPage, rows)
   }
 

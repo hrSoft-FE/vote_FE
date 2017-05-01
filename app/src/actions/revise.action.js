@@ -33,8 +33,8 @@ export function getVoteItem (reviseId) {
           dispatch(setVoteItem(json.data))
         } else if (json.code === 20001 || json.code === 20002) {
           // message.error(codeHelper(json.code))
-          // window.localStorage.clear('user.token')
-          // localStorage.setItem('user.is_login', 'false')
+          window.localStorage.clear('user.token')
+          localStorage.setItem('user.is_login', 'false')
           window.history.go(0)
         } else {
           // message.error(codeHelper(json.code))

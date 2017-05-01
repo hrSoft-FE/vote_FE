@@ -11,7 +11,7 @@ import Poll from './components/content/poll'
 import RaiseContainer from './containers/raise.container'
 import ReviseContainer from './containers/revise.container'
 import QuestionContainer from './containers/poll.container'
-import Statistics from './components/content/vote/details/statistics'
+import Statistics from './components/content/vote/statistics'
 import QRCodeContainer from './containers/qrcode.container'
 
 const RouterApp = (

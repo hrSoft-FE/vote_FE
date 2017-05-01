@@ -10,3 +10,5 @@ export const GET_QRC_URL = 'GET_QRC_URL'
 
 export const SET_USER_VOTE = 'SET_USER_VOTE'
 export const SET_VOTE_ITEM = 'SET_VOTE_ITEM'
+
+export const GET_VOTE_RECORD = 'GET_VOTE_RECORD'

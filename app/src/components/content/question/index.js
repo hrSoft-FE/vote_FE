@@ -89,7 +89,7 @@ class Question extends Component {
         <div className='list-wrapper'>
           <div className='title'>{vote.title}</div>
           <form className='toggle'>
-            <span className='toggle-text'>{isMuti(type)}</span>
+            <span className='toggle-text'>{isMuti(problems[0])}</span>
           </form>
           <div className='question-list'>
             <div className='question-list-item'>

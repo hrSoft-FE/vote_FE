@@ -2,6 +2,7 @@ import {SET_USER_VOTE} from './type'
 import API from '../api'
 import codeHelper from 'utils/codeHelper'
 import {message} from 'antd'
+import Goto from 'utils/goto'
 
 const setUserVote = (data) => {
   return {
@@ -35,7 +36,8 @@ export function getUserVote (page = 2, rows = 80) {
           codeHelper(json.code)
           // window.localStorage.clear('user.token')
           // localStorage.setItem('user.is_login', 'false')
-          window.history.go(0)
+          // window.history.go(0)
+          Goto('login')
         }
       })
     }
@@ -57,11 +59,12 @@ export function delUserVote (delId, callback) {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          message.success(codeHelper(json.code))
+          message.success('删除成功')
+          window.history.go(0)
         } else if (json.code === 20001) {
-          message.error(codeHelper(json.code))
-          window.localStorage.clear('user.token')
-          window.localStorage.setItem('user.is_login', 'false')
+          codeHelper(json.code)
+          // window.localStorage.clear('user.token')
+          // window.localStorage.setItem('user.is_login', 'false')
           return json.code
         } else {
           console.log(json.code)
