@@ -190,7 +190,7 @@ class Revise extends Component {
               </Button>
             </FormItem>
             {getFieldDecorator('time')(
-              <RangePicker
+              <RangePicker 
                 ranges={{
                   Today: [moment(), moment()],
                   'This Month': [moment(), moment().endOf('month')]
