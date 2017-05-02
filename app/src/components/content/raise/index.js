@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import './index.less'
-import { Form, Input, Icon, Button, InputNumber, Switch, Radio } from 'antd'
-import { DatePicker } from 'antd'
+import { Form, Input, Icon, Button, InputNumber, Switch, Radio, DatePicker } from 'antd'
 import moment from 'moment'
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-let uuid = 0
+let uuid = 1   // uuid为自增的选项key值，初始值为1表示初始状态下已有2个选项
 
 function onChange (dates, dateStrings) {
   console.log('From: ', dates[0], ', to: ', dates[1])
@@ -36,8 +35,9 @@ class Raise extends Component {
     const {form} = this.props
     // can use data-binding to get
     const keys = form.getFieldValue('keys')
+    console.log(keys)
     // We need at least one passenger
-    if (keys.length === 1) {
+    if (keys.length <= 2) {
       return
     }
 
@@ -96,9 +96,10 @@ class Raise extends Component {
             option.push(item)
           }
         })
-        const {title, participatorLimit, password, type, time} = values
+        const {title, password, type, time} = values
         const anonymous = this.state.anonymous
-        const visibilityLimit = this.state.visibility
+        const participatorLimit = this.state.participatorLimitDisable ? 0 : values.participatorLimit
+        const visibilityLimit = this.state.visibilityLimit
         const startTime = Date.parse(time[0])
         const endTime = Date.parse(time[1])
         const problems = [
@@ -117,6 +118,8 @@ class Raise extends Component {
           anonymous,
           problems
         }
+        // console.log(participatorLimit)
+        // console.log(this.state.participatorLimitDisable)
         this.props.fetchVote(body)
       }
     })
@@ -130,7 +133,7 @@ class Raise extends Component {
         sm: {span: 20, offset: 4}
       }
     }
-    getFieldDecorator('keys', {initialValue: []})
+    getFieldDecorator('keys', {initialValue: [0, 1]})
     const keys = getFieldValue('keys')
     const formItems = keys.map((k) => {
       return (
@@ -202,8 +205,9 @@ class Raise extends Component {
             >
               <FormItem style={{marginTop: 10}}>
                 {getFieldDecorator('participatorLimit', {initialValue: 0})(
-                  <InputNumber placeholder='人数限制' style={{width: '70%'}}
-                               disabled={this.state.participatorLimitDisable} />
+                  <InputNumber
+                    placeholder='人数限制' style={{width: '70%'}}
+                    disabled={this.state.participatorLimitDisable} />
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>
@@ -217,8 +221,9 @@ class Raise extends Component {
             >
               <FormItem style={{marginTop: 10}}>
                 {getFieldDecorator('password', {initialValue: null})(
-                  <Input placeholder='投票密码' type='password' style={{width: '70%', marginRight: 8}}
-                         disabled={this.state.passwordDisable} />
+                  <Input
+                    placeholder='投票密码' type='password' style={{width: '70%', marginRight: 8}}
+                    disabled={this.state.passwordDisable} />
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>

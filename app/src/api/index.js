@@ -35,7 +35,7 @@ export default {
   voteInfo: voteApiMaker('info?page=pnum&rows=rnum'), // 用户所有的投票信息
   voteItemInfo: voteApiMaker(':voteId/info'), // 用户单个的投票信息
   delVote: voteApiMaker(':voteId/delete'),
+  title: voteApiMaker(':voteId/title'),
     // problem
-  title: problemApiMaker(':problemId/title'),
   type: problemApiMaker(':problemId/type')
 }

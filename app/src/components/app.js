@@ -41,7 +41,7 @@ class AppComponent extends Component {
         <div className='nav-wrapper'>
           <div className='bar'>
             <img src={logo} className='logo' alt='logo' />
-            <div className='logo-text'>VOTE</div>
+            <div className='logo-text'>VOTER</div>
           </div>
           {nav}
         </div>

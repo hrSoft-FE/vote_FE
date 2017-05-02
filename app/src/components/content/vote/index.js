@@ -8,9 +8,13 @@ class Vote extends Component {
     super(props)
   };
 
+  paginate = (currentPage) => {
+    this.props.action.getUserVote(currentPage, 6)
+  }
+
   componentDidMount () {
     const currentPage = 1
-    const rows = 200
+    const rows = 6
     this.props.action.getUserVote(currentPage, rows)
   }
 
@@ -34,7 +38,7 @@ class Vote extends Component {
         <div className='mask' />
         <div className='vote'>
           {voteItems}
-          {/*<Pagination defaultCurrent={6} total={500} />*/}
+          <Pagination defaultCurrent={1} defaultPageSize={6} ageSize={6} total={vote.total} onChange={::this.paginate} />
         </div>
       </div>
     )

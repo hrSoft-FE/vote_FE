@@ -13,7 +13,7 @@ const setUserVote = (data) => {
   }
 }
 
-export function getUserVote (page = 2, rows = 80) {
+export function getUserVote (page = 1, rows = 6) {
   return (dispatch) => {
     const token = window.localStorage.getItem('user.token')
     // 此处为了替换2处，连写了2次replace，有点累赘

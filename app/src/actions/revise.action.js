@@ -27,9 +27,9 @@ export function getVoteItem (reviseId) {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          // message.success(codeHelper(json.code))
+          message.success('获取问题成功')
           // console.log(json.data)
-          window.localStorage.setItem('voteItem', json.data)
+          // window.localStorage.setItem('voteItem', json.data)
           dispatch(setVoteItem(json.data))
         } else if (json.code === 20001 || json.code === 20002) {
           // message.error(codeHelper(json.code))
@@ -44,22 +44,25 @@ export function getVoteItem (reviseId) {
   }
 }
 export function reviseVoteItem (body) {
-  const {title} = body
+  const {id, title} = body
+  const tempack = {
+    voteId: id,
+    title: title
+  }
   return (dispatch) => {
     const token = localStorage.getItem('user.token')
     if (token) {
-      fetch(API.title.replace(/:problemId/, title), {
+      fetch(API.title.replace(/:voteId/, 291), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'token': token
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(tempack)
       }).then((res) => {
         return res.json()
       }).then((json) => {
         if (json.code === 0) {
-          console.log(json)
           dispatch(setVoteItem(json.data))
           message.success('成功修改投票')
           Goto('vote')

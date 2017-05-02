@@ -6,11 +6,11 @@ const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker
 const RadioGroup = Radio.Group
 
-let uuid = 0
+let uuid = 1
 
-function onChange (dates, dateStrings) {
-  console.log('From: ', dates[0], ', to: ', dates[1])
-  console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
+function onTimeChange (dates, dateStrings) {
+  // console.log('From: ', dates[0], ', to: ', dates[1])
+  // console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
 }
 
 class Revise extends Component {
@@ -124,7 +124,7 @@ class Revise extends Component {
           problem,
           time
         }
-        this.props.action.reviseVoteItem(body)
+        // this.props.action.reviseVoteItem(body)
         console.log('body: ', body)
       }
     })
@@ -133,37 +133,42 @@ class Revise extends Component {
   componentDidMount () {
     this.props.action.getVoteItem(this.props.location.query.voteid)
     // 获取并设置原有的表单数据
-    const {revise: {vote = {}, problems = [], options = []}, action} = this.props
-    const {title = '', anonymous = false, participatorLimit = true, startTime = 1490427181, endTime = 1490427183, password = null} = vote
-    const {type = 1} = problems[0] || {}
-    const {form} = this.props
+    const { revise: {vote = {}, problems = []} } = this.props
+    const { anonymous = false, participatorLimit = 0, password = null, visibilityLimit = false } = vote
+    const { type = 1 } = problems[0] || {}
+    const { form } = this.props
     this.setState({
-      value: type
+      value: type,
+      anonymous: anonymous,
+      participatorLimit: participatorLimit,
+      visibilityLimit: visibilityLimit,
+      participatorLimitDisable: !participatorLimit
     })
     form.setFieldsValue({
-      // type: type,
-      title: title,
       participatorLimit: participatorLimit,
       password: password
     })
   }
 
   render () {
-    const {getFieldDecorator, getFieldValue} = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
+    const { revise: {vote = {}, options = []} } = this.props
+    const { title } = vote
+    const { startTime = 1490427181000, endTime = 1490427183000 } = vote
     const formItemLayout = {
       wrapperCol: {
         xs: {span: 24, offset: 0},
         sm: {span: 20, offset: 4}
       }
     }
-    getFieldDecorator('keys', {initialValue: []})
+    getFieldDecorator('keys', {initialValue: options})
     const keys = getFieldValue('keys')
     const formItems = keys.map((k) => {
       return (
         <FormItem
           {...formItemLayout}
           required={false}
-          key={k}
+          key={k.id}
         >
           <Icon
             className='dynamic-delete-button'
@@ -171,8 +176,9 @@ class Revise extends Component {
             disabled={keys.length === 1}
             onClick={() => this.remove(k)}
           />
-          {getFieldDecorator(`names-${k}`, {
+          {getFieldDecorator(`names-${k.id}`, {
             validateTrigger: ['onChange', 'onBlur'],
+            initialValue: k.value,
             rules: [{
               required: true,
               whitespace: true,
@@ -200,25 +206,30 @@ class Revise extends Component {
             </FormItem>
             <FormItem style={{marginLeft: 78}}>
               {getFieldDecorator('title', {
-                // initialValue: '一个可爱的初始标题',
+                initialValue: title,
                 rules: [{required: true, message: '请输入投票题目'}]
               })(
                 <Input style={{width: '80%'}} placeholder='投票名称' />
               )}
             </FormItem>
             {formItems}
-            <FormItem {...formItemLayout}>
-              <Button type='dashed' onClick={this.add} style={{width: '85%'}}>
-                <Icon type='plus' /> 添加选项
-              </Button>
-            </FormItem>
-            {getFieldDecorator('time')(
+            {/*<FormItem {...formItemLayout}>*/}
+              {/*<Button type='dashed' onClick={this.add} style={{width: '85%'}}>*/}
+                {/*<Icon type='plus' /> 添加选项*/}
+              {/*</Button>*/}
+            {/*</FormItem>*/}
+            {getFieldDecorator('time', {
+              initialValue: [
+                moment(moment.unix(startTime / 1000), 'YYYY-MM-DD HH:mm:ss'),
+                moment(moment.unix(endTime / 1000), 'YYYY-MM-DD HH:mm:ss')
+              ]
+            })(
               <RangePicker
                 ranges={{
                   Today: [moment(), moment()],
                   'This Month': [moment(), moment().endOf('month')]
                 }}
-                showTime format='YYYY-MM-DD HH:mm:ss' onChange={onChange}
+                showTime format='YYYY-MM-DD HH:mm:ss' onChange={onTimeChange}
                 style={{width: '67%', marginLeft: 78, marginBottom: 25}}
               />
             )}
@@ -234,7 +245,10 @@ class Revise extends Component {
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>
-                {getFieldDecorator('switch-participator', {valuePropName: 'checked'})(
+                {getFieldDecorator('switch-participator', {
+                  valuePropName: 'checked',
+                  initialValue: !!this.state.participatorLimit
+                })(
                   <Switch onChange={this.isShowParticipator} className='switch' />
                 )}
               </FormItem>
@@ -253,16 +267,19 @@ class Revise extends Component {
                 )}
               </FormItem>
               <FormItem style={{marginLeft: 268}}>
-                {getFieldDecorator('switch-password', {valuePropName: 'checked'})(
+                {getFieldDecorator('switch-password', {
+                  valuePropName: 'checked',
+                  // initialValue: this.state.visibilityLimit
+                })(
                   <Switch onChange={this.isShowPassword} className='switch' />
                 )}
               </FormItem>
             </FormItem>
             <FormItem {...formItemLayout}>
               <span>是否匿名</span>
-              <Switch style={{marginLeft: 11, marginRight: 105}} onChange={this.isAnonymous} />
+              <Switch style={{marginLeft: 11, marginRight: 105}} checked={this.state.anonymous} onChange={this.isAnonymous} />
               <span>是否私有</span>
-              <Switch style={{marginLeft: 11}} onChange={this.isVisibility} />
+              <Switch style={{marginLeft: 11}} defaultChecked={this.state.visibilityLimit} onChange={this.isVisibility} />
             </FormItem>
             <FormItem
               {...formItemLayout}
