@@ -40,24 +40,25 @@ class Statistics extends Component {
   }
 
   render () {
-    const {statistics} = this.props
-    console.log(statistics)
-    const option = statistics.option || this.state.statistics.options
+    const {statistics: {total, records = []}} = this.props
+    const record = records[0] || {problemTitle: '', type: '', option: [{}]}
+    const options = record.option
     return (
       <div className='statistics-wrapper'>
         <img src={sideLeft} alt='左侧立标' className='side-left side' />
         <img src={sideRight} alt='右侧立标' className='side-right side' />
         <div className='statistics'>
           <div className='title-bar'>
-            <h1>{statistics.problemTitle || '无'}</h1>
-            <p className='people-number'>参与人数:{statistics.total || 0}</p>
-            <p className='single-multiple'>{statistics.type === 1 ? '单选' : '多选' || '单选'}</p>
+            <h1>{record.problemTitle || '无'}</h1>
+            <p className='people-number'>参与人数:{total || 0}</p>
+            <p className='single-multiple'>{ record.type === 1 ? '单选' : '多选'}</p>
           </div>
           <div className='progress-bar'>
             {
-              option.map((value, index) => (
+              options.map((value, index) => (
                 <div className='progress-item' key={index}>
-                  <Progress percent={value.percent} strokeWidth={20} /><p className='vote-title'>选项:{value.optionTitle}</p><p>票数:{value.num}</p>
+                  <Progress percent={value.percent * 100} strokeWidth={20} /><p className='vote-title'>
+                  选项:{value.optionTitle}</p><p>票数:{value.num}</p>
                 </div>
               ))
             }
@@ -70,4 +71,7 @@ class Statistics extends Component {
     )
   }
 }
-export default Statistics
+
+export
+default
+Statistics

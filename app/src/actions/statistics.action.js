@@ -33,7 +33,7 @@ export function getVoteData (id) {
       }).then((json) => {
         if (json.code === 0) {
           console.log(json.data)
-          dispatch(getVoteRecord(json.data.records[0]))
+          dispatch(getVoteRecord(json.data))
           message.success('投票结果获取成功')
         } else {
           codeHelper(json.code)

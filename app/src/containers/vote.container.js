@@ -2,7 +2,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {getUserVote, delUserVote, getVoteItem} from '../actions'
 import Vote from '../components/content/vote'
-import React, {Component, PropTypes} from 'react'
 
 const mapStateToProps = (state) => {
   return {
