@@ -44,7 +44,6 @@ class Question extends Component {
       }
       records.push(item)
     })
-    console.log(records)
     if (records.length === 0) {
       let recordItem = {
         'problemId': id,
@@ -52,7 +51,6 @@ class Question extends Component {
       }
       records.push(recordItem)
     }
-    console.log(records)
     this.props.submitVote(records)
   }
 

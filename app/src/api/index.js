@@ -6,6 +6,8 @@ const __APIVOTE__ = 'http://192.168.1.217:8080/vote'
 const __APIPROBLEM__ = 'http://192.168.1.217:8080/problem'
 // Option
 const __APIOPTION__ = 'http://192.168.1.217:8080/option'
+// Record
+const __APIRECORD__ = 'http://192.168.1.217:8080/record'
 
 const userApiMaker = (path) => {
   return `${__APIUSER__}/${path}`
@@ -18,6 +20,9 @@ const problemApiMaker = (path) => {
 }
 const optionApiMaker = (path) => {
   return `${__APIOPTION__}/${path}`
+}
+const recordApiMaker = (path) => {
+  return `${__APIRECORD__}/${path}`
 }
 
 export default {
@@ -37,5 +42,7 @@ export default {
   delVote: voteApiMaker(':voteId/delete'),
   title: voteApiMaker(':voteId/title'),
     // problem
-  type: problemApiMaker(':problemId/type')
+  type: problemApiMaker(':problemId/type'),
+  // record
+  record: recordApiMaker('?voteId=id')
 }

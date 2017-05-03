@@ -11,7 +11,7 @@ import Poll from './components/content/poll'
 import RaiseContainer from './containers/raise.container'
 import ReviseContainer from './containers/revise.container'
 import QuestionContainer from './containers/poll.container'
-import Statistics from './components/content/vote/statistics'
+import StatisticsContainer from './containers/statistics.container'
 import QRCodeContainer from './containers/qrcode.container'
 
 const RouterApp = (
@@ -27,7 +27,7 @@ const RouterApp = (
       <Route path='question'>
         <Route path=':voteId' component={QuestionContainer} />
       </Route>
-      <Route path='statistics' component={Statistics} />
+      <Route path='statistics' component={StatisticsContainer} />
       <Route path='personalCenter' component={PersonalContainer} />
       <Route path='qrcode' component={QRCodeContainer} />
 

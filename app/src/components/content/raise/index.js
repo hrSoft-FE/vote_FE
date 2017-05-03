@@ -89,7 +89,6 @@ class Raise extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         let option = []
-        console.log(values)
         Object.keys(values).forEach(key => {
           if (key.match(/^name?/)) {
             let item = {'value': values[key]}
@@ -105,7 +104,8 @@ class Raise extends Component {
         const problems = [
           {
             options: option,
-            type: parseInt(type)
+            type: parseInt(type),
+            title: title
           }
         ]
         const body = {
@@ -118,8 +118,6 @@ class Raise extends Component {
           anonymous,
           problems
         }
-        // console.log(participatorLimit)
-        // console.log(this.state.participatorLimitDisable)
         this.props.fetchVote(body)
       }
     })

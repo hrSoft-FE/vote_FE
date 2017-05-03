@@ -2,6 +2,7 @@ import { GET_VOTE } from './type'
 import API from '../api'
 import codeHelper from 'utils/codeHelper'
 import {message} from 'antd'
+import Goto from 'utils/goto'
 /**
  *
  * @param data
@@ -54,6 +55,7 @@ export function submitVote (body) {
       if (json.code === 0) {
         dispatch(getVote(json.data))
         message.success('投票成功')
+        Goto('/')
       } else {
         codeHelper(json.code)
       }
